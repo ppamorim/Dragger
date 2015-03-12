@@ -36,9 +36,13 @@ public class DragHelperCallback extends ViewDragHelper.Callback {
   @Override
   public int clampViewPositionVertical(View child, int top, int dy) {
     final int topBound = draggerView.getPaddingTop();
-    final int bottomBound = draggerView.getHeight() - dragView.getHeight();
+    final int bottomBound = (int) draggerListener.dragVerticalDragRange();
     final int newTop = Math.min(Math.max(top, topBound), bottomBound);
     return newTop;
+  }
+
+  @Override public int getViewVerticalDragRange(View child) {
+    return (int) draggerListener.dragVerticalDragRange();
   }
 
   @Override public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
@@ -61,7 +65,7 @@ public class DragHelperCallback extends ViewDragHelper.Callback {
 
     dragOffset = Math.abs(top);
 
-    float fractionScreen = (float) dragOffset / draggerListener.dragRange();
+    float fractionScreen = (float) dragOffset / draggerListener.dragVerticalDragRange();
     if (fractionScreen >= 1) {
       fractionScreen = 1;
     }
@@ -76,16 +80,10 @@ public class DragHelperCallback extends ViewDragHelper.Callback {
   }
 
   private void triggerOnReleaseActionsWhileVerticalDrag(float yVel) {
-    if (yVel < 0 && yVel <= -Y_MIN_VELOCITY) {
+    if (draggerView.isDragViewAboveTheMiddle()) {
       draggerView.expand();
-    } else if (yVel > 0 && yVel >= Y_MIN_VELOCITY) {
-      draggerView.collapse();
     } else {
-      if (draggerView.isDragViewAboveTheMiddle()) {
-        draggerView.expand();
-      } else {
-        draggerView.collapse();
-      }
+      draggerView.collapse();
     }
   }
 

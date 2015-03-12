@@ -14,7 +14,12 @@ import com.ppamorim.library.transformer.SlideTransformer;
 
 public class DraggerView extends FrameLayout {
 
+  private static final float SLIDE_TOP = 0f;
+  private static final float SLIDE_BOTTOM = 1f;
   private static final int MAX_ALPHA = 1;
+  public static int BACK_FACTOR = 3;
+
+  private float verticalDragRange;
 
   private TypedArray attributes;
 
@@ -23,9 +28,6 @@ public class DraggerView extends FrameLayout {
   private ViewDragHelper mDragHelper;
   private View mDragView;
   private View mShadowView;
-
-  private static final float SLIDE_TOP = 0f;
-  private static final float SLIDE_BOTTOM = 1f;
 
   public DraggerView(Context context) {
     this(context, null);
@@ -42,7 +44,8 @@ public class DraggerView extends FrameLayout {
   }
 
   private void configDragViewHelper() {
-    mDragHelper = ViewDragHelper.create(this, 1.0f, new DragHelperCallback(this, mDragView, mShadowView, draggerListener));
+    mDragHelper = ViewDragHelper.create(this, 1.0f,
+        new DragHelperCallback(this, mDragView, mShadowView, draggerListener));
   }
 
   private void mapGUI(TypedArray attributes) {
@@ -58,13 +61,19 @@ public class DraggerView extends FrameLayout {
     slideTransformer = new SlideTransformer(mDragView, this);
   }
 
-
   boolean isDragViewAboveTheMiddle() {
-    return slideTransformer.isAboveTheMiddle();
+    int parentHeight = mDragView.getHeight();
+    float dragLimit = 0.5f;
+    float viewYPosition = ViewHelper.getY(mDragView) + (mDragView.getHeight() * dragLimit);
+    return viewYPosition < (parentHeight * dragLimit);
   }
 
   private float getVerticalDragRange() {
-    return getHeight() - slideTransformer.getMinHeightPlusMargin();
+    return verticalDragRange;
+  }
+
+  private void setVerticalDragRange(float verticalDragRange) {
+    this.verticalDragRange = verticalDragRange;
   }
 
   public void expand() {
@@ -98,6 +107,32 @@ public class DraggerView extends FrameLayout {
   }
 
   @Override
+  protected void onLayout(boolean changed, int l, int t, int r, int b) {
+    int width = getMeasuredWidth();
+    int height = getMeasuredHeight();
+    int childWidth = width - getPaddingLeft() - getPaddingRight();
+    int childHeight = height - getPaddingTop() - getPaddingBottom();
+    int childLeft = getPaddingLeft();
+    int childTop = getPaddingTop();
+    int childRight = childLeft + childWidth;
+    int childBottom = childTop + childHeight;
+    mDragView.layout(childLeft, childTop, childRight, childBottom);
+  }
+  @Override
+  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    int measureWidth = MeasureSpec.makeMeasureSpec(getMeasuredWidth() - getPaddingLeft() - getPaddingRight(), MeasureSpec.EXACTLY);
+    int measureHeight = MeasureSpec.makeMeasureSpec(getMeasuredHeight() - getPaddingTop() - getPaddingBottom(), MeasureSpec.EXACTLY);
+    mDragView.measure(measureWidth, measureHeight);
+  }
+
+  @Override
+  protected void onSizeChanged(int width, int height, int oldWidth, int oldHeight) {
+    super.onSizeChanged(width, height, oldWidth, oldHeight);
+    setVerticalDragRange(height);
+  }
+
+  @Override
   public boolean onInterceptTouchEvent(MotionEvent ev) {
     final int action = MotionEventCompat.getActionMasked(ev);
     if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
@@ -124,7 +159,7 @@ public class DraggerView extends FrameLayout {
       ViewHelper.setAlpha(mShadowView, MAX_ALPHA - dragValue);
     }
 
-    @Override public float dragRange() {
+    @Override public float dragVerticalDragRange() {
       return getVerticalDragRange();
     }
   };
