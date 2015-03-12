@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <declare-styleable name="dragger_layout">
+    <attr name="drag_view_id" format="reference"/>
+    <attr name="shadow_view_id" format="reference"/>
+  </declare-styleable>
+
+</resources>
