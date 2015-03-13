@@ -1,0 +1,12 @@
+<resources>
+
+  <style name="AppThemeNoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="colorPrimary">@color/white</item>
+    <item name="colorPrimaryDark">@color/white</item>
+    <item name="android:textColorPrimary">@color/white</item>
+    <item name="android:textColorSecondary">@color/white</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="windowActionBar">false</item>
+  </style>
+
+</resources>
