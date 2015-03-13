@@ -1,0 +1,31 @@
+<com.github.library.DraggerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dragger_layout="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dragger_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    dragger_layout:drag_view_id="@+id/drag_view"
+    dragger_layout:shadow_view_id="@+id/shadow_view">
+
+  <FrameLayout
+      android:id="@+id/shadow_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/transparent"
+      android:visibility="invisible"/>
+
+  <LinearLayout
+      android:id="@+id/drag_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/black_grey"
+      android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/accent"/>
+
+  </LinearLayout>
+
+</com.github.library.DraggerView>

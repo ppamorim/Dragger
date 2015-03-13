@@ -15,7 +15,6 @@
 */
 package com.github.dragger;
 
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -23,40 +22,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 import com.github.dragger.app.R;
 import com.github.library.DragPosition;
 import com.github.library.DraggerView;
 
-public class BaseActivity extends ActionBarActivity {
+public class DraggerActivity extends ActionBarActivity {
+
+  public static final String DRAG_POSITION = "drag_position";
 
   private Resources mResources;
 
   @InjectView(R.id.toolbar) Toolbar toolbar;
   @InjectView(R.id.dragger_view) DraggerView draggerView;
 
-  @OnClick(R.id.left) void onLeftClick() {
-    startDraggerActivity(DragPosition.LEFT);
-  }
-
-  @OnClick(R.id.right) void onRightClick() {
-    startDraggerActivity(DragPosition.RIGHT);
-  }
-
-  @OnClick(R.id.top) void onTopClick() {
-    startDraggerActivity(DragPosition.TOP);
-  }
-
-  @OnClick(R.id.bottom) void onBottomClick() {
-    startDraggerActivity(DragPosition.BOTTOM);
-  }
-
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_base);
+    setContentView(R.layout.activity_dragger);
     ButterKnife.inject(this);
     configResources();
     configToolbar();
+    configIntents();
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -72,6 +57,10 @@ public class BaseActivity extends ActionBarActivity {
     //draggerView.closeFromTopToBottom();
   }
 
+  private void configIntents() {
+    draggerView.setDragPosition((DragPosition) getIntent().getSerializableExtra(DRAG_POSITION));
+  }
+
   private void configResources() {
     mResources = getResources();
   }
@@ -80,12 +69,6 @@ public class BaseActivity extends ActionBarActivity {
     setSupportActionBar(toolbar);
     toolbar.setTitle(mResources.getString(R.string.app_name));
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-  }
-
-  private void startDraggerActivity(DragPosition dragPosition) {
-    Intent intent = new Intent(this, DraggerActivity.class);
-    intent.putExtra(DraggerActivity.DRAG_POSITION, dragPosition);
-    startActivity(intent);
   }
 
 }

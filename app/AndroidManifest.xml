@@ -18,6 +18,8 @@
             </intent-filter>
         </activity>
 
+      <activity android:name="com.github.dragger.DraggerActivity"/>
+
     </application>
 
 </manifest>

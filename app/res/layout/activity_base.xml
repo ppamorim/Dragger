@@ -4,27 +4,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     dragger_layout:drag_view_id="@+id/drag_view"
-    dragger_layout:shadow_view_id="@+id/shadow_view">
+    dragger_layout:shadow_view_id="@+id/shadow_view"
+    dragger_layout:drag_position="top">
 
   <FrameLayout
       android:id="@+id/shadow_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/transparent"/>
+      android:background="@color/transparent"
+      android:visibility="visible"/>
 
   <LinearLayout
       android:id="@+id/drag_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/abc_search_url_text_normal"
+      android:background="@color/black_grey"
+      android:gravity="center_horizontal"
       android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize" />
+        android:layout_height="56dp"
+        android:background="@color/accent"/>
+
+    <Button
+        android:id="@+id/left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/open_left"
+        android:padding="16dp"/>
+
+    <Button
+        android:id="@+id/right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/open_right"
+        android:padding="16dp"/>
+
+    <Button
+        android:id="@+id/top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/open_top"
+        android:padding="16dp"/>
+
+    <Button
+        android:id="@+id/bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/open_bottom"
+        android:padding="16dp"/>
 
   </LinearLayout>
 

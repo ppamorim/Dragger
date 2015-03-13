@@ -1,6 +1,7 @@
 <resources>
   <string name="app_name">Dragger</string>
-
-  <string name="hello_world">Hello world!</string>
-  <string name="action_settings">Settings</string>
+  <string name="open_left">Open left</string>
+  <string name="open_right">Open right</string>
+  <string name="open_top">Open top</string>
+  <string name="open_bottom">Open bottom</string>
 </resources>
