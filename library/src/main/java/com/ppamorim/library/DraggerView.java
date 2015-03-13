@@ -17,7 +17,6 @@ public class DraggerView extends FrameLayout {
   private static final float SLIDE_TOP = 0f;
   private static final float SLIDE_BOTTOM = 1f;
   private static final int MAX_ALPHA = 1;
-  public static int BACK_FACTOR = 3;
 
   private float verticalDragRange;
 
@@ -121,8 +120,12 @@ public class DraggerView extends FrameLayout {
   @Override
   protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    int measureWidth = MeasureSpec.makeMeasureSpec(getMeasuredWidth() - getPaddingLeft() - getPaddingRight(), MeasureSpec.EXACTLY);
-    int measureHeight = MeasureSpec.makeMeasureSpec(getMeasuredHeight() - getPaddingTop() - getPaddingBottom(), MeasureSpec.EXACTLY);
+    int measureWidth = MeasureSpec.makeMeasureSpec(
+        getMeasuredWidth() - getPaddingLeft() - getPaddingRight(),
+        MeasureSpec.EXACTLY);
+    int measureHeight = MeasureSpec.makeMeasureSpec(
+        getMeasuredHeight() - getPaddingTop() - getPaddingBottom(),
+        MeasureSpec.EXACTLY);
     mDragView.measure(measureWidth, measureHeight);
   }
 
