@@ -34,6 +34,8 @@ public class DraggerView extends FrameLayout {
   //private static final float COLLAPSE = 0f;
   //private static final float EXPAND = 1f;
 
+  private static final int DELAY = 200;
+
   private static final float SLIDE_OUT = 0f;
   private static final float SLIDE_IN = 1f;
 
@@ -87,7 +89,7 @@ public class DraggerView extends FrameLayout {
         MeasureSpec.EXACTLY);
     if(mDragView != null) {
       mDragView.measure(measureWidth, measureHeight);
-      //setViewAlpha(mDragView, MIN_ALPHA);
+      setViewAlpha(mDragView, MIN_ALPHA);
       closeView();
       expandWithDelay();
     }
@@ -224,7 +226,7 @@ public class DraggerView extends FrameLayout {
           canFinish = true;
         }
       }
-    }, 2000);
+    }, DELAY);
   }
 
   private void openView() {
