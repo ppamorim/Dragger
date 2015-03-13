@@ -1,4 +1,4 @@
-<com.ppamorim.library.DraggerView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.github.library.DraggerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dragger_layout="http://schemas.android.com/apk/res-auto"
     android:id="@+id/dragger_view"
     android:layout_width="match_parent"
@@ -28,4 +28,4 @@
 
   </LinearLayout>
 
-</com.ppamorim.library.DraggerView>
+</com.github.library.DraggerView>

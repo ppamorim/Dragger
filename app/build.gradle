@@ -8,22 +8,17 @@ dependencies {
 }
 
 android {
-
   packagingOptions {
     exclude 'META-INF/services/javax.annotation.processing.Processor'
   }
-
   compileSdkVersion Integer.parseInt(project.ANDROID_COMPILE_SDK_VERSION)
   buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
-
   defaultConfig {
-    applicationId "com.ppamorim.dragger"
-    versionCode Integer.parseInt(project.VERSION_CODE)
+    applicationId 'com.github.dragger'
     versionName project.VERSION_NAME
     minSdkVersion Integer.parseInt(project.ANDROID_MIN_SDK)
     targetSdkVersion Integer.parseInt(project.ANDROID_TARGET_SDK_VERSION)
   }
-
   sourceSets {
     main {
       manifest.srcFile 'AndroidManifest.xml'
@@ -34,6 +29,7 @@ android {
   lintOptions {
     abortOnError false
   }
+  productFlavors {}
 }
 
 task checkstyle(type: Checkstyle) {
