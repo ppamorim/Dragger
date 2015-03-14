@@ -1,4 +1,6 @@
-# Dragger [![Build Status](https://api.travis-ci.org/ppamorim/Dragger.svg?branch=master)](https://travis-ci.org/ppamorim/Dragger)
+![Logo 1][10]
+
+[![Build Status](https://api.travis-ci.org/ppamorim/Dragger.svg?branch=master)](https://travis-ci.org/ppamorim/Dragger)
 
 The library was created in order to provide new animations for activities on Android.
 Using the ViewDragHelper class, it was possible to create smooth animations and that's allow a full controls of the view for user.
@@ -59,7 +61,7 @@ Contributors
 
 * [Pedro Paulo de Amorim][3]
 
-This was only possible because [Pedro Vicente Gómez Sánchez][4] helped me and I am very grateful for that . Thank U.
+This was only possible because [Pedro Vicente Gómez Sánchez][4] helped me and I am very grateful for that! Thank you. :)
 
 Developed By
 ------------
@@ -94,3 +96,4 @@ License
 [2]: http://blog.denevell.org/android-viewdraghelper-example-tutorial.html
 [3]: https://github.com/ppamorim/
 [4]: https://github.com/pedrovgs/
+[10]: ./art/dragger.png
