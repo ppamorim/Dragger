@@ -27,9 +27,9 @@ public class DragHelperCallback extends ViewDragHelper.Callback {
   private View dragView;
 
   private DragPosition dragPosition;
-  private DraggerListener draggerListener;
+  private DraggerHelperListener draggerListener;
 
-  public DragHelperCallback(DraggerView draggerView, View dragView, DragPosition dragPosition, DraggerListener draggerListener) {
+  public DragHelperCallback(DraggerView draggerView, View dragView, DragPosition dragPosition, DraggerHelperListener draggerListener) {
     this.draggerView = draggerView;
     this.dragView = dragView;
     this.dragPosition = DragPosition.values()[dragPosition.getPosition()];
@@ -84,9 +84,9 @@ public class DragHelperCallback extends ViewDragHelper.Callback {
     if(state == dragState) {
       return;
     }
-    if ((dragState == ViewDragHelper.STATE_DRAGGING || dragState == ViewDragHelper.STATE_SETTLING) &&
-        state == ViewDragHelper.STATE_IDLE) {
-
+    if ((dragState == ViewDragHelper.STATE_DRAGGING
+        || dragState == ViewDragHelper.STATE_SETTLING)
+        && state == ViewDragHelper.STATE_IDLE) {
       switch (dragPosition) {
         case LEFT:
         case RIGHT:
@@ -102,8 +102,6 @@ public class DragHelperCallback extends ViewDragHelper.Callback {
           }
           break;
       }
-
-
     }
     dragState = state;
   }
@@ -111,27 +109,11 @@ public class DragHelperCallback extends ViewDragHelper.Callback {
   @Override public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
     super.onViewPositionChanged(changedView, left, top, dx, dy);
 
-    //switch (dragEdge) {
-    //  case TOP:
-    //  case BOTTOM:
-    //    // if (verticalDraging)
-    //    dragOffset = Math.abs(top);
-    //    break;
-    //  case LEFT:
-    //  case RIGHT:
-    //    // if (horizontalDraging)
-    //    dragOffset = Math.abs(left);
-    //    break;
-    //  default:
-    //    break;
-    //}
-
     if(dragPosition == DragPosition.TOP || dragPosition == DragPosition.BOTTOM) {
       dragOffset = Math.abs(top);
     } else {
       dragOffset = Math.abs(left);
     }
-
     float fractionScreen = (float) dragOffset / draggerListener.dragVerticalDragRange();
     if (fractionScreen >= 1) {
       fractionScreen = 1;
@@ -146,31 +128,31 @@ public class DragHelperCallback extends ViewDragHelper.Callback {
     switch (dragPosition) {
       case LEFT:
         if (draggerView.isDragViewAboveTheMiddle()) {
-          draggerView.closeFromRightToLeft();
+          draggerView.closeFromCenterToLeft();
         } else {
-          draggerView.openFromSideToCenter();
+          draggerView.moveToCenter();
         }
         break;
       case RIGHT:
         if (draggerView.isDragViewAboveTheMiddle()) {
-          draggerView.closeFromLeftToRight();
+          draggerView.closeFromCenterToRight();
         } else {
-          draggerView.openFromSideToCenter();
+          draggerView.moveToCenter();
         }
         break;
       case TOP:
       default:
         if (draggerView.isDragViewAboveTheMiddle()) {
-          draggerView.closeFromTopToBottom();
+          draggerView.closeFromCenterToBottom();
         } else {
-          draggerView.openFromBottomToTop();
+          draggerView.moveToCenter();
         }
         break;
       case BOTTOM:
         if (draggerView.isDragViewAboveTheMiddle()) {
-          draggerView.openFromSideToCenter();
+          draggerView.closeFromCenterToTop();
         } else {
-          draggerView.closeFromBottomToTop();
+          draggerView.moveToCenter();
         }
         break;
     }

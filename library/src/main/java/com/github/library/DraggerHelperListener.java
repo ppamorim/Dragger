@@ -20,20 +20,9 @@ package com.github.library;
  *
  * @author Pedro Paulo de Amorim
  */
-public enum DragPosition {
-  LEFT(0),
-  RIGHT(1),
-  TOP(2),
-  BOTTOM(3);
-
-  private int position;
-
-  DragPosition(int position) {
-    this.position = position;
-  }
-
-  public int getPosition() {
-    return position;
-  }
-
+public interface DraggerHelperListener {
+  void finishActivity();
+  void onViewPositionChanged(float dragValue);
+  float dragVerticalDragRange();
+  float dragHorizontalDragRange();
 }

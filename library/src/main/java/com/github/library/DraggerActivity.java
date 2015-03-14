@@ -15,25 +15,27 @@
 */
 package com.github.library;
 
-/**
- * Represent the position of the dragView when this is dragged.
- *
- * @author Pedro Paulo de Amorim
- */
-public enum DragPosition {
-  LEFT(0),
-  RIGHT(1),
-  TOP(2),
-  BOTTOM(3);
+import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
+import android.view.View;
 
-  private int position;
+public class DraggerActivity extends ActionBarActivity {
 
-  DragPosition(int position) {
-    this.position = position;
+  private DraggerView draggerView;
+
+  @Override public void setContentView(int layoutResID) {
+    configDraggerView();
+    View view = LayoutInflater.from(this).inflate(layoutResID, null);
+    draggerView.addView(view);
+    super.setContentView(draggerView);
   }
 
-  public int getPosition() {
-    return position;
+  private void configDraggerView() {
+    draggerView = new DraggerView(this);
+  }
+
+  public void setDragPosition(DragPosition dragPosition) {
+    draggerView.setDragPosition(dragPosition);
   }
 
 }

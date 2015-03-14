@@ -1,4 +1,3 @@
-
 /*
 * Copyright (C) 2015 Pedro Paulo de Amorim
 *
@@ -54,7 +53,8 @@ public class DraggerView extends FrameLayout {
   private TypedArray attributes;
   private DragPosition dragPosition;
 
-  private DragHelperCallback mDragHelperCallback;
+  private DraggerCallback draggerCallback;
+  private DragHelperCallback dragHelperCallback;
   private ViewDragHelper mDragHelper;
   private View mDragView;
   private View mShadowView;
@@ -90,7 +90,7 @@ public class DraggerView extends FrameLayout {
     if(mDragView != null) {
       mDragView.measure(measureWidth, measureHeight);
       setViewAlpha(mDragView, MIN_ALPHA);
-      closeView();
+      closeActivity();
       expandWithDelay();
     }
   }
@@ -151,7 +151,7 @@ public class DraggerView extends FrameLayout {
 
   public void setDragPosition(DragPosition dragPosition) {
     this.dragPosition = dragPosition;
-    mDragHelperCallback.setDragPosition(dragPosition);
+    dragHelperCallback.setDragPosition(dragPosition);
   }
 
   private void initializeAttributes(AttributeSet attrs) {
@@ -178,8 +178,12 @@ public class DraggerView extends FrameLayout {
   }
 
   private void configDragViewHelper() {
-    mDragHelperCallback = new DragHelperCallback(this, mDragView, dragPosition, draggerListener);
-    mDragHelper = ViewDragHelper.create(this, SENSITIVITY, mDragHelperCallback);
+    dragHelperCallback = new DragHelperCallback(this, mDragView, dragPosition, draggerListener);
+    mDragHelper = ViewDragHelper.create(this, SENSITIVITY, dragHelperCallback);
+  }
+
+  public void setCallback(DraggerCallback draggerCallback) {
+    this.draggerCallback = draggerCallback;
   }
 
   private void mapGUI(TypedArray attributes) {
@@ -197,7 +201,7 @@ public class DraggerView extends FrameLayout {
     switch (dragPosition) {
       case LEFT:
         parentSize = mDragView.getWidth();
-        viewAxisPosition = ViewHelper.getX(mDragView);
+        viewAxisPosition = -ViewHelper.getX(mDragView) + (parentSize * dragLimit);
         break;
       case RIGHT:
         parentSize = mDragView.getWidth();
@@ -209,8 +213,8 @@ public class DraggerView extends FrameLayout {
         viewAxisPosition = ViewHelper.getY(mDragView) + (parentSize * dragLimit);
         break;
       case BOTTOM:
-        parentSize = -mDragView.getHeight();
-        viewAxisPosition = ViewHelper.getY(mDragView) - (-parentSize * dragLimit);
+        parentSize = mDragView.getHeight();
+        viewAxisPosition = -ViewHelper.getY(mDragView) + (parentSize * dragLimit);
         break;
     }
     return parentSize < viewAxisPosition;
@@ -222,81 +226,69 @@ public class DraggerView extends FrameLayout {
         if(isEnabled()) {
           setViewAlpha(mDragView, MAX_ALPHA);
           mShadowView.setVisibility(VISIBLE);
-          openView();
+          openActivity();
           canFinish = true;
         }
       }
     }, DELAY);
   }
 
-  private void openView() {
+  private void openActivity() {
+    moveToCenter();
+  }
+
+  public void closeActivity() {
     switch (dragPosition) {
       case LEFT:
-        openFromSideToCenter();
+        closeFromCenterToLeft();
         break;
       case RIGHT:
-        openFromSideToCenter();
+        closeFromCenterToRight();
         break;
       case TOP:
       default:
-        openFromBottomToTop();
+        closeFromCenterToBottom();
         break;
       case BOTTOM:
-        openFromSideToCenter();
+        closeFromCenterToTop();
         break;
     }
   }
 
-  private void closeView() {
-    switch (dragPosition) {
-      case LEFT:
-        closeFromRightToLeft();
-        break;
-      case RIGHT:
-        closeFromLeftToRight();
-        break;
-      case TOP:
-      default:
-        closeFromTopToBottom();
-        break;
-      case BOTTOM:
-        closeFromBottomToTop();
-        break;
+  public void moveToCenter() {
+    smoothSlideTo(mDragView, 0, 0);
+    notifyOpen();
+  }
+
+  public void closeFromCenterToRight() {
+    smoothSlideTo(mDragView, (int) getHorizontalDragRange(), 0);
+    notifyClosed();
+  }
+
+  public void closeFromCenterToLeft() {
+    smoothSlideTo(mDragView, (int) -getHorizontalDragRange(), 0);
+    notifyClosed();
+  }
+
+  public void closeFromCenterToTop() {
+    smoothSlideTo(mDragView, 0,(int) -getVerticalDragRange());
+    notifyClosed();
+  }
+
+  public void closeFromCenterToBottom() {
+    smoothSlideTo(mDragView, 0,(int) (SLIDE_IN * getVerticalDragRange()));
+    notifyClosed();
+  }
+
+  private void notifyOpen() {
+    if(draggerCallback != null) {
+      draggerCallback.notifyOpen();
     }
   }
 
-  public void closeFromLeftToRight() {
-    if (mDragHelper.smoothSlideViewTo(mDragView, (int) getHorizontalDragRange(), 0)) {
-      ViewCompat.postInvalidateOnAnimation(this);
-    }
-  }
-
-  public void openFromSideToCenter() {
-    if (mDragHelper.smoothSlideViewTo(mDragView, 0, 0)) {
-      ViewCompat.postInvalidateOnAnimation(this);
-    }
-  }
-
-  public void closeFromRightToLeft() {
-    if (mDragHelper.smoothSlideViewTo(mDragView, (int) -getHorizontalDragRange(), 0)) {
-      ViewCompat.postInvalidateOnAnimation(this);
-    }
-  }
-
-
-  public void openFromBottomToTop() {
-    smoothSlideToY(mDragView, SLIDE_OUT);
-    //notifyMaximizeToListener();
-  }
-
-  public void closeFromTopToBottom() {
-    smoothSlideToY(mDragView, SLIDE_IN);
-    //notifyMinimizeToListener();
-  }
-
-  public void closeFromBottomToTop() {
-    if (mDragHelper.smoothSlideViewTo(mDragView, 0,(int) -getVerticalDragRange())) {
-      ViewCompat.postInvalidateOnAnimation(this);
+  private void notifyClosed() {
+    if(draggerCallback != null) {
+      draggerCallback.notifyClose();
     }
   }
 
@@ -304,38 +296,26 @@ public class DraggerView extends FrameLayout {
     ViewHelper.setAlpha(view, alpha);
   }
 
-  private boolean smoothSlideToY(View view, float slideOffset) {
-    int y = (int) (slideOffset * getVerticalDragRange());
-    if (mDragHelper.smoothSlideViewTo(view, 0, y)) {
+  private boolean smoothSlideTo(View view, int x, int y) {
+    if (mDragHelper.smoothSlideViewTo(view, x, y)) {
       ViewCompat.postInvalidateOnAnimation(this);
       return true;
     }
     return false;
   }
-
-  private boolean smoothSlideToX(View view, boolean invertDragRange, float slideOffset) {
-    final int leftBound = getPaddingLeft();
-    int x = (int) (leftBound + slideOffset * getHorizontalDragRange());
-    if (mDragHelper.smoothSlideViewTo(view, x, 0)) {
-      ViewCompat.postInvalidateOnAnimation(this);
-      return true;
-    }
-    return false;
-  }
-
 
   private void finish() {
     if(canFinish) {
       Context context = getContext();
       if (context instanceof Activity) {
-        Activity act = (Activity) context;
-        act.finish();
-        act.overridePendingTransition(0, android.R.anim.fade_out);
+        Activity activity = (Activity) context;
+        activity.overridePendingTransition(0, android.R.anim.fade_out);
+        activity.finish();
       }
     }
   }
 
-  private DraggerListener draggerListener = new DraggerListener() {
+  private DraggerHelperListener draggerListener = new DraggerHelperListener() {
 
     @Override public void finishActivity() {
       finish();
@@ -351,10 +331,6 @@ public class DraggerView extends FrameLayout {
 
     @Override public float dragHorizontalDragRange() {
       return getHorizontalDragRange();
-    }
-
-    @Override public int dragViewWidth() {
-      return mDragView.getWidth();
     }
 
   };

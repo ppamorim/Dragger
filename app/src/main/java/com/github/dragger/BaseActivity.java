@@ -35,6 +35,10 @@ public class BaseActivity extends ActionBarActivity {
   @InjectView(R.id.toolbar) Toolbar toolbar;
   @InjectView(R.id.dragger_view) DraggerView draggerView;
 
+  @OnClick(R.id.menu) void onMenuClick() {
+    startActivity(new Intent(this, BaseActivity.class));
+  }
+
   @OnClick(R.id.left) void onLeftClick() {
     startDraggerActivity(DragPosition.LEFT);
   }
@@ -69,7 +73,7 @@ public class BaseActivity extends ActionBarActivity {
   }
 
   @Override public void onBackPressed() {
-    //draggerView.closeFromTopToBottom();
+    draggerView.closeFromCenterToBottom();
   }
 
   private void configResources() {

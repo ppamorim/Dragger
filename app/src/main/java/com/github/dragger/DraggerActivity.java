@@ -54,7 +54,7 @@ public class DraggerActivity extends ActionBarActivity {
   }
 
   @Override public void onBackPressed() {
-    //draggerView.closeFromTopToBottom();
+    draggerView.closeActivity();
   }
 
   private void configIntents() {

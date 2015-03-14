@@ -15,25 +15,7 @@
 */
 package com.github.library;
 
-/**
- * Represent the position of the dragView when this is dragged.
- *
- * @author Pedro Paulo de Amorim
- */
-public enum DragPosition {
-  LEFT(0),
-  RIGHT(1),
-  TOP(2),
-  BOTTOM(3);
-
-  private int position;
-
-  DragPosition(int position) {
-    this.position = position;
-  }
-
-  public int getPosition() {
-    return position;
-  }
-
+public interface DraggerCallback {
+  void notifyOpen();
+  void notifyClose();
 }
