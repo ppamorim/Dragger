@@ -73,6 +73,13 @@ Developed By
   <img alt="Add me to Linkedin" src="http://imageshack.us/a/img41/7877/smallld.png" />
 </a>
 
+Libraries used on the sample project
+------------------------------------
+
+* [Butterknife][5]
+* [NineOldAndroids][6]
+* [Picasso][7]
+
 License
 -------
 
@@ -94,4 +101,7 @@ License
 [2]: http://blog.denevell.org/android-viewdraghelper-example-tutorial.html
 [3]: https://github.com/ppamorim/
 [4]: https://github.com/pedrovgs/
+[5]: https://github.com/JakeWharton/butterknife
+[6]: https://github.com/JakeWharton/NineOldAndroids/
+[7]: https://github.com/square/picasso
 [10]: ./art/dragger.png

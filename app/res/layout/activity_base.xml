@@ -75,6 +75,14 @@
             android:text="@string/open_bottom"
             android:padding="16dp"/>
 
+        <Button
+            android:id="@+id/panel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/open_panel"
+            android:padding="16dp"/>
+
       </LinearLayout>
 
   </LinearLayout>

@@ -19,6 +19,7 @@
         </activity>
 
       <activity android:name="com.github.dragger.DraggerActivity"/>
+      <activity android:name="com.github.dragger.PanelActivity"/>
 
     </application>
 

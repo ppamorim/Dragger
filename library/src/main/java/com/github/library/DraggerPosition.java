@@ -36,4 +36,18 @@ public enum DraggerPosition {
     return position;
   }
 
+  public static DraggerPosition getDragPosition(int position) {
+    switch (position) {
+      case 0:
+        return DraggerPosition.LEFT;
+      case 1:
+        return DraggerPosition.RIGHT;
+      case 3:
+        return DraggerPosition.BOTTOM;
+      case 2:
+      default:
+        return DraggerPosition.TOP;
+    }
+  }
+
 }

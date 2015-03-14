@@ -30,20 +30,15 @@ import com.nineoldandroids.view.ViewHelper;
 
 public class DraggerView extends FrameLayout {
 
-  //private static final float COLLAPSE = 0f;
-  //private static final float EXPAND = 1f;
-
   private static final int DELAY = 200;
-
-  private static final float SLIDE_OUT = 0f;
   private static final float SLIDE_IN = 1f;
 
   private static final int MAX_ALPHA = 1;
   private static final int MIN_ALPHA = 0;
 
-  private static final int DEFAULT_DRAG_POSITION = DraggerPosition.TOP.ordinal();
   private static final float SENSITIVITY = 1.0f;
   private static final float DEFAULT_DRAG_LIMIT = 0.5f;
+  private static final int DEFAULT_DRAG_POSITION = DraggerPosition.TOP.ordinal();
 
   private boolean canFinish = false;
   private float verticalDragRange;
@@ -55,18 +50,23 @@ public class DraggerView extends FrameLayout {
 
   private DraggerCallback draggerCallback;
   private DraggerHelperCallback dragHelperCallback;
-  private ViewDragHelper mDragHelper;
-  private View mDragView;
-  private View mShadowView;
+  private ViewDragHelper dragHelper;
+  private View dragView;
+  private View shadowView;
 
   private Handler handler = new Handler();
 
   public DraggerView(Context context) {
-    this(context, null);
+    super(context);
   }
 
   public DraggerView(Context context, AttributeSet attrs) {
     super(context, attrs);
+    initializeAttributes(attrs);
+  }
+
+  public DraggerView(Context context, AttributeSet attrs, int defStyle) {
+    super(context, attrs, defStyle);
     initializeAttributes(attrs);
   }
 
@@ -87,9 +87,9 @@ public class DraggerView extends FrameLayout {
     int measureHeight = MeasureSpec.makeMeasureSpec(
         getMeasuredHeight() - getPaddingTop() - getPaddingBottom(),
         MeasureSpec.EXACTLY);
-    if (mDragView != null) {
-      mDragView.measure(measureWidth, measureHeight);
-      setViewAlpha(mDragView, MIN_ALPHA);
+    if (dragView != null) {
+      dragView.measure(measureWidth, measureHeight);
+      setViewAlpha(dragView, MIN_ALPHA);
       closeActivity();
       expandWithDelay();
     }
@@ -104,19 +104,19 @@ public class DraggerView extends FrameLayout {
   @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
     final int action = MotionEventCompat.getActionMasked(ev);
     if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
-      mDragHelper.cancel();
+      dragHelper.cancel();
       return false;
     }
-    return mDragHelper.shouldInterceptTouchEvent(ev);
+    return dragHelper.shouldInterceptTouchEvent(ev);
   }
 
   @Override public boolean onTouchEvent(MotionEvent ev) {
-    mDragHelper.processTouchEvent(ev);
+    dragHelper.processTouchEvent(ev);
     return true;
   }
 
   @Override public void computeScroll() {
-    if (!isInEditMode() && mDragHelper.continueSettling(true)) {
+    if (!isInEditMode() && dragHelper.continueSettling(true)) {
       ViewCompat.postInvalidateOnAnimation(this);
     }
   }
@@ -158,28 +158,15 @@ public class DraggerView extends FrameLayout {
     TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.dragger_layout);
     this.dragLimit = attributes.getFloat(R.styleable.dragger_layout_drag_limit,
         DEFAULT_DRAG_LIMIT);
-    this.dragPosition = getDragPosition(attributes.getInt(R.styleable.dragger_layout_drag_position,
+    this.dragPosition = DraggerPosition.getDragPosition(attributes.getInt(
+        R.styleable.dragger_layout_drag_position,
         DEFAULT_DRAG_POSITION));
     this.attributes = attributes;
   }
 
-  private DraggerPosition getDragPosition(int position) {
-    switch (position) {
-      case 0:
-        return DraggerPosition.LEFT;
-      case 1:
-        return DraggerPosition.RIGHT;
-      case 3:
-        return DraggerPosition.BOTTOM;
-      case 2:
-      default:
-        return DraggerPosition.TOP;
-    }
-  }
-
   private void configDragViewHelper() {
-    dragHelperCallback = new DraggerHelperCallback(this, mDragView, dragPosition, draggerListener);
-    mDragHelper = ViewDragHelper.create(this, SENSITIVITY, dragHelperCallback);
+    dragHelperCallback = new DraggerHelperCallback(this, dragView, dragPosition, draggerListener);
+    dragHelper = ViewDragHelper.create(this, SENSITIVITY, dragHelperCallback);
   }
 
   public void setCallback(DraggerCallback draggerCallback) {
@@ -191,8 +178,8 @@ public class DraggerView extends FrameLayout {
         attributes.getResourceId(R.styleable.dragger_layout_drag_view_id, R.id.drag_view);
     int shadowViewId =
         attributes.getResourceId(R.styleable.dragger_layout_shadow_view_id, R.id.shadow_view);
-    mDragView = findViewById(dragViewId);
-    mShadowView = findViewById(shadowViewId);
+    dragView = findViewById(dragViewId);
+    shadowView = findViewById(shadowViewId);
   }
 
   boolean isDragViewAboveTheMiddle() {
@@ -200,21 +187,21 @@ public class DraggerView extends FrameLayout {
     float viewAxisPosition;
     switch (dragPosition) {
       case LEFT:
-        parentSize = mDragView.getWidth();
-        viewAxisPosition = -ViewHelper.getX(mDragView) + (parentSize * dragLimit);
+        parentSize = dragView.getWidth();
+        viewAxisPosition = -ViewHelper.getX(dragView) + (parentSize * dragLimit);
         break;
       case RIGHT:
-        parentSize = mDragView.getWidth();
-        viewAxisPosition = ViewHelper.getX(mDragView) + (parentSize * dragLimit);
+        parentSize = dragView.getWidth();
+        viewAxisPosition = ViewHelper.getX(dragView) + (parentSize * dragLimit);
         break;
       case TOP:
       default:
-        parentSize = mDragView.getHeight();
-        viewAxisPosition = ViewHelper.getY(mDragView) + (parentSize * dragLimit);
+        parentSize = dragView.getHeight();
+        viewAxisPosition = ViewHelper.getY(dragView) + (parentSize * dragLimit);
         break;
       case BOTTOM:
-        parentSize = mDragView.getHeight();
-        viewAxisPosition = -ViewHelper.getY(mDragView) + (parentSize * dragLimit);
+        parentSize = dragView.getHeight();
+        viewAxisPosition = -ViewHelper.getY(dragView) + (parentSize * dragLimit);
         break;
     }
     return parentSize < viewAxisPosition;
@@ -224,8 +211,8 @@ public class DraggerView extends FrameLayout {
     handler.postDelayed(new Runnable() {
       @Override public void run() {
         if (isEnabled()) {
-          setViewAlpha(mDragView, MAX_ALPHA);
-          mShadowView.setVisibility(VISIBLE);
+          setViewAlpha(dragView, MAX_ALPHA);
+          shadowView.setVisibility(VISIBLE);
           openActivity();
           canFinish = true;
         }
@@ -256,27 +243,27 @@ public class DraggerView extends FrameLayout {
   }
 
   public void moveToCenter() {
-    smoothSlideTo(mDragView, 0, 0);
+    smoothSlideTo(dragView, 0, 0);
     notifyOpen();
   }
 
   public void closeFromCenterToRight() {
-    smoothSlideTo(mDragView, (int) getHorizontalDragRange(), 0);
+    smoothSlideTo(dragView, (int) getHorizontalDragRange(), 0);
     notifyClosed();
   }
 
   public void closeFromCenterToLeft() {
-    smoothSlideTo(mDragView, (int) -getHorizontalDragRange(), 0);
+    smoothSlideTo(dragView, (int) -getHorizontalDragRange(), 0);
     notifyClosed();
   }
 
   public void closeFromCenterToTop() {
-    smoothSlideTo(mDragView, 0, (int) -getVerticalDragRange());
+    smoothSlideTo(dragView, 0, (int) -getVerticalDragRange());
     notifyClosed();
   }
 
   public void closeFromCenterToBottom() {
-    smoothSlideTo(mDragView, 0, (int) (SLIDE_IN * getVerticalDragRange()));
+    smoothSlideTo(dragView, 0, (int) (SLIDE_IN * getVerticalDragRange()));
     notifyClosed();
   }
 
@@ -292,12 +279,12 @@ public class DraggerView extends FrameLayout {
     }
   }
 
-  public void setViewAlpha(View view, float alpha) {
+  private void setViewAlpha(View view, float alpha) {
     ViewHelper.setAlpha(view, alpha);
   }
 
   private boolean smoothSlideTo(View view, int x, int y) {
-    if (mDragHelper.smoothSlideViewTo(view, x, y)) {
+    if (dragHelper.smoothSlideViewTo(view, x, y)) {
       ViewCompat.postInvalidateOnAnimation(this);
       return true;
     }
@@ -322,7 +309,7 @@ public class DraggerView extends FrameLayout {
     }
 
     @Override public void onViewPositionChanged(float dragValue) {
-      ViewHelper.setAlpha(mShadowView, MAX_ALPHA - dragValue);
+      ViewHelper.setAlpha(shadowView, MAX_ALPHA - dragValue);
     }
 
     @Override public float dragVerticalDragRange() {

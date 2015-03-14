@@ -38,4 +38,12 @@ public class DraggerActivity extends ActionBarActivity {
     draggerView.setDragPosition(dragPosition);
   }
 
+  public void setCallback(DraggerCallback draggerCallback) {
+    draggerView.setCallback(draggerCallback);
+  }
+
+  public void setDragLimit(float dragLimit) {
+    draggerView.setDragLimit(dragLimit);
+  }
+
 }
