@@ -41,7 +41,7 @@ public class DraggerView extends FrameLayout {
   private static final int MAX_ALPHA = 1;
   private static final int MIN_ALPHA = 0;
 
-  private static final int DEFAULT_DRAG_POSITION = DragPosition.TOP.ordinal();
+  private static final int DEFAULT_DRAG_POSITION = DraggerPosition.TOP.ordinal();
   private static final float SENSITIVITY = 1.0f;
   private static final float DEFAULT_DRAG_LIMIT = 0.5f;
 
@@ -51,10 +51,10 @@ public class DraggerView extends FrameLayout {
   private float dragLimit;
 
   private TypedArray attributes;
-  private DragPosition dragPosition;
+  private DraggerPosition dragPosition;
 
   private DraggerCallback draggerCallback;
-  private DragHelperCallback dragHelperCallback;
+  private DraggerHelperCallback dragHelperCallback;
   private ViewDragHelper mDragHelper;
   private View mDragView;
   private View mShadowView;
@@ -145,11 +145,11 @@ public class DraggerView extends FrameLayout {
     this.dragLimit = dragLimit;
   }
 
-  public DragPosition getDragPosition() {
+  public DraggerPosition getDragPosition() {
     return dragPosition;
   }
 
-  public void setDragPosition(DragPosition dragPosition) {
+  public void setDragPosition(DraggerPosition dragPosition) {
     this.dragPosition = dragPosition;
     dragHelperCallback.setDragPosition(dragPosition);
   }
@@ -163,22 +163,22 @@ public class DraggerView extends FrameLayout {
     this.attributes = attributes;
   }
 
-  private DragPosition getDragPosition(int position) {
+  private DraggerPosition getDragPosition(int position) {
     switch (position) {
       case 0:
-        return DragPosition.LEFT;
+        return DraggerPosition.LEFT;
       case 1:
-        return DragPosition.RIGHT;
+        return DraggerPosition.RIGHT;
       case 3:
-        return DragPosition.BOTTOM;
+        return DraggerPosition.BOTTOM;
       case 2:
       default:
-        return DragPosition.TOP;
+        return DraggerPosition.TOP;
     }
   }
 
   private void configDragViewHelper() {
-    dragHelperCallback = new DragHelperCallback(this, mDragView, dragPosition, draggerListener);
+    dragHelperCallback = new DraggerHelperCallback(this, mDragView, dragPosition, draggerListener);
     mDragHelper = ViewDragHelper.create(this, SENSITIVITY, dragHelperCallback);
   }
 

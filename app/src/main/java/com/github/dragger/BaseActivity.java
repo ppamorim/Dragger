@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import com.github.dragger.app.R;
-import com.github.library.DragPosition;
+import com.github.library.DraggerPosition;
 import com.github.library.DraggerView;
 
 public class BaseActivity extends ActionBarActivity {
@@ -40,19 +40,19 @@ public class BaseActivity extends ActionBarActivity {
   }
 
   @OnClick(R.id.left) void onLeftClick() {
-    startDraggerActivity(DragPosition.LEFT);
+    startDraggerActivity(DraggerPosition.LEFT);
   }
 
   @OnClick(R.id.right) void onRightClick() {
-    startDraggerActivity(DragPosition.RIGHT);
+    startDraggerActivity(DraggerPosition.RIGHT);
   }
 
   @OnClick(R.id.top) void onTopClick() {
-    startDraggerActivity(DragPosition.TOP);
+    startDraggerActivity(DraggerPosition.TOP);
   }
 
   @OnClick(R.id.bottom) void onBottomClick() {
-    startDraggerActivity(DragPosition.BOTTOM);
+    startDraggerActivity(DraggerPosition.BOTTOM);
   }
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +87,9 @@ public class BaseActivity extends ActionBarActivity {
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
   }
 
-  private void startDraggerActivity(DragPosition dragPosition) {
+  private void startDraggerActivity(DraggerPosition dragPosition) {
     Intent intent = new Intent(this, DraggerActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
     intent.putExtra(DraggerActivity.DRAG_POSITION, dragPosition);
     startActivity(intent);
   }

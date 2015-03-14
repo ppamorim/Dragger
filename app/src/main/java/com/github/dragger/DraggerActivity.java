@@ -23,7 +23,7 @@ import android.view.MenuItem;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.github.dragger.app.R;
-import com.github.library.DragPosition;
+import com.github.library.DraggerPosition;
 import com.github.library.DraggerView;
 
 public class DraggerActivity extends ActionBarActivity {
@@ -59,7 +59,7 @@ public class DraggerActivity extends ActionBarActivity {
   }
 
   private void configIntents() {
-    draggerView.setDragPosition((DragPosition) getIntent().getSerializableExtra(DRAG_POSITION));
+    draggerView.setDragPosition((DraggerPosition) getIntent().getSerializableExtra(DRAG_POSITION));
   }
 
   private void configResources() {
