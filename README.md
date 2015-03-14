@@ -10,6 +10,8 @@ This new component has been created using some concepts described on [Flavien La
 
 This library can works on API 8 (but not tested yet).
 
+![Demo 1][11]
+
 Usage
 -----
 
@@ -105,3 +107,4 @@ License
 [6]: https://github.com/JakeWharton/NineOldAndroids/
 [7]: https://github.com/square/picasso
 [10]: ./art/dragger.png
+[11]: http://i.imgur.com/goPWgq1.gif
