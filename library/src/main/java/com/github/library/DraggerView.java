@@ -87,7 +87,7 @@ public class DraggerView extends FrameLayout {
     int measureHeight = MeasureSpec.makeMeasureSpec(
         getMeasuredHeight() - getPaddingTop() - getPaddingBottom(),
         MeasureSpec.EXACTLY);
-    if(mDragView != null) {
+    if (mDragView != null) {
       mDragView.measure(measureWidth, measureHeight);
       setViewAlpha(mDragView, MIN_ALPHA);
       closeActivity();
@@ -223,7 +223,7 @@ public class DraggerView extends FrameLayout {
   public void expandWithDelay() {
     handler.postDelayed(new Runnable() {
       @Override public void run() {
-        if(isEnabled()) {
+        if (isEnabled()) {
           setViewAlpha(mDragView, MAX_ALPHA);
           mShadowView.setVisibility(VISIBLE);
           openActivity();
@@ -271,23 +271,23 @@ public class DraggerView extends FrameLayout {
   }
 
   public void closeFromCenterToTop() {
-    smoothSlideTo(mDragView, 0,(int) -getVerticalDragRange());
+    smoothSlideTo(mDragView, 0, (int) -getVerticalDragRange());
     notifyClosed();
   }
 
   public void closeFromCenterToBottom() {
-    smoothSlideTo(mDragView, 0,(int) (SLIDE_IN * getVerticalDragRange()));
+    smoothSlideTo(mDragView, 0, (int) (SLIDE_IN * getVerticalDragRange()));
     notifyClosed();
   }
 
   private void notifyOpen() {
-    if(draggerCallback != null) {
+    if (draggerCallback != null) {
       draggerCallback.notifyOpen();
     }
   }
 
   private void notifyClosed() {
-    if(draggerCallback != null) {
+    if (draggerCallback != null) {
       draggerCallback.notifyClose();
     }
   }
@@ -305,7 +305,7 @@ public class DraggerView extends FrameLayout {
   }
 
   private void finish() {
-    if(canFinish) {
+    if (canFinish) {
       Context context = getContext();
       if (context instanceof Activity) {
         Activity activity = (Activity) context;

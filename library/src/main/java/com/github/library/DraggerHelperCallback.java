@@ -55,13 +55,13 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
 
     switch (dragPosition) {
       case RIGHT:
-        if(left > 0) {
+        if (left > 0) {
           leftBound = draggerView.getPaddingLeft();
           rightBound = (int) draggerListener.dragHorizontalDragRange();
         }
         break;
       case LEFT:
-        if(left < 0) {
+        if (left < 0) {
           leftBound = (int) -draggerListener.dragHorizontalDragRange();
           rightBound = draggerView.getPaddingLeft();
         }
@@ -80,13 +80,13 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
     switch (dragPosition) {
       case TOP:
       default:
-        if(top > 0) {
+        if (top > 0) {
           topBound = draggerView.getPaddingTop();
           bottomBound = (int) draggerListener.dragVerticalDragRange();
         }
         break;
       case BOTTOM:
-        if(top < 0) {
+        if (top < 0) {
           topBound = (int) -draggerListener.dragVerticalDragRange();
           bottomBound = draggerView.getPaddingTop();
         }
@@ -105,7 +105,7 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
   }
 
   @Override public void onViewDragStateChanged(int state) {
-    if(state == dragState) {
+    if (state == dragState) {
       return;
     }
     if ((dragState == ViewDragHelper.STATE_DRAGGING
@@ -114,14 +114,14 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
       switch (dragPosition) {
         case LEFT:
         case RIGHT:
-          if(dragOffset == draggerListener.dragHorizontalDragRange()) {
+          if (dragOffset == draggerListener.dragHorizontalDragRange()) {
             draggerListener.finishActivity();
           }
           break;
         default:
         case TOP:
         case BOTTOM:
-          if(dragOffset == draggerListener.dragVerticalDragRange()) {
+          if (dragOffset == draggerListener.dragVerticalDragRange()) {
             draggerListener.finishActivity();
           }
           break;
