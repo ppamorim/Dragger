@@ -1,6 +1,7 @@
 ![Logo 1][10]
 
 [![Build Status](https://api.travis-ci.org/ppamorim/Dragger.svg?branch=master)](https://travis-ci.org/ppamorim/Dragger)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.dragger/dragger/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.dragger/dragger)
 
 The library was created in order to provide new animations for activities on Android.
 Using the ViewDragHelper class, it was possible to create smooth animations and that's allow a full controls of the view for user.
