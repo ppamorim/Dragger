@@ -15,6 +15,8 @@ This library can works on API 8 (but not tested yet).
 Usage
 -----
 
+[![Join the chat at https://gitter.im/ppamorim/Dragger](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ppamorim/Dragger?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 You can use this library like a view, you need just do it:
 
 * 1. Add ''DraggerView'' view on your root layout and add two layouts inside this.
