@@ -26,6 +26,13 @@
         android:layout_height="56dp"
         android:background="@color/accent"/>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:padding="16dp"
+        android:src="@mipmap/dragger"/>
+
   </LinearLayout>
 
 </com.github.library.DraggerView>

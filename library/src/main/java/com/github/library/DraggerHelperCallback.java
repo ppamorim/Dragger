@@ -79,7 +79,6 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
 
     switch (dragPosition) {
       case TOP:
-      default:
         if (top > 0) {
           topBound = draggerView.getPaddingTop();
           bottomBound = (int) draggerListener.dragVerticalDragRange();
@@ -90,6 +89,8 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
           topBound = (int) -draggerListener.dragVerticalDragRange();
           bottomBound = draggerView.getPaddingTop();
         }
+        break;
+      default:
         break;
     }
 

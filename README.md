@@ -36,10 +36,7 @@ You can add a shadow view if you want(the first one) and it need to be invisible
       <LinearLayout
           android:id="@+id/drag_view"
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:background="@color/black_grey"
-          android:gravity="center_horizontal"
-          android:orientation="vertical"/>
+          android:layout_height="match_parent"/>
 
 </com.github.library.DraggerView>
 ```
