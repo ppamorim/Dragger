@@ -49,8 +49,9 @@ public class DraggerActivity extends ActionBarActivity {
       case android.R.id.home:
         onBackPressed();
         return true;
+      default:
+        return super.onOptionsItemSelected(item);
     }
-    return super.onOptionsItemSelected(item);
   }
 
   @Override public void onBackPressed() {
