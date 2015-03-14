@@ -37,39 +37,62 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
     this.draggerListener = draggerListener;
   }
 
+  public DraggerPosition getDragPosition() {
+    return dragPosition;
+  }
+
+  public void setDragPosition(DraggerPosition dragPosition) {
+    this.dragPosition = dragPosition;
+  }
+
   @Override public boolean tryCaptureView(View child, int pointerId) {
     return child.equals(dragView);
   }
 
   @Override public int clampViewPositionHorizontal(View child, int left, int dx) {
-    final int leftBound;
-    final int rightBound;
-    if(dragPosition == DraggerPosition.RIGHT && left > 0) {
-      leftBound = draggerView.getPaddingLeft();
-      rightBound = (int) draggerListener.dragHorizontalDragRange();
-    } else if(dragPosition == DraggerPosition.LEFT && left < 0) {
-      leftBound = (int) -draggerListener.dragHorizontalDragRange();
-      rightBound = draggerView.getPaddingLeft();
-    } else {
-      leftBound = 0;
-      rightBound = 0;
+    int leftBound = 0;
+    int rightBound = 0;
+
+    switch (dragPosition) {
+      case RIGHT:
+        if(left > 0) {
+          leftBound = draggerView.getPaddingLeft();
+          rightBound = (int) draggerListener.dragHorizontalDragRange();
+        }
+        break;
+      case LEFT:
+        if(left < 0) {
+          leftBound = (int) -draggerListener.dragHorizontalDragRange();
+          rightBound = draggerView.getPaddingLeft();
+        }
+        break;
+      default:
+        break;
     }
+
     return Math.min(Math.max(left, leftBound), rightBound);
   }
 
   @Override public int clampViewPositionVertical(View child, int top, int dy) {
-    final int topBound;
-    final int bottomBound;
-    if(dragPosition == DraggerPosition.TOP && top > 0) {
-      topBound = draggerView.getPaddingTop();
-      bottomBound = (int) draggerListener.dragVerticalDragRange();
-    } else if(dragPosition == DraggerPosition.BOTTOM && top < 0) {
-      topBound = (int) -draggerListener.dragVerticalDragRange();
-      bottomBound = draggerView.getPaddingTop();
-    } else {
-      topBound = 0;
-      bottomBound = 0;
+    int topBound = 0;
+    int bottomBound = 0;
+
+    switch (dragPosition) {
+      case TOP:
+      default:
+        if(top > 0) {
+          topBound = draggerView.getPaddingTop();
+          bottomBound = (int) draggerListener.dragVerticalDragRange();
+        }
+        break;
+      case BOTTOM:
+        if(top < 0) {
+          topBound = (int) -draggerListener.dragVerticalDragRange();
+          bottomBound = draggerView.getPaddingTop();
+        }
+        break;
     }
+
     return Math.min(Math.max(top, topBound), bottomBound);
   }
 
@@ -110,11 +133,18 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
   @Override public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
     super.onViewPositionChanged(changedView, left, top, dx, dy);
 
-    if(dragPosition == DraggerPosition.TOP || dragPosition == DraggerPosition.BOTTOM) {
-      dragOffset = Math.abs(top);
-    } else {
-      dragOffset = Math.abs(left);
+    switch (dragPosition) {
+      case TOP:
+      case BOTTOM:
+        dragOffset = Math.abs(top);
+        break;
+      case LEFT:
+      case RIGHT:
+      default:
+        dragOffset = Math.abs(left);
+        break;
     }
+
     float fractionScreen = (float) dragOffset / draggerListener.dragVerticalDragRange();
     if (fractionScreen >= 1) {
       fractionScreen = 1;
@@ -157,14 +187,6 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
         }
         break;
     }
-  }
-
-  public DraggerPosition getDragPosition() {
-    return dragPosition;
-  }
-
-  public void setDragPosition(DraggerPosition dragPosition) {
-    this.dragPosition = dragPosition;
   }
 
 }
