@@ -43,6 +43,26 @@ You can add a shadow view if you want(the first one) and it need to be invisible
 </com.github.library.DraggerView>
 ```
 
+In your ''styles'' file, you need config like this:
+
+```xml
+<style name="YourTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="android:windowIsTranslucent">true</item>
+      <item name="android:windowBackground">@android:color/transparent</item>
+      <item name="android:windowNoTitle">true</item>
+      <item name="windowActionBar">false</item>
+      <item name="android:windowAnimationStyle">@null</item>
+</style>
+```
+
+And your ''manifest'':
+
+```xml
+<activity
+    android:name="com.github.dragger.BaseActivity"
+    android:theme="@style/YourTheme"/>
+```
+
 Import dependency
 --------------------------------
 

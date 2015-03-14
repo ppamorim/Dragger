@@ -10,7 +10,8 @@
 
         <activity
             android:name="com.github.dragger.BaseActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:theme="@style/AppThemeNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
