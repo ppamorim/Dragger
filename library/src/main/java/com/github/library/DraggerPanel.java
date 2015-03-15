@@ -87,7 +87,7 @@ public class DraggerPanel extends FrameLayout {
   }
 
   private void eraseViewIfNeeded(FrameLayout frameLayout) {
-    if(frameLayout.getChildCount() > 0) {
+    if (frameLayout.getChildCount() > 0) {
       frameLayout.removeAllViews();
     }
   }
