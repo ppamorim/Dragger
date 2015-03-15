@@ -28,6 +28,13 @@ import android.view.View;
 import android.widget.FrameLayout;
 import com.nineoldandroids.view.ViewHelper;
 
+/**
+ * Class created to extends a FrameLayout, that's a root of the view
+ * It contains a dragView(the content) and a shadowView(for dim)
+ * You must add this elements, otherwise
+ *
+ * @author Pedro Paulo de Amorim
+ */
 public class DraggerView extends FrameLayout {
 
   private static final int DELAY = 200;
@@ -38,9 +45,11 @@ public class DraggerView extends FrameLayout {
 
   private static final float SENSITIVITY = 1.0f;
   private static final float DEFAULT_DRAG_LIMIT = 0.5f;
-  private static final int DEFAULT_DRAG_POSITION = DraggerPosition.TOP.ordinal();
+  private static final int DEFAULT_DRAG_POSITION = DraggerPosition.TOP.getPosition();
+  private static final int INVALID_POINTER = -1;
 
   private boolean canFinish = false;
+  private int activePointerId = INVALID_POINTER;
   private float verticalDragRange;
   private float horizontalDragRange;
   private float dragLimit;
@@ -102,17 +111,38 @@ public class DraggerView extends FrameLayout {
   }
 
   @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
-    final int action = MotionEventCompat.getActionMasked(ev);
-    if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
-      dragHelper.cancel();
+    if (!isEnabled()) {
       return false;
     }
-    return dragHelper.shouldInterceptTouchEvent(ev);
+    final int action = MotionEventCompat.getActionMasked(ev);
+    switch (action) {
+      case MotionEvent.ACTION_CANCEL:
+      case MotionEvent.ACTION_UP:
+        dragHelper.cancel();
+        return false;
+      case MotionEvent.ACTION_DOWN:
+        int index = MotionEventCompat.getActionIndex(ev);
+        activePointerId = MotionEventCompat.getPointerId(ev, index);
+        if (activePointerId == INVALID_POINTER) {
+          return false;
+        }
+      default:
+        return dragHelper.shouldInterceptTouchEvent(ev);
+    }
   }
 
   @Override public boolean onTouchEvent(MotionEvent ev) {
+    int actionMasked = MotionEventCompat.getActionMasked(ev);
+    if ((actionMasked & MotionEventCompat.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
+      activePointerId = MotionEventCompat.getPointerId(ev, actionMasked);
+    }
+    if (activePointerId == INVALID_POINTER) {
+      return false;
+    }
     dragHelper.processTouchEvent(ev);
-    return true;
+    boolean isDragViewHit = isViewHit(dragView, (int) ev.getX(), (int) ev.getY());
+    boolean isSecondViewHit = isViewHit(shadowView, (int) ev.getX(), (int) ev.getY());
+    return isDragViewHit || isSecondViewHit;
   }
 
   @Override public void computeScroll() {
@@ -158,9 +188,8 @@ public class DraggerView extends FrameLayout {
     TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.dragger_layout);
     this.dragLimit = attributes.getFloat(R.styleable.dragger_layout_drag_limit,
         DEFAULT_DRAG_LIMIT);
-    this.dragPosition = DraggerPosition.getDragPosition(attributes.getInt(
-        R.styleable.dragger_layout_drag_position,
-        DEFAULT_DRAG_POSITION));
+    this.dragPosition = DraggerPosition.getDragPosition(
+        attributes.getInt(R.styleable.dragger_layout_drag_position, DEFAULT_DRAG_POSITION));
     this.attributes = attributes;
   }
 
@@ -174,12 +203,29 @@ public class DraggerView extends FrameLayout {
   }
 
   private void mapGUI(TypedArray attributes) {
-    int dragViewId =
-        attributes.getResourceId(R.styleable.dragger_layout_drag_view_id, R.id.drag_view);
-    int shadowViewId =
-        attributes.getResourceId(R.styleable.dragger_layout_shadow_view_id, R.id.shadow_view);
-    dragView = findViewById(dragViewId);
-    shadowView = findViewById(shadowViewId);
+    if(getChildCount() == 2) {
+      int dragViewId = attributes.getResourceId(
+          R.styleable.dragger_layout_drag_view_id, R.id.drag_view);
+      int shadowViewId = attributes.getResourceId(
+          R.styleable.dragger_layout_shadow_view_id, R.id.shadow_view);
+      dragView = findViewById(dragViewId);
+      shadowView = findViewById(shadowViewId);
+    } else {
+      throw new IllegalStateException("DraggerView must contains only two direct child");
+    }
+  }
+
+  private boolean isViewHit(View view, int x, int y) {
+    int[] viewLocation = new int[2];
+    view.getLocationOnScreen(viewLocation);
+    int[] parentLocation = new int[2];
+    this.getLocationOnScreen(parentLocation);
+    int screenX = parentLocation[0] + x;
+    int screenY = parentLocation[1] + y;
+    return screenX >= viewLocation[0]
+        && screenX < viewLocation[0] + view.getWidth()
+        && screenY >= viewLocation[1]
+        && screenY < viewLocation[1] + view.getHeight();
   }
 
   boolean isDragViewAboveTheMiddle() {
@@ -296,8 +342,10 @@ public class DraggerView extends FrameLayout {
       Context context = getContext();
       if (context instanceof Activity) {
         Activity activity = (Activity) context;
-        activity.overridePendingTransition(0, android.R.anim.fade_out);
-        activity.finish();
+        if(!activity.isFinishing()) {
+          activity.overridePendingTransition(0, android.R.anim.fade_out);
+          activity.finish();
+        }
       }
     }
   }

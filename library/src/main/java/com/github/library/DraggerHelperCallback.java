@@ -52,7 +52,6 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
   @Override public int clampViewPositionHorizontal(View child, int left, int dx) {
     int leftBound = 0;
     int rightBound = 0;
-
     switch (dragPosition) {
       case RIGHT:
         if (left > 0) {
@@ -69,14 +68,12 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
       default:
         break;
     }
-
     return Math.min(Math.max(left, leftBound), rightBound);
   }
 
   @Override public int clampViewPositionVertical(View child, int top, int dy) {
     int topBound = 0;
     int bottomBound = 0;
-
     switch (dragPosition) {
       case TOP:
         if (top > 0) {
@@ -93,7 +90,6 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
       default:
         break;
     }
-
     return Math.min(Math.max(top, topBound), bottomBound);
   }
 
@@ -133,20 +129,20 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
 
   @Override public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
     super.onViewPositionChanged(changedView, left, top, dx, dy);
-
+    float fractionScreen;
     switch (dragPosition) {
       case TOP:
       case BOTTOM:
         dragOffset = Math.abs(top);
+        fractionScreen = (float) dragOffset / draggerListener.dragVerticalDragRange();
         break;
       case LEFT:
       case RIGHT:
       default:
         dragOffset = Math.abs(left);
+        fractionScreen = (float) dragOffset / draggerListener.dragHorizontalDragRange();
         break;
     }
-
-    float fractionScreen = (float) dragOffset / draggerListener.dragVerticalDragRange();
     if (fractionScreen >= 1) {
       fractionScreen = 1;
     }

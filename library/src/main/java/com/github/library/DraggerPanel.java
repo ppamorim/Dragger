@@ -37,19 +37,16 @@ public class DraggerPanel extends FrameLayout {
 
   public DraggerPanel(Context context) {
     super(context);
-    initializeView();
   }
 
   public DraggerPanel(Context context, AttributeSet attrs) {
     super(context, attrs);
     initializeAttributes(attrs);
-    initializeView();
   }
 
   public DraggerPanel(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
     initializeAttributes(attrs);
-    initializeView();
   }
 
   public void setDragLimit(float dragLimit) {
@@ -74,17 +71,25 @@ public class DraggerPanel extends FrameLayout {
    */
   public void initializeView() {
     inflate(getContext(), R.layout.dragger_panel, this);
-    draggerView = (DraggerView) findViewById(R.id.dragger_panel);
+    draggerView = (DraggerView) findViewById(R.id.dragger_view);
     dragView = (FrameLayout) findViewById(R.id.drag_view);
     shadowView = (FrameLayout) findViewById(R.id.shadow_view);
   }
 
   public void addViewOnDrag(View view) {
+    eraseViewIfNeeded(dragView);
     dragView.addView(view);
   }
 
   public void addViewOnShadow(View view) {
+    eraseViewIfNeeded(shadowView);
     shadowView.addView(view);
+  }
+
+  private void eraseViewIfNeeded(FrameLayout frameLayout) {
+    if(frameLayout.getChildCount() > 0) {
+      frameLayout.removeAllViews();
+    }
   }
 
 }

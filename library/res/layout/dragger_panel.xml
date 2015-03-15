@@ -1,6 +1,7 @@
-<com.ppamorim.library.DraggerView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<com.github.library.DraggerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:swipe_back_layout="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/dragger_panel"
+    android:id="@+id/dragger_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     swipe_back_layout:shadow_view_id="@+id/shadow_view"
@@ -9,11 +10,12 @@
   <FrameLayout
       android:id="@+id/shadow_view"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"/>
+      android:layout_height="match_parent"
+      android:visibility="invisible"/>
 
   <FrameLayout
       android:id="@+id/drag_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"/>
 
-</com.ppamorim.library.DraggerView>
+</com.github.library.DraggerView>

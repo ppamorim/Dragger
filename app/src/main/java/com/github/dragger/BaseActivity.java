@@ -56,7 +56,7 @@ public class BaseActivity extends ActionBarActivity {
   }
 
   @OnClick(R.id.panel) void onPanelClick() {
-
+    startActivity(new Intent(this, PanelActivity.class));
   }
 
   @Override protected void onCreate(Bundle savedInstanceState) {
