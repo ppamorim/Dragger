@@ -203,7 +203,7 @@ public class DraggerView extends FrameLayout {
   }
 
   private void mapGUI(TypedArray attributes) {
-    if(getChildCount() == 2) {
+    if (getChildCount() == 2) {
       int dragViewId = attributes.getResourceId(
           R.styleable.dragger_layout_drag_view_id, R.id.drag_view);
       int shadowViewId = attributes.getResourceId(
@@ -342,7 +342,7 @@ public class DraggerView extends FrameLayout {
       Context context = getContext();
       if (context instanceof Activity) {
         Activity activity = (Activity) context;
-        if(!activity.isFinishing()) {
+        if (!activity.isFinishing()) {
           activity.overridePendingTransition(0, android.R.anim.fade_out);
           activity.finish();
         }
