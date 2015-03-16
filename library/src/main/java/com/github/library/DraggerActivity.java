@@ -30,7 +30,7 @@ public class DraggerActivity extends ActionBarActivity {
     super.setContentView(draggerPanel);
   }
 
-  public void setShadowResID(int shadowResID) {
+  public void setShadowView(int shadowResID) {
     this.shadowResID = shadowResID;
   }
 
