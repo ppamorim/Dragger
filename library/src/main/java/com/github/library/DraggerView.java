@@ -171,7 +171,7 @@ public class DraggerView extends FrameLayout {
     return dragLimit;
   }
 
-  public void setDragLimit(float dragLimit) {
+  public void setDraggerLimit(float dragLimit) {
     this.dragLimit = dragLimit;
   }
 
@@ -179,7 +179,7 @@ public class DraggerView extends FrameLayout {
     return dragPosition;
   }
 
-  public void setDragPosition(DraggerPosition dragPosition) {
+  public void setDraggerPosition(DraggerPosition dragPosition) {
     this.dragPosition = dragPosition;
     dragHelperCallback.setDragPosition(dragPosition);
   }
@@ -198,7 +198,7 @@ public class DraggerView extends FrameLayout {
     dragHelper = ViewDragHelper.create(this, SENSITIVITY, dragHelperCallback);
   }
 
-  public void setCallback(DraggerCallback draggerCallback) {
+  public void setDraggerCallback(DraggerCallback draggerCallback) {
     this.draggerCallback = draggerCallback;
   }
 

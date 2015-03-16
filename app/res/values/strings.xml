@@ -7,4 +7,5 @@
   <string name="open_top">Open top</string>
   <string name="open_bottom">Open bottom</string>
   <string name="open_panel">Open panel</string>
+  <string name="open_activity">Open activity</string>
 </resources>

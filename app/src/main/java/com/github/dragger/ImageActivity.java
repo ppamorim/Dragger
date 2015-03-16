@@ -15,7 +15,6 @@
 */
 package com.github.dragger;
 
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -23,52 +22,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 import com.github.dragger.app.R;
 import com.github.library.DraggerPosition;
 import com.github.library.DraggerView;
 
-public class BaseActivity extends ActionBarActivity {
+public class ImageActivity extends ActionBarActivity {
+
+  public static final String DRAG_POSITION = "drag_position";
 
   private Resources mResources;
 
   @InjectView(R.id.toolbar) Toolbar toolbar;
   @InjectView(R.id.dragger_view) DraggerView draggerView;
 
-  @OnClick(R.id.menu) void onMenuClick() {
-    startActivity(new Intent(this, BaseActivity.class));
-  }
-
-  @OnClick(R.id.left) void onLeftClick() {
-    startDraggerActivity(DraggerPosition.LEFT);
-  }
-
-  @OnClick(R.id.right) void onRightClick() {
-    startDraggerActivity(DraggerPosition.RIGHT);
-  }
-
-  @OnClick(R.id.top) void onTopClick() {
-    startDraggerActivity(DraggerPosition.TOP);
-  }
-
-  @OnClick(R.id.bottom) void onBottomClick() {
-    startDraggerActivity(DraggerPosition.BOTTOM);
-  }
-
-  @OnClick(R.id.panel) void onPanelClick() {
-    startActivity(new Intent(this, PanelActivity.class));
-  }
-
-  @OnClick(R.id.activity) void onActivityClick() {
-    startActivity(new Intent(this, DraggingActivity.class));
-  }
-
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_base);
+    setContentView(R.layout.activity_dragger);
     ButterKnife.inject(this);
     configResources();
     configToolbar();
+    configIntents();
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -82,7 +55,12 @@ public class BaseActivity extends ActionBarActivity {
   }
 
   @Override public void onBackPressed() {
-    draggerView.closeFromCenterToBottom();
+    draggerView.closeActivity();
+  }
+
+  private void configIntents() {
+    draggerView.setDraggerPosition(
+        (DraggerPosition) getIntent().getSerializableExtra(DRAG_POSITION));
   }
 
   private void configResources() {
@@ -93,13 +71,6 @@ public class BaseActivity extends ActionBarActivity {
     setSupportActionBar(toolbar);
     toolbar.setTitle(mResources.getString(R.string.app_name));
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-  }
-
-  private void startDraggerActivity(DraggerPosition dragPosition) {
-    Intent intent = new Intent(this, ImageActivity.class);
-    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-    intent.putExtra(ImageActivity.DRAG_POSITION, dragPosition);
-    startActivity(intent);
   }
 
 }

@@ -21,29 +21,46 @@ import android.view.View;
 
 public class DraggerActivity extends ActionBarActivity {
 
-  private DraggerView draggerView;
+  private int shadowResID = -1;
+  private DraggerPanel draggerPanel;
 
   @Override public void setContentView(int layoutResID) {
     configDraggerView();
-    View view = LayoutInflater.from(this).inflate(layoutResID, null);
-    draggerView.addView(view);
-    super.setContentView(draggerView);
+    configViews(layoutResID);
+    super.setContentView(draggerPanel);
+  }
+
+  public void setShadowResID(int shadowResID) {
+    this.shadowResID = shadowResID;
   }
 
   private void configDraggerView() {
-    draggerView = new DraggerView(this);
+    draggerPanel = new DraggerPanel(this);
+    draggerPanel.initializeView();
   }
 
-  public void setDragPosition(DraggerPosition dragPosition) {
-    draggerView.setDragPosition(dragPosition);
+  private void configViews(int layoutResID) {
+    draggerPanel.addViewOnDrag(inflateLayout(layoutResID));
+    if(shadowResID == -1) {
+      shadowResID = R.layout.layout_shadow;
+    }
+    draggerPanel.addViewOnShadow(inflateLayout(shadowResID));
   }
 
-  public void setCallback(DraggerCallback draggerCallback) {
-    draggerView.setCallback(draggerCallback);
+  private View inflateLayout(int layoutResID) {
+    return LayoutInflater.from(this).inflate(layoutResID, null);
   }
 
-  public void setDragLimit(float dragLimit) {
-    draggerView.setDragLimit(dragLimit);
+  public void setDraggerPosition(DraggerPosition dragPosition) {
+    draggerPanel.setDraggerPosition(dragPosition);
+  }
+
+  public void setDraggerLimit(float dragLimit) {
+    draggerPanel.setDraggerLimit(dragLimit);
+  }
+
+  public void setDraggerCallback(DraggerCallback draggerCallback) {
+    draggerPanel.setDraggerCallback(draggerCallback);
   }
 
 }

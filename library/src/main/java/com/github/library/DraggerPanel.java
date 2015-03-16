@@ -49,12 +49,16 @@ public class DraggerPanel extends FrameLayout {
     initializeAttributes(attrs);
   }
 
-  public void setDragLimit(float dragLimit) {
-    draggerView.setDragLimit(dragLimit);
+  public void setDraggerLimit(float draggerLimit) {
+    draggerView.setDraggerLimit(draggerLimit);
   }
 
-  public void setDragPosition(DraggerPosition dragPosition) {
-    draggerView.setDragPosition(dragPosition);
+  public void setDraggerPosition(DraggerPosition dragPosition) {
+    draggerView.setDraggerPosition(dragPosition);
+  }
+
+  public void setDraggerCallback(DraggerCallback draggerCallback) {
+    draggerView.setDraggerCallback(draggerCallback);
   }
 
   private void initializeAttributes(AttributeSet attrs) {

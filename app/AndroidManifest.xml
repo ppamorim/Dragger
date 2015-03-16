@@ -19,8 +19,9 @@
             </intent-filter>
         </activity>
 
-      <activity android:name="com.github.dragger.DraggerActivity"/>
+      <activity android:name="com.github.dragger.ImageActivity"/>
       <activity android:name="com.github.dragger.PanelActivity"/>
+      <activity android:name="com.github.dragger.DraggingActivity"/>
 
     </application>
 
