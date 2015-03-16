@@ -41,7 +41,7 @@ public class DraggerActivity extends ActionBarActivity {
 
   private void configViews(int layoutResID) {
     draggerPanel.addViewOnDrag(inflateLayout(layoutResID));
-    if(shadowResID == -1) {
+    if (shadowResID == -1) {
       shadowResID = R.layout.layout_shadow;
     }
     draggerPanel.addViewOnShadow(inflateLayout(shadowResID));
