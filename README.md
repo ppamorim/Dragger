@@ -68,15 +68,14 @@ And your ''manifest'':
 Or, if you need to be fast:
 
 ```java
-    public class YourActivity extends DraggerActivity {
+public class YourActivity extends DraggerActivity {
 
-      @Override public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setShadowView(R.layout.custom_shadow); //No necessary, use if you want.
-        setContentView(R.layout.layout_content);
-      }
+  @Override public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setShadowView(R.layout.custom_shadow); //No necessary, use if you want.
+    setContentView(R.layout.layout_content);
+  }
 
-    }
 }
 ```
 
