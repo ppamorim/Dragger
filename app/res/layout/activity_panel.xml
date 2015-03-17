@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-  <com.github.library.DraggerPanel
+  <com.github.ppamorim.library.DraggerPanel
       android:id="@+id/dragger_panel"
       android:layout_width="match_parent"
       android:layout_height="match_parent"/>
