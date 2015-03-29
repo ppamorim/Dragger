@@ -82,11 +82,19 @@ Import dependency
 
 This library uses nineoldandroids:2.4.0 and appcompat-v7:21.0.3, you have to provide this dependencies from your local artifact repository or from maven central repository.
 
-Or into your build.gradle
+I'll release a day on MavenCentral, I haven't much time and had to deploy on jitPack
+Into your build.gradle:
 
 ```groovy
+
+repositories {
+  maven {
+    url "https://jitpack.io"
+  }
+}
+
 dependencies {
-    waiting sonatype...
+  compile 'com.github.ppamorim:Dragger:2324e5f2a5'
 }
 ```
 
