@@ -6,7 +6,7 @@
 [![Join the chat at https://gitter.im/ppamorim/Dragger](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ppamorim/Dragger?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 The library was created in order to provide new animations for activities on Android.
-Using the ViewDragHelper class, it is possible to create smooth animations that allow full control of the view by user.
+Using the ViewDragHelper class, it is possible to create smooth animations that allow full control of the view by the user.
 
 This new component has been created using some concepts described on [Flavien Laurent Blog][1] and [Denevell Blog][2].
 
@@ -18,7 +18,7 @@ Usage
 -----
 
 
-You can use this library like a view, you need just do the following:
+You can use this library like a view, you just need to do the following:
 
 * 1. Add ''DraggerView'' view to your root layout and add two layouts inside it.
 You can add a shadow view if you want (the first one) and it neesd to be invisible.
