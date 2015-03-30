@@ -21,7 +21,7 @@ Usage
 You can use this library like a view, you just need to do the following:
 
 * 1. Add ''DraggerView'' view to your root layout and add two layouts inside it.
-You can add a shadow view if you want (the first one) and it neesd to be invisible.
+You can add a shadow view if you want (the first one) and it needs to be invisible.
 
 ```xml
 <com.github.library.DraggerView
