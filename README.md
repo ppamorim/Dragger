@@ -91,7 +91,9 @@ Import dependency
 
 This library uses nineoldandroids:2.4.0 and appcompat-v7:21.0.3, you have to provide these dependencies from your local artifact repository or from maven central repository.
 
-One day I will release on MavenCentral, I haven't much time and had to deploy on jitPack
+But why not add in MavenCentral?
+Because I want this thing (MavenCentral) burn in da HELL!
+JitPack is there and is the future !
 
 Into your build.gradle:
 
@@ -132,7 +134,6 @@ Libraries used on the sample project
 
 * [Butterknife][5]
 * [NineOldAndroids][6]
-* [Picasso][7]
 
 License
 -------
