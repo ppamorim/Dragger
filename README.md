@@ -114,6 +114,7 @@ Contributors
 ------------
 
 * [Pedro Paulo de Amorim][3]
+* [Falkirks][12]
 
 This was only possible because [Pedro Vicente Gómez Sánchez][4] helped me and I am very grateful for that! Thank you. :)
 
@@ -161,3 +162,4 @@ License
 [7]: https://github.com/square/picasso
 [10]: ./art/dragger.png
 [11]: http://i.imgur.com/goPWgq1.gif
+[12]: https://github.com/Falkirks
