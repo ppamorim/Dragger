@@ -93,7 +93,8 @@ This library uses nineoldandroids:2.4.0 and appcompat-v7:21.0.3, you have to pro
 
 But why not add in MavenCentral?
 Because I want this thing (MavenCentral) burn in da HELL!
-JitPack is there and is the future !
+
+JitPack is there and is the future!
 
 Into your build.gradle:
 
