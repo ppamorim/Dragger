@@ -25,7 +25,9 @@ import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import com.nineoldandroids.view.ViewHelper;
 
 /**
@@ -49,6 +51,7 @@ public class DraggerView extends FrameLayout {
   private static final int INVALID_POINTER = -1;
 
   private boolean canFinish = false;
+  private boolean canSlide = true;
   private int activePointerId = INVALID_POINTER;
   private float verticalDragRange;
   private float horizontalDragRange;
@@ -111,7 +114,7 @@ public class DraggerView extends FrameLayout {
   }
 
   @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
-    if (!isEnabled()) {
+    if (!isEnabled() || isListOnTop()) {
       return false;
     }
     final int action = MotionEventCompat.getActionMasked(ev);
@@ -165,6 +168,82 @@ public class DraggerView extends FrameLayout {
 
   private void setHorizontalDragRange(float horizontalDragRange) {
     this.horizontalDragRange = horizontalDragRange;
+  }
+
+  public void setListViewPosition(final ListView listView) {
+    listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+      @Override public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+      }
+
+      @Override public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
+          int totalItemCount) {
+
+        switch (dragPosition) {
+          case LEFT:
+            //parentSize = dragView.getWidth();
+            //viewAxisPosition = -ViewHelper.getX(dragView) + (parentSize * dragLimit);
+            break;
+          case RIGHT:
+            //parentSize = dragView.getWidth();
+            //viewAxisPosition = ViewHelper.getX(dragView) + (parentSize * dragLimit);
+            break;
+          case TOP:
+          default:
+            if(firstVisibleItem > 0) {
+              return;
+            }
+            setCanSlide(canScrollUp(listView));
+            break;
+          case BOTTOM:
+            if(firstVisibleItem < totalItemCount) {
+              return;
+            }
+            setCanSlide(canScrollDown(listView));
+            break;
+        }
+
+      }
+    });
+
+  }
+
+  public boolean isListOnTop() {
+    return canSlide;
+  }
+
+  public void setCanSlide(boolean canSlide) {
+    this.canSlide = canSlide;
+  }
+
+  public boolean canScrollUp(View view) {
+    if (android.os.Build.VERSION.SDK_INT < 14) {
+      if (view instanceof AbsListView) {
+        final AbsListView absListView = (AbsListView) view;
+        return absListView.getChildCount() > 0
+            && (absListView.getFirstVisiblePosition() > 0 || absListView
+            .getChildAt(0).getTop() < absListView.getPaddingTop());
+      } else {
+        return view.getScrollY() > 0;
+      }
+    } else {
+      return ViewCompat.canScrollVertically(view, -1);
+    }
+  }
+
+  public boolean canScrollDown(View view) {
+    if (android.os.Build.VERSION.SDK_INT < 14) {
+      if (view instanceof AbsListView) {
+        final AbsListView absListView = (AbsListView) view;
+        return absListView.getChildCount() > 0
+            && (absListView.getFirstVisiblePosition() > 0 || absListView
+            .getChildAt(0).getBottom() < absListView.getPaddingBottom());
+      } else {
+        return view.getScrollY() > 0;
+      }
+    } else {
+      return ViewCompat.canScrollVertically(view, -1);
+    }
   }
 
   public float getDragLimit() {
@@ -271,20 +350,24 @@ public class DraggerView extends FrameLayout {
   }
 
   public void closeActivity() {
-    switch (dragPosition) {
-      case LEFT:
-        closeFromCenterToLeft();
-        break;
-      case RIGHT:
-        closeFromCenterToRight();
-        break;
-      case TOP:
-      default:
-        closeFromCenterToBottom();
-        break;
-      case BOTTOM:
-        closeFromCenterToTop();
-        break;
+    if(dragPosition != null) {
+      switch (dragPosition) {
+        case LEFT:
+          closeFromCenterToLeft();
+          break;
+        case RIGHT:
+          closeFromCenterToRight();
+          break;
+        case TOP:
+        default:
+          closeFromCenterToBottom();
+          break;
+        case BOTTOM:
+          closeFromCenterToTop();
+          break;
+      }
+    } else {
+      throw new IllegalStateException("dragPosition is null");
     }
   }
 

@@ -35,6 +35,10 @@ public class BaseActivity extends ActionBarActivity {
   @InjectView(R.id.toolbar) Toolbar toolbar;
   @InjectView(R.id.dragger_view) DraggerView draggerView;
 
+  @OnClick(R.id.list) void onListClick() {
+    startActivity(new Intent(this, ListActivity.class));
+  }
+
   @OnClick(R.id.menu) void onMenuClick() {
     startActivity(new Intent(this, BaseActivity.class));
   }
