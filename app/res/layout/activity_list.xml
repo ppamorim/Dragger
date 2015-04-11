@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     dragger_layout:drag_view_id="@+id/drag_view"
     dragger_layout:shadow_view_id="@+id/shadow_view"
-    dragger_layout:drag_position="bottom">
+    dragger_layout:drag_position="top">
 
   <FrameLayout
       android:id="@+id/shadow_view"
