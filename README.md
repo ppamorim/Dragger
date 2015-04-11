@@ -10,7 +10,7 @@ Using the ViewDragHelper class, it is possible to create smooth animations that 
 
 This new component has been created using some concepts described on [Flavien Laurent Blog][1] and [Denevell Blog][2].
 
-This library can works on API 10 (but not tested yet).
+This library should work on API 10 (but not tested yet).
 
 ![Demo 1][11]
 
