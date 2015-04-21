@@ -92,7 +92,7 @@ Import dependency
 This library uses nineoldandroids:2.4.0 and appcompat-v7:21.0.3, you have to provide these dependencies from your local artifact repository or from maven central repository.
 
 But why not add in MavenCentral?
-Because I want this thing (MavenCentral) burn in da HELL!
+Because it is so much bureaucratic.
 
 JitPack is there and is the future!
 
