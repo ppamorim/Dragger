@@ -89,7 +89,7 @@ Sample
 Import dependency
 --------------------------------
 
-This library uses nineoldandroids:2.4.0 and appcompat-v7:21.0.3, you have to provide these dependencies from your local artifact repository or from maven central repository.
+This library uses nineoldandroids:2.4.0 and appcompat-v7:21.0.3.
 
 But why not add in MavenCentral?
 Because it is so much bureaucratic.
