@@ -24,7 +24,7 @@ You can use this library like a view, you just need to do the following:
 You can add a shadow view if you want (the first one) and it needs to be invisible.
 
 ```xml
-<com.github.library.DraggerView
+<com.github.ppamorim.library.DraggerView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     dragger_layout:drag_view_id="@+id/drag_view"
@@ -43,7 +43,7 @@ You can add a shadow view if you want (the first one) and it needs to be invisib
           android:layout_width="match_parent"
           android:layout_height="match_parent"/>
 
-</com.github.library.DraggerView>
+</com.github.ppamorim.library.DraggerView>
 ```
 
 In your ''styles'' file, you need a config like this:
