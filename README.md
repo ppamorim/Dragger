@@ -24,7 +24,7 @@ You can use this library like a view, you just need to do the following:
 You can add a shadow view if you want (the first one) and it needs to be invisible.
 
 ```xml
-<com.github.library.DraggerView
+<com.github.ppamorim.library.DraggerView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     dragger_layout:drag_view_id="@+id/drag_view"
@@ -43,7 +43,7 @@ You can add a shadow view if you want (the first one) and it needs to be invisib
           android:layout_width="match_parent"
           android:layout_height="match_parent"/>
 
-</com.github.library.DraggerView>
+</com.github.ppamorim.library.DraggerView>
 ```
 
 In your ''styles'' file, you need a config like this:
@@ -89,10 +89,10 @@ Sample
 Import dependency
 --------------------------------
 
-This library uses nineoldandroids:2.4.0 and appcompat-v7:21.0.3, you have to provide these dependencies from your local artifact repository or from maven central repository.
+This library uses nineoldandroids:2.4.0 and appcompat-v7:21.0.3.
 
 But why not add in MavenCentral?
-Because I want this thing (MavenCentral) burn in da HELL!
+Because it is so much bureaucratic.
 
 JitPack is there and is the future!
 
