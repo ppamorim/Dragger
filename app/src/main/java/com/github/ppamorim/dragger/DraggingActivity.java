@@ -19,11 +19,14 @@ import android.os.Bundle;
 import com.github.ppamorim.dragger.app.R;
 import com.github.ppamorim.library.DraggerActivity;
 
-public class DraggingActivity extends DraggerActivity {
+public class DraggingActivity extends AbstractToolbarActivity {
 
-  @Override public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.layout_content);
+  @Override protected String getToolbarTitle() {
+    return getResources().getString(R.string.app_name);
+  }
+
+  @Override protected int getContentViewId() {
+    return R.layout.layout_content;
   }
 
 }

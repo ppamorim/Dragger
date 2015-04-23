@@ -1,12 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'checkstyle'
 
-repositories {
-  maven {
-    url "https://jitpack.io"
-  }
-}
-
 dependencies {
   compile project(':library')
   compile 'com.android.support:appcompat-v7:22.1.0'

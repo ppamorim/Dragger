@@ -22,11 +22,7 @@
       android:background="@color/black_grey"
       android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@color/accent"/>
+    <include layout="@layout/toolbar"/>
 
     <ListView
         android:id="@+id/list_view"

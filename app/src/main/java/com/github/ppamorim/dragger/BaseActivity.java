@@ -28,12 +28,11 @@ import com.github.ppamorim.dragger.app.R;
 import com.github.ppamorim.library.DraggerPosition;
 import com.github.ppamorim.library.DraggerView;
 
-public class BaseActivity extends ActionBarActivity {
+public class BaseActivity extends AbstractToolbarActivity {
 
-  private Resources mResources;
-
-  @InjectView(R.id.toolbar) Toolbar toolbar;
-  @InjectView(R.id.dragger_view) DraggerView draggerView;
+  @OnClick(R.id.edittext) void onEditTextClick() {
+    startActivity(new Intent(this, EditTextActivity.class));
+  }
 
   @OnClick(R.id.list) void onListClick() {
     startActivity(new Intent(this, ListActivity.class));
@@ -67,36 +66,12 @@ public class BaseActivity extends ActionBarActivity {
     startActivity(new Intent(this, DraggingActivity.class));
   }
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_base);
-    ButterKnife.inject(this);
-    configResources();
-    configToolbar();
+  @Override protected String getToolbarTitle() {
+    return getResources().getString(R.string.app_name);
   }
 
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        onBackPressed();
-        return true;
-      default:
-        return super.onOptionsItemSelected(item);
-    }
-  }
-
-  @Override public void onBackPressed() {
-    draggerView.closeFromCenterToBottom();
-  }
-
-  private void configResources() {
-    mResources = getResources();
-  }
-
-  private void configToolbar() {
-    setSupportActionBar(toolbar);
-    toolbar.setTitle(mResources.getString(R.string.app_name));
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+  @Override protected int getContentViewId() {
+    return R.layout.activity_base;
   }
 
   private void startDraggerActivity(DraggerPosition dragPosition) {

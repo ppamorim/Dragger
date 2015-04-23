@@ -23,16 +23,18 @@ import butterknife.InjectView;
 import com.github.ppamorim.dragger.app.R;
 import com.github.ppamorim.library.DraggerPanel;
 
-public class PanelActivity extends ActionBarActivity {
+public class PanelActivity extends AbstractActivity {
 
   private LayoutInflater layoutInflater;
 
   @InjectView(R.id.dragger_panel) DraggerPanel draggerPanel;
 
+  @Override protected int getContentViewId() {
+    return R.layout.activity_panel;
+  }
+
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_panel);
-    ButterKnife.inject(this);
     configLayoutInflater();
   }
 
@@ -46,4 +48,5 @@ public class PanelActivity extends ActionBarActivity {
   private void configLayoutInflater() {
     layoutInflater = LayoutInflater.from(this);
   }
+
 }
