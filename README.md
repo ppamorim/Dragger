@@ -124,9 +124,6 @@ Developed By
 
 * Pedro Paulo de Amorim - <pp.amorim@hotmail.com>
 
-<a href="https://twitter.com/manodocarvao">
-  <img alt="Follow me on Twitter" src="http://imageshack.us/a/img812/3923/smallth.png" />
-</a>
 <a href="https://www.linkedin.com/profile/view?id=185411359">
   <img alt="Add me to Linkedin" src="http://imageshack.us/a/img41/7877/smallld.png" />
 </a>
