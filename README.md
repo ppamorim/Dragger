@@ -1,7 +1,6 @@
 ![Logo 1][10]
 
 [![Build Status](https://api.travis-ci.org/ppamorim/Dragger.svg?branch=master)](https://travis-ci.org/ppamorim/Dragger)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.dragger/dragger/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.dragger/dragger)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Dragger-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1673)
 [![Join the chat at https://gitter.im/ppamorim/Dragger](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ppamorim/Dragger?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
