@@ -15,24 +15,34 @@
 */
 package com.github.ppamorim.dragger;
 
-<<<<<<< HEAD:dragger/src/main/java/com/github/ppamorim/dragger/DraggerCallback.java
-public interface DraggerCallback {
-  void notifyOpen();
-  void notifyClose();
-=======
 import android.os.Bundle;
+import butterknife.InjectView;
 import com.github.ppamorim.dragger.app.R;
-import com.github.ppamorim.library.DraggerActivity;
+import com.github.ppamorim.library.DraggerPosition;
+import com.github.ppamorim.library.DraggerView;
 
-public class DraggingActivity extends AbstractToolbarActivity {
+public class ImageActivity extends AbstractToolbarActivity {
+
+  public static final String DRAG_POSITION = "drag_position";
+
+  @InjectView(R.id.dragger_view) DraggerView draggerView;
 
   @Override protected String getToolbarTitle() {
     return getResources().getString(R.string.app_name);
   }
 
   @Override protected int getContentViewId() {
-    return R.layout.layout_content;
+    return R.layout.activity_dragger;
   }
 
->>>>>>> ae059aa744d54090c48c4ed0719197bae824252f:app/src/main/java/com/github/ppamorim/dragger/DraggingActivity.java
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    configIntents();
+  }
+
+  private void configIntents() {
+    draggerView.setDraggerPosition(
+        (DraggerPosition) getIntent().getSerializableExtra(DRAG_POSITION));
+  }
+
 }
