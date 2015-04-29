@@ -18,6 +18,8 @@ package com.github.ppamorim.dragger;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
+import android.os.Debug;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
@@ -28,7 +30,6 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import com.github.ppamorim.dragger.R;
 import com.nineoldandroids.view.ViewHelper;
 
 /**
@@ -218,7 +219,7 @@ public class DraggerView extends FrameLayout {
   }
 
   public boolean canScrollUp(View view) {
-    if (android.os.Build.VERSION.SDK_INT < 14) {
+    if (Build.VERSION.SDK_INT < 14) {
       if (view instanceof AbsListView) {
         final AbsListView absListView = (AbsListView) view;
         return absListView.getChildCount() > 0
@@ -233,7 +234,7 @@ public class DraggerView extends FrameLayout {
   }
 
   public boolean canScrollDown(View view) {
-    if (android.os.Build.VERSION.SDK_INT < 14) {
+    if (Build.VERSION.SDK_INT < 14) {
       if (view instanceof AbsListView) {
         final AbsListView absListView = (AbsListView) view;
         return absListView.getChildCount() > 0
@@ -260,6 +261,7 @@ public class DraggerView extends FrameLayout {
   }
 
   public void setDraggerPosition(DraggerPosition dragPosition) {
+    System.out.println("drag position: " + dragPosition.name());
     this.dragPosition = dragPosition;
     dragHelperCallback.setDragPosition(dragPosition);
   }
