@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <declare-styleable name="dragger_layout">
+    <attr name="drag_view_id" format="reference"/>
+    <attr name="shadow_view_id" format="reference"/>
+    <attr name="drag_limit" format="float"/>
+
+    <attr name="drag_position" format="enum">
+      <enum name="left" value="0"/>
+      <enum name="right" value="1"/>
+      <enum name="top" value="2"/>
+      <enum name="bottom" value="3"/>
+    </attr>
+  </declare-styleable>
+
+</resources>
