@@ -28,7 +28,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import com.github.ppamorim.library.R;
+import com.github.ppamorim.dragger.R;
 import com.nineoldandroids.view.ViewHelper;
 
 /**

@@ -15,12 +15,11 @@
 */
 package com.github.ppamorim.dragger;
 
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import com.github.ppamorim.library.R;
 
-public class DraggerActivity extends ActionBarActivity {
+public class DraggerActivity extends AppCompatActivity {
 
   private int shadowResID = -1;
   private DraggerPanel draggerPanel;

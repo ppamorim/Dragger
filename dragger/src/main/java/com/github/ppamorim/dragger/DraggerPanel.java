@@ -20,7 +20,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
-import com.github.ppamorim.library.R;
+import com.github.ppamorim.dragger.R;
 
 public class DraggerPanel extends FrameLayout {
 

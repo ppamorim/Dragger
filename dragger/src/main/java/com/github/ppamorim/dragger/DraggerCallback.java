@@ -15,24 +15,7 @@
 */
 package com.github.ppamorim.dragger;
 
-<<<<<<< HEAD:dragger/src/main/java/com/github/ppamorim/dragger/DraggerCallback.java
 public interface DraggerCallback {
   void notifyOpen();
   void notifyClose();
-=======
-import android.os.Bundle;
-import com.github.ppamorim.dragger.app.R;
-import com.github.ppamorim.library.DraggerActivity;
-
-public class DraggingActivity extends AbstractToolbarActivity {
-
-  @Override protected String getToolbarTitle() {
-    return getResources().getString(R.string.app_name);
-  }
-
-  @Override protected int getContentViewId() {
-    return R.layout.layout_content;
-  }
-
->>>>>>> ae059aa744d54090c48c4ed0719197bae824252f:app/src/main/java/com/github/ppamorim/dragger/DraggingActivity.java
 }
