@@ -106,7 +106,7 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.ppamorim:dragger:v1.0.1'
+  compile 'com.github.ppamorim:dragger:v1.0.2'
 }
 ```
 
