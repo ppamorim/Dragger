@@ -23,6 +23,4 @@ package com.github.ppamorim.dragger;
 public interface DraggerHelperListener {
   void finishActivity();
   void onViewPositionChanged(float dragValue);
-  float dragVerticalDragRange();
-  float dragHorizontalDragRange();
 }

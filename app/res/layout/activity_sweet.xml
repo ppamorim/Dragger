@@ -12,5 +12,12 @@
       android:layout_height="wrap_content"
       android:padding="16dp"
       android:text="@string/open_sweet_parent"/>
+  
+  <ImageView
+      android:id="@+id/hide_image"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@mipmap/dragger"
+      android:visibility="gone"/>
 
 </LinearLayout>

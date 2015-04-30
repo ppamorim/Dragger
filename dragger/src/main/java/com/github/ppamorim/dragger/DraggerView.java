@@ -15,11 +15,9 @@
 */
 package com.github.ppamorim.dragger;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
-import android.os.Debug;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
@@ -64,6 +62,7 @@ public class DraggerView extends FrameLayout {
 
   private DraggerCallback draggerCallback;
   private DraggerHelperCallback dragHelperCallback;
+  private DraggerHelperListener draggerListener;
   private ViewDragHelper dragHelper;
   private View dragView;
   private View shadowView;
@@ -261,7 +260,6 @@ public class DraggerView extends FrameLayout {
   }
 
   public void setDraggerPosition(DraggerPosition dragPosition) {
-    System.out.println("drag position: " + dragPosition.name());
     this.dragPosition = dragPosition;
     dragHelperCallback.setDragPosition(dragPosition);
   }
@@ -276,8 +274,14 @@ public class DraggerView extends FrameLayout {
   }
 
   private void configDragViewHelper() {
-    dragHelperCallback = new DraggerHelperCallback(this, dragView, dragPosition, draggerListener);
+    dragHelperCallback = new DraggerHelperCallback(this, dragView, dragPosition, draggerHelperConfig);
     dragHelper = ViewDragHelper.create(this, SENSITIVITY, dragHelperCallback);
+    dragHelperCallback.setDraggerListener(draggerListener);
+  }
+
+  public void setDraggerHelperListener(DraggerHelperListener draggerListener) {
+    this.draggerListener = draggerListener;
+    dragHelperCallback.setDraggerListener(draggerListener);
   }
 
   public void setDraggerCallback(DraggerCallback draggerCallback) {
@@ -423,28 +427,7 @@ public class DraggerView extends FrameLayout {
     return false;
   }
 
-  private void finish() {
-    if (canFinish) {
-      Context context = getContext();
-      if (context instanceof Activity) {
-        Activity activity = (Activity) context;
-        if (!activity.isFinishing()) {
-          activity.overridePendingTransition(0, android.R.anim.fade_out);
-          activity.finish();
-        }
-      }
-    }
-  }
-
-  private DraggerHelperListener draggerListener = new DraggerHelperListener() {
-
-    @Override public void finishActivity() {
-      finish();
-    }
-
-    @Override public void onViewPositionChanged(float dragValue) {
-      ViewHelper.setAlpha(shadowView, MAX_ALPHA - dragValue);
-    }
+  private DraggerHelperConfig draggerHelperConfig = new DraggerHelperConfig() {
 
     @Override public float dragVerticalDragRange() {
       return getVerticalDragRange();

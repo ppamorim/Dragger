@@ -27,14 +27,21 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
   private View dragView;
 
   private DraggerPosition dragPosition;
+  private DraggerHelperConfig draggerHelperConfig;
   private DraggerHelperListener draggerListener;
 
   public DraggerHelperCallback(DraggerView draggerView, View dragView, DraggerPosition dragPosition,
-      DraggerHelperListener draggerListener) {
+      DraggerHelperConfig draggerHelperConfig) {
     this.draggerView = draggerView;
     this.dragView = dragView;
     this.dragPosition = DraggerPosition.values()[dragPosition.getPosition()];
-    this.draggerListener = draggerListener;
+    this.draggerHelperConfig = draggerHelperConfig;
+  }
+
+  public void setDraggerListener(DraggerHelperListener draggerListener) {
+    if(draggerListener != null) {
+      this.draggerListener = draggerListener;
+    }
   }
 
   public DraggerPosition getDragPosition() {
@@ -56,12 +63,12 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
       case RIGHT:
         if (left > 0) {
           leftBound = draggerView.getPaddingLeft();
-          rightBound = (int) draggerListener.dragHorizontalDragRange();
+          rightBound = (int) draggerHelperConfig.dragHorizontalDragRange();
         }
         break;
       case LEFT:
         if (left < 0) {
-          leftBound = (int) -draggerListener.dragHorizontalDragRange();
+          leftBound = (int) -draggerHelperConfig.dragHorizontalDragRange();
           rightBound = draggerView.getPaddingLeft();
         }
         break;
@@ -78,12 +85,12 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
       case TOP:
         if (top > 0) {
           topBound = draggerView.getPaddingTop();
-          bottomBound = (int) draggerListener.dragVerticalDragRange();
+          bottomBound = (int) draggerHelperConfig.dragVerticalDragRange();
         }
         break;
       case BOTTOM:
         if (top < 0) {
-          topBound = (int) -draggerListener.dragVerticalDragRange();
+          topBound = (int) -draggerHelperConfig.dragVerticalDragRange();
           bottomBound = draggerView.getPaddingTop();
         }
         break;
@@ -94,15 +101,15 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
   }
 
   @Override public int getViewVerticalDragRange(View child) {
-    return (int) draggerListener.dragVerticalDragRange();
+    return (int) draggerHelperConfig.dragVerticalDragRange();
   }
 
   @Override public int getViewHorizontalDragRange(View child) {
-    return (int) draggerListener.dragHorizontalDragRange();
+    return (int) draggerHelperConfig.dragHorizontalDragRange();
   }
 
   @Override public void onViewDragStateChanged(int state) {
-    if (state == dragState) {
+    if (state == dragState || draggerListener == null) {
       return;
     }
     if ((dragState == ViewDragHelper.STATE_DRAGGING
@@ -111,14 +118,14 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
       switch (dragPosition) {
         case LEFT:
         case RIGHT:
-          if (dragOffset == draggerListener.dragHorizontalDragRange()) {
+          if (dragOffset == draggerHelperConfig.dragHorizontalDragRange()) {
             draggerListener.finishActivity();
           }
           break;
         default:
         case TOP:
         case BOTTOM:
-          if (dragOffset == draggerListener.dragVerticalDragRange()) {
+          if (dragOffset == draggerHelperConfig.dragVerticalDragRange()) {
             draggerListener.finishActivity();
           }
           break;
@@ -134,20 +141,26 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
       case TOP:
       case BOTTOM:
         dragOffset = Math.abs(top);
-        fractionScreen = (float) dragOffset / draggerListener.dragVerticalDragRange();
+        fractionScreen = (float) dragOffset / draggerHelperConfig.dragVerticalDragRange();
         break;
       case LEFT:
       case RIGHT:
       default:
         dragOffset = Math.abs(left);
-        fractionScreen = (float) dragOffset / draggerListener.dragHorizontalDragRange();
+        fractionScreen = (float) dragOffset / draggerHelperConfig.dragHorizontalDragRange();
         break;
     }
+
+    System.out.println("fractionScreen>: " + fractionScreen);
+
     if (fractionScreen >= 1) {
       fractionScreen = 1;
     }
+
     if (draggerListener != null) {
       draggerListener.onViewPositionChanged(fractionScreen);
+    } else {
+      System.out.println("draggerListener null ");
     }
   }
 

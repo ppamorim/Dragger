@@ -4,6 +4,7 @@
     android:id="@+id/dragger_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     dragger_layout:shadow_view_id="@+id/image_background"
     dragger_layout:drag_view_id="@+id/drag_view">
 
