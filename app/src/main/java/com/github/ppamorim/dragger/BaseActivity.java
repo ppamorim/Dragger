@@ -21,6 +21,10 @@ import com.github.ppamorim.dragger.app.R;
 
 public class BaseActivity extends AbstractToolbarActivity {
 
+  @OnClick(R.id.sweet) void onSweetClick() {
+    startActivity(new Intent(this, SweetActivity.class));
+  }
+
   @OnClick(R.id.edittext) void onEditTextClick() {
     startActivity(new Intent(this, EditTextActivity.class));
   }

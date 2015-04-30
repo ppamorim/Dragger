@@ -33,6 +33,14 @@
           android:orientation="vertical">
 
         <Button
+            android:id="@+id/sweet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/open_sweet"
+            android:padding="16dp"/>
+
+        <Button
             android:id="@+id/edittext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

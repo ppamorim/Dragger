@@ -19,6 +19,8 @@
             </intent-filter>
         </activity>
 
+      <activity android:name="com.github.ppamorim.dragger.SweetActivity"/>
+      <activity android:name="com.github.ppamorim.dragger.SweetParentActivity"/>
       <activity android:name="com.github.ppamorim.dragger.EditTextActivity"/>
       <activity android:name="com.github.ppamorim.dragger.ListActivity"/>
       <activity android:name="com.github.ppamorim.dragger.ImageActivity"/>
