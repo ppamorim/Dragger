@@ -52,6 +52,7 @@ public class DraggerView extends FrameLayout {
   private static final int DEFAULT_DRAG_POSITION = DraggerPosition.TOP.getPosition();
   private static final int INVALID_POINTER = -1;
 
+  private boolean animationFinish = false;
   private boolean canFinish = false;
   private boolean canSlide = true;
   private int activePointerId = INVALID_POINTER;
@@ -104,9 +105,14 @@ public class DraggerView extends FrameLayout {
     if (dragView != null) {
       dragView.measure(measureWidth, measureHeight);
       setViewAlpha(dragView, MIN_ALPHA);
-      closeActivity();
-      expandWithDelay();
+      if (!animationFinish) {
+        closeActivity();
+        expandWithDelay();
+      } else {
+        showViews();
+      }
     }
+
   }
 
   @Override protected void onSizeChanged(int width, int height, int oldWidth, int oldHeight) {
@@ -182,14 +188,6 @@ public class DraggerView extends FrameLayout {
           int totalItemCount) {
 
         switch (dragPosition) {
-          case LEFT:
-            //parentSize = dragView.getWidth();
-            //viewAxisPosition = -ViewHelper.getX(dragView) + (parentSize * dragLimit);
-            break;
-          case RIGHT:
-            //parentSize = dragView.getWidth();
-            //viewAxisPosition = ViewHelper.getX(dragView) + (parentSize * dragLimit);
-            break;
           case TOP:
           default:
             if(firstVisibleItem > 0) {
@@ -261,7 +259,6 @@ public class DraggerView extends FrameLayout {
   }
 
   public void setDraggerPosition(DraggerPosition dragPosition) {
-    System.out.println("drag position: " + dragPosition.name());
     this.dragPosition = dragPosition;
     dragHelperCallback.setDragPosition(dragPosition);
   }
@@ -339,8 +336,7 @@ public class DraggerView extends FrameLayout {
     handler.postDelayed(new Runnable() {
       @Override public void run() {
         if (isEnabled()) {
-          setViewAlpha(dragView, MAX_ALPHA);
-          shadowView.setVisibility(VISIBLE);
+          showViews();
           openActivity();
           canFinish = true;
         }
@@ -348,7 +344,13 @@ public class DraggerView extends FrameLayout {
     }, DELAY);
   }
 
+  private void showViews() {
+    setViewAlpha(dragView, MAX_ALPHA);
+    shadowView.setVisibility(VISIBLE);
+  }
+
   private void openActivity() {
+    animationFinish = true;
     moveToCenter();
   }
 
