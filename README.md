@@ -72,7 +72,7 @@ Or, if you need it to be fast:
 public class YourActivity extends DraggerActivity {
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setShadowView(R.layout.custom_shadow); //No necessary, use if you want.
+    setShadowView(R.layout.custom_shadow); // It is not necessary, use if you want.
     setContentView(R.layout.layout_content);
   }
 }
@@ -89,9 +89,9 @@ Sample
 Import dependency
 --------------------------------
 
-This library uses nineoldandroids:2.4.0 and appcompat-v7:21.0.3.
+This library uses `nineoldandroids:2.4.0` and `appcompat-v7:21.0.3`.
 
-But why not add in MavenCentral?
+But why not to add in MavenCentral?
 Because it is so much bureaucratic.
 
 JitPack is there and is the future!
