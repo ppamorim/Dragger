@@ -2,6 +2,7 @@
 
 [![Build Status](https://api.travis-ci.org/ppamorim/Dragger.svg?branch=master)](https://travis-ci.org/ppamorim/Dragger)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Dragger-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1673)
+[![JitPack](https://img.shields.io/github/release/ppamorim/Dragger.svg?label=JitPack%20Maven)](https://jitpack.io/#ppamorim/Dragger)
 [![Join the chat at https://gitter.im/ppamorim/Dragger](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ppamorim/Dragger?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 The library was created in order to provide new animations for activities on Android.
