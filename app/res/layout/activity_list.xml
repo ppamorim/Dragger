@@ -24,8 +24,8 @@
 
     <include layout="@layout/toolbar"/>
 
-    <ListView
-        android:id="@+id/list_view"
+    <com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

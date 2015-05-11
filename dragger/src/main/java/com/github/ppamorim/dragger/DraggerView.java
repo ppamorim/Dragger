@@ -178,36 +178,6 @@ public class DraggerView extends FrameLayout {
     this.horizontalDragRange = horizontalDragRange;
   }
 
-  public void setListViewPosition(final ListView listView) {
-    listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-      @Override public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-      }
-
-      @Override public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
-          int totalItemCount) {
-
-        switch (dragPosition) {
-          case TOP:
-          default:
-            if(firstVisibleItem > 0) {
-              return;
-            }
-            setCanSlide(canScrollUp(listView));
-            break;
-          case BOTTOM:
-            if(firstVisibleItem < totalItemCount) {
-              return;
-            }
-            setCanSlide(canScrollDown(listView));
-            break;
-        }
-
-      }
-    });
-
-  }
-
   public boolean isListOnTop() {
     return canSlide;
   }

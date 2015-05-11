@@ -1,9 +1,17 @@
 apply plugin: 'com.android.application'
 apply plugin: 'checkstyle'
 
+repositories {
+  maven {
+    url "https://jitpack.io"
+  }
+}
+
 dependencies {
   compile project(':dragger')
   compile 'com.android.support:appcompat-v7:22.1.1'
+  compile 'com.github.ksoichiro:android-observablescrollview:1.5.1'
+  compile 'com.github.ppamorim:recyclerrenderers:v1.2'
   compile 'com.jakewharton:butterknife:6.1.0'
 }
 
