@@ -21,19 +21,22 @@ public abstract class AbstractToolbarActivity extends AbstractActivity {
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case android.R.id.home:
-        if(!enabledBackButton) {
+        if (!enabledBackButton) {
           return false;
         }
         finish();
         return true;
+      default:
+        return super.onOptionsItemSelected(item);
     }
-    return super.onOptionsItemSelected(item);
   }
 
   public void setDisableBackButton(boolean isEnabled) {
     enabledBackButton = isEnabled;
     setSupportActionBar(getToolbar());
-    getSupportActionBar().setDisplayHomeAsUpEnabled(isEnabled);
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().setDisplayHomeAsUpEnabled(isEnabled);
+    }
   }
 
   public Toolbar getToolbar() {

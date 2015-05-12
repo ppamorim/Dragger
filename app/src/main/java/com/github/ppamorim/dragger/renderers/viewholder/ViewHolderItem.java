@@ -18,7 +18,7 @@ public class ViewHolderItem extends RenderViewHolder<Item> {
   }
 
   @Override public void onBindView(Item item) {
-    if(item != null) {
+    if (item != null) {
       textView.setText(item.getText());
     }
   }
