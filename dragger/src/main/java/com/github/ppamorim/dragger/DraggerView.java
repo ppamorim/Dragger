@@ -19,7 +19,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
-import android.os.Debug;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
@@ -29,7 +28,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
-import android.widget.ListView;
 import com.nineoldandroids.view.ViewHelper;
 
 /**
@@ -325,7 +323,7 @@ public class DraggerView extends FrameLayout {
   }
 
   public void closeActivity() {
-    if(dragPosition != null) {
+    if (dragPosition != null) {
       switch (dragPosition) {
         case LEFT:
           closeFromCenterToLeft();
