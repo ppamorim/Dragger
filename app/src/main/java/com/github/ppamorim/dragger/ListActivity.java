@@ -69,8 +69,8 @@ public class ListActivity extends AbstractToolbarActivity {
         boolean dragging) {
       draggerView.setCanSlide(!(scrollY == 0));
     }
-    @Override public void onDownMotionEvent() {}
-    @Override public void onUpOrCancelMotionEvent(ScrollState scrollState) {}
+    @Override public void onDownMotionEvent() { }
+    @Override public void onUpOrCancelMotionEvent(ScrollState scrollState) { }
   };
 
 }

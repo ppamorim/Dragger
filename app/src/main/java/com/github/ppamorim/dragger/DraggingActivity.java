@@ -19,7 +19,7 @@ import android.os.Bundle;
 import com.github.ppamorim.dragger.app.R;
 
 public class DraggingActivity extends DraggerActivity {
-  
+
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.layout_content);
