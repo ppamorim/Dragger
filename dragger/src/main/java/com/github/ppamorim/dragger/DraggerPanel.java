@@ -98,4 +98,8 @@ public class DraggerPanel extends FrameLayout {
     }
   }
 
+  public void closeActivity() {
+    draggerView.closeActivity();
+  }
+
 }
