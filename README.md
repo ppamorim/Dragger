@@ -2,6 +2,7 @@
 
 [![Build Status](https://api.travis-ci.org/ppamorim/Dragger.svg?branch=master)](https://travis-ci.org/ppamorim/Dragger)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Dragger-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1673)
+[![JitPack](https://img.shields.io/github/release/ppamorim/Dragger.svg?label=JitPack%20Maven)](https://jitpack.io/#ppamorim/Dragger)
 [![Join the chat at https://gitter.im/ppamorim/Dragger](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ppamorim/Dragger?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 The library was created in order to provide new animations for activities on Android.
@@ -71,14 +72,14 @@ Or, if you need it to be fast:
 public class YourActivity extends DraggerActivity {
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setShadowView(R.layout.custom_shadow); //No necessary, use if you want.
+    setShadowView(R.layout.custom_shadow); // It is not necessary, use if you want.
     setContentView(R.layout.layout_content);
   }
 }
 ```
 
 Sample
---------------------------------
+------
 
 <a href="https://play.google.com/store/apps/details?id=com.github.dragger">
   <img alt="Get it on Google Play"
@@ -88,9 +89,9 @@ Sample
 Import dependency
 --------------------------------
 
-This library uses nineoldandroids:2.4.0 and appcompat-v7:21.0.3.
+This library uses `nineoldandroids:2.4.0` and `appcompat-v7:21.0.3`.
 
-But why not add in MavenCentral?
+But why not to add in MavenCentral?
 Because it is so much bureaucratic.
 
 JitPack is there and is the future!
@@ -106,8 +107,38 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.ppamorim:dragger:v1.0.4'
+  compile 'com.github.ppamorim:dragger:1.0.5'
 }
+```
+
+I decided that needs to make Out-Of-Box, then...
+You will use with lists(RecyclerView, List/GridView, ScrollView)?
+--------------------------------------------------------------------
+
+You must use the [Android-ObservableScrollView][13], like this:
+
+```groovy
+dependencies {
+  compile 'com.github.ksoichiro:android-observablescrollview:VERSION'
+}
+```
+
+```java
+
+public void configRecyclerView() {
+  ...
+  recyclerView.setScrollViewCallbacks(onObservableScrollViewCallbacks);
+}
+
+private ObservableScrollViewCallbacks onObservableScrollViewCallbacks =
+    new ObservableScrollViewCallbacks() {
+  @Override public void onScrollChanged(int scrollY, boolean firstScroll,
+      boolean dragging) {
+    draggerView.setSlideEnabled(scrollY != 0);
+  }
+  @Override public void onDownMotionEvent() { }
+  @Override public void onUpOrCancelMotionEvent(ScrollState scrollState) { }
+};
 ```
 
 Contributors
@@ -160,3 +191,4 @@ License
 [10]: ./art/dragger.png
 [11]: http://i.imgur.com/goPWgq1.gif
 [12]: https://github.com/Falkirks
+[13]: https://github.com/ksoichiro/Android-ObservableScrollView
