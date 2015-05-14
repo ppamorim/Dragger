@@ -71,4 +71,8 @@ public class DraggerActivity extends AppCompatActivity {
     draggerPanel.setSlideEnabled(enabled);
   }
 
+  public void closeActivity() {
+    draggerPanel.closeActivity();
+  }
+
 }
