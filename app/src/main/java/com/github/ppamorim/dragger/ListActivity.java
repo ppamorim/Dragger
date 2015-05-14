@@ -47,7 +47,7 @@ public class ListActivity extends AbstractToolbarActivity {
     configRecyclerView();
   }
 
-  public  void configRecyclerView() {
+  public void configRecyclerView() {
 
     ArrayList<Item> texts = new ArrayList<>();
     for (int i = 0; i < 100; i++) {
@@ -67,7 +67,7 @@ public class ListActivity extends AbstractToolbarActivity {
       new ObservableScrollViewCallbacks() {
     @Override public void onScrollChanged(int scrollY, boolean firstScroll,
         boolean dragging) {
-      draggerView.setSlideEnabled(!(scrollY == 0));
+      draggerView.setSlideEnabled(scrollY != 0);
     }
     @Override public void onDownMotionEvent() { }
     @Override public void onUpOrCancelMotionEvent(ScrollState scrollState) { }

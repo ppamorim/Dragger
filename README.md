@@ -79,7 +79,7 @@ public class YourActivity extends DraggerActivity {
 ```
 
 Sample
---------------------------------
+------
 
 <a href="https://play.google.com/store/apps/details?id=com.github.dragger">
   <img alt="Get it on Google Play"
@@ -109,6 +109,36 @@ repositories {
 dependencies {
   compile 'com.github.ppamorim:dragger:v1.0.4'
 }
+```
+
+
+You will use with any list(RecyclerView, List/GridView, ScrollView)?
+--------------------------------------------------------------------
+
+You must use the [Android-ObservableScrollView][13], like this:
+
+```groovy
+dependencies {
+  compile 'com.github.ksoichiro:android-observablescrollview:VERSION'
+}
+```
+
+```java
+
+public void configRecyclerView() {
+  ...
+  recyclerView.setScrollViewCallbacks(onObservableScrollViewCallbacks);
+}
+
+private ObservableScrollViewCallbacks onObservableScrollViewCallbacks =
+    new ObservableScrollViewCallbacks() {
+  @Override public void onScrollChanged(int scrollY, boolean firstScroll,
+      boolean dragging) {
+    draggerView.setSlideEnabled(scrollY != 0);
+  }
+  @Override public void onDownMotionEvent() { }
+  @Override public void onUpOrCancelMotionEvent(ScrollState scrollState) { }
+};
 ```
 
 Contributors
@@ -161,3 +191,4 @@ License
 [10]: ./art/dragger.png
 [11]: http://i.imgur.com/goPWgq1.gif
 [12]: https://github.com/Falkirks
+[13]: https://github.com/ksoichiro/Android-ObservableScrollView
