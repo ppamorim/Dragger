@@ -26,11 +26,6 @@ public class DraggerPanel extends FrameLayout {
   private static final float DEFAULT_DRAG_LIMIT = 0.5f;
   private static final int DEFAULT_DRAG_POSITION = DraggerPosition.TOP.ordinal();
 
-  private float dragLimit;
-  private DraggerPosition dragPosition;
-
-  private TypedArray attributes;
-
   private DraggerView draggerView;
   private FrameLayout dragView;
   private FrameLayout shadowView;
@@ -49,6 +44,10 @@ public class DraggerPanel extends FrameLayout {
     initializeAttributes(attrs);
   }
 
+  public DraggerView getDraggerView() {
+    return draggerView;
+  }
+
   public void setDraggerLimit(float draggerLimit) {
     draggerView.setDraggerLimit(draggerLimit);
   }
@@ -61,12 +60,15 @@ public class DraggerPanel extends FrameLayout {
     draggerView.setDraggerCallback(draggerCallback);
   }
 
+  public void setSlideEnabled(boolean enabled) {
+    draggerView.setSlideEnabled(enabled);
+  }
+
   private void initializeAttributes(AttributeSet attrs) {
     TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.dragger_layout);
-    this.dragLimit = attributes.getFloat(R.styleable.dragger_layout_drag_limit, DEFAULT_DRAG_LIMIT);
-    this.dragPosition = DraggerPosition.getDragPosition(
-        attributes.getInt(R.styleable.dragger_layout_drag_position, DEFAULT_DRAG_POSITION));
-    this.attributes = attributes;
+    setDraggerLimit(attributes.getFloat(R.styleable.dragger_layout_drag_limit, DEFAULT_DRAG_LIMIT));
+    setDraggerPosition(DraggerPosition.getDragPosition(
+        attributes.getInt(R.styleable.dragger_layout_drag_position, DEFAULT_DRAG_POSITION)));
   }
 
   /**
