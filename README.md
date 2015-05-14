@@ -107,12 +107,12 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.ppamorim:dragger:v1.0.4'
+  compile 'com.github.ppamorim:dragger:1.0.5'
 }
 ```
 
-
-You will use with any list(RecyclerView, List/GridView, ScrollView)?
+I decided that needs to make Out-Of-Box, then...
+You will use with lists(RecyclerView, List/GridView, ScrollView)?
 --------------------------------------------------------------------
 
 You must use the [Android-ObservableScrollView][13], like this:
