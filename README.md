@@ -111,10 +111,11 @@ dependencies {
 }
 ```
 
-I decided that needs to make Out-Of-Box, then...
+
 You will use with lists(RecyclerView, List/GridView, ScrollView)?
 --------------------------------------------------------------------
 
+I decided that need to be Out-Of-Box, then...
 You must use the [Android-ObservableScrollView][13], like this:
 
 ```groovy
