@@ -1,36 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.ppamorim.dragger.DraggerView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:dragger_layout="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/dragger_view"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drag_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    dragger_layout:drag_view_id="@+id/drag_view"
-    dragger_layout:shadow_view_id="@+id/shadow_view"
-    dragger_layout:drag_position="top">
+    android:background="@color/black_grey"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
-  <FrameLayout
-      android:id="@+id/shadow_view"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/transparent"
-      android:visibility="invisible"/>
+    <include layout="@layout/toolbar"/>
 
-  <LinearLayout
-      android:id="@+id/drag_view"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/black_grey"
-      android:gravity="center_horizontal"
-      android:orientation="vertical">
-
-      <include layout="@layout/toolbar"/>
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_gravity="center"
-          android:gravity="center"
-          android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/edittext"
@@ -104,8 +88,6 @@
             android:text="@string/open_activity"
             android:padding="16dp"/>
 
-      </LinearLayout>
+    </LinearLayout>
 
-  </LinearLayout>
-
-</com.github.ppamorim.dragger.DraggerView>
+</LinearLayout>
