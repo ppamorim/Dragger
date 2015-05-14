@@ -67,7 +67,7 @@ public class ListActivity extends AbstractToolbarActivity {
       new ObservableScrollViewCallbacks() {
     @Override public void onScrollChanged(int scrollY, boolean firstScroll,
         boolean dragging) {
-      draggerView.setCanSlide(!(scrollY == 0));
+      draggerView.setSlideEnabled(!(scrollY == 0));
     }
     @Override public void onDownMotionEvent() { }
     @Override public void onUpOrCancelMotionEvent(ScrollState scrollState) { }

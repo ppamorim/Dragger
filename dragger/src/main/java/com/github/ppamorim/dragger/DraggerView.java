@@ -18,7 +18,6 @@ package com.github.ppamorim.dragger;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Build;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
@@ -26,7 +25,6 @@ import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import com.nineoldandroids.view.ViewHelper;
 
@@ -120,7 +118,7 @@ public class DraggerView extends FrameLayout {
   }
 
   @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
-    if (!isEnabled() || isListOnTop()) {
+    if (!isEnabled() || canSlide()) {
       return false;
     }
     final int action = MotionEventCompat.getActionMasked(ev);
@@ -176,42 +174,12 @@ public class DraggerView extends FrameLayout {
     this.horizontalDragRange = horizontalDragRange;
   }
 
-  public boolean isListOnTop() {
+  public boolean canSlide() {
     return canSlide;
   }
 
-  public void setCanSlide(boolean canSlide) {
+  public void setSlideEnabled(boolean canSlide) {
     this.canSlide = canSlide;
-  }
-
-  public boolean canScrollUp(View view) {
-    if (Build.VERSION.SDK_INT < 14) {
-      if (view instanceof AbsListView) {
-        final AbsListView absListView = (AbsListView) view;
-        return absListView.getChildCount() > 0
-            && (absListView.getFirstVisiblePosition() > 0 || absListView
-            .getChildAt(0).getTop() < absListView.getPaddingTop());
-      } else {
-        return view.getScrollY() > 0;
-      }
-    } else {
-      return ViewCompat.canScrollVertically(view, -1);
-    }
-  }
-
-  public boolean canScrollDown(View view) {
-    if (Build.VERSION.SDK_INT < 14) {
-      if (view instanceof AbsListView) {
-        final AbsListView absListView = (AbsListView) view;
-        return absListView.getChildCount() > 0
-            && (absListView.getFirstVisiblePosition() > 0 || absListView
-            .getChildAt(0).getBottom() < absListView.getPaddingBottom());
-      } else {
-        return view.getScrollY() > 0;
-      }
-    } else {
-      return ViewCompat.canScrollVertically(view, -1);
-    }
   }
 
   public float getDragLimit() {

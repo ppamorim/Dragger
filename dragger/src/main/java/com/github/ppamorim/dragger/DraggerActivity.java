@@ -30,6 +30,10 @@ public class DraggerActivity extends AppCompatActivity {
     super.setContentView(draggerPanel);
   }
 
+  public DraggerPanel getDraggerPanel() {
+    return draggerPanel;
+  }
+
   public void setShadowView(int shadowResID) {
     this.shadowResID = shadowResID;
   }
@@ -61,6 +65,10 @@ public class DraggerActivity extends AppCompatActivity {
 
   public void setDraggerCallback(DraggerCallback draggerCallback) {
     draggerPanel.setDraggerCallback(draggerCallback);
+  }
+
+  public void setSlideEnabled(boolean enabled) {
+    draggerPanel.setSlideEnabled(enabled);
   }
 
 }
