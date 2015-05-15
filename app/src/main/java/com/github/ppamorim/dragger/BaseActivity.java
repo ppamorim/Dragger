@@ -29,6 +29,10 @@ public class BaseActivity extends AbstractToolbarActivity {
     startActivity(new Intent(this, ListActivity.class));
   }
 
+  @OnClick(R.id.activity_list) void onActivityListClick() {
+    startActivity(new Intent(this, ActivityListActivity.class));
+  }
+
   @OnClick(R.id.menu) void onMenuClick() {
     startActivity(new Intent(this, BaseActivity.class));
   }

@@ -17,6 +17,7 @@ package com.github.ppamorim.dragger;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.github.ppamorim.dragger.app.R;
 
@@ -39,7 +40,8 @@ public class PanelActivity extends AbstractActivity {
     super.onPostCreate(savedInstanceState);
     draggerPanel.initializeView();
     draggerPanel.addViewOnDrag(layoutInflater.inflate(R.layout.layout_content, draggerPanel, false));
-    draggerPanel.addViewOnShadow(layoutInflater.inflate(R.layout.layout_shadow, draggerPanel, false));
+    draggerPanel.addViewOnShadow(
+        layoutInflater.inflate(R.layout.layout_shadow, draggerPanel, false));
   }
 
   private void configLayoutInflater() {

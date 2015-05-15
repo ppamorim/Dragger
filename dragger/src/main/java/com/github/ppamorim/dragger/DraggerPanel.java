@@ -26,6 +26,10 @@ public class DraggerPanel extends FrameLayout {
   private static final float DEFAULT_DRAG_LIMIT = 0.5f;
   private static final int DEFAULT_DRAG_POSITION = DraggerPosition.TOP.ordinal();
 
+  private TypedArray attributes;
+  private float draggerLimit;
+  private int draggerPosition;
+
   private DraggerView draggerView;
   private FrameLayout dragView;
   private FrameLayout shadowView;
@@ -65,10 +69,12 @@ public class DraggerPanel extends FrameLayout {
   }
 
   private void initializeAttributes(AttributeSet attrs) {
-    TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.dragger_layout);
-    setDraggerLimit(attributes.getFloat(R.styleable.dragger_layout_drag_limit, DEFAULT_DRAG_LIMIT));
-    setDraggerPosition(DraggerPosition.getDragPosition(
-        attributes.getInt(R.styleable.dragger_layout_drag_position, DEFAULT_DRAG_POSITION)));
+    attributes = getContext().obtainStyledAttributes(attrs, R.styleable.dragger_layout);
+    if(attributes != null) {
+      draggerLimit = attributes.getFloat(R.styleable.dragger_layout_drag_limit, DEFAULT_DRAG_LIMIT);
+      draggerPosition =
+          attributes.getInt(R.styleable.dragger_layout_drag_position, DEFAULT_DRAG_POSITION);
+    }
   }
 
   /**
@@ -80,6 +86,10 @@ public class DraggerPanel extends FrameLayout {
     draggerView = (DraggerView) findViewById(R.id.dragger_view);
     dragView = (FrameLayout) findViewById(R.id.drag_view);
     shadowView = (FrameLayout) findViewById(R.id.shadow_view);
+    if(attributes != null) {
+      setDraggerLimit(draggerLimit);
+      setDraggerPosition(DraggerPosition.getDragPosition(draggerPosition));
+    }
   }
 
   public void addViewOnDrag(View view) {
