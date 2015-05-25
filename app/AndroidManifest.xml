@@ -19,8 +19,10 @@
             </intent-filter>
         </activity>
 
+      <activity android:name="com.github.ppamorim.dragger.LazyActivity"/>
       <activity android:name="com.github.ppamorim.dragger.EditTextActivity"/>
       <activity android:name="com.github.ppamorim.dragger.ListActivity"/>
+      <activity android:name="com.github.ppamorim.dragger.ActivityListActivity"/>
       <activity android:name="com.github.ppamorim.dragger.ImageActivity"/>
       <activity android:name="com.github.ppamorim.dragger.PanelActivity"/>
       <activity android:name="com.github.ppamorim.dragger.DraggingActivity"/>

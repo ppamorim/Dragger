@@ -21,12 +21,20 @@ import com.github.ppamorim.dragger.app.R;
 
 public class BaseActivity extends AbstractToolbarActivity {
 
+  @OnClick(R.id.lazy) void onLazyClick() {
+    startActivity(new Intent(this, LazyActivity.class));
+  }
+
   @OnClick(R.id.edittext) void onEditTextClick() {
     startActivity(new Intent(this, EditTextActivity.class));
   }
 
   @OnClick(R.id.list) void onListClick() {
     startActivity(new Intent(this, ListActivity.class));
+  }
+
+  @OnClick(R.id.activity_list) void onActivityListClick() {
+    startActivity(new Intent(this, ActivityListActivity.class));
   }
 
   @OnClick(R.id.menu) void onMenuClick() {

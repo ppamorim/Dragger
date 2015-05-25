@@ -16,19 +16,12 @@
 package com.github.ppamorim.dragger;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.FrameLayout;
 
-public class DraggerPanel extends FrameLayout {
-
-  private static final float DEFAULT_DRAG_LIMIT = 0.5f;
-  private static final int DEFAULT_DRAG_POSITION = DraggerPosition.TOP.ordinal();
+public class DraggerPanel extends BaseDraggerPanel {
 
   private DraggerView draggerView;
-  private FrameLayout dragView;
-  private FrameLayout shadowView;
 
   public DraggerPanel(Context context) {
     super(context);
@@ -64,38 +57,18 @@ public class DraggerPanel extends FrameLayout {
     draggerView.setSlideEnabled(enabled);
   }
 
-  private void initializeAttributes(AttributeSet attrs) {
-    TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.dragger_layout);
-    setDraggerLimit(attributes.getFloat(R.styleable.dragger_layout_drag_limit, DEFAULT_DRAG_LIMIT));
-    setDraggerPosition(DraggerPosition.getDragPosition(
-        attributes.getInt(R.styleable.dragger_layout_drag_position, DEFAULT_DRAG_POSITION)));
-  }
-
-  /**
-   * Apply all the custom view configuration and inflate the main view. The view won't be
-   * visible if this method is not called.
-   */
   public void initializeView() {
-    inflate(getContext(), R.layout.dragger_panel, this);
+    super.initializeView(R.layout.dragger_panel);
     draggerView = (DraggerView) findViewById(R.id.dragger_view);
-    dragView = (FrameLayout) findViewById(R.id.drag_view);
-    shadowView = (FrameLayout) findViewById(R.id.shadow_view);
+    if (attributes != null) {
+      setDraggerLimit(draggerLimit);
+      setDraggerPosition(DraggerPosition.getDragPosition(draggerPosition));
+    }
   }
 
   public void addViewOnDrag(View view) {
     eraseViewIfNeeded(dragView);
     dragView.addView(view);
-  }
-
-  public void addViewOnShadow(View view) {
-    eraseViewIfNeeded(shadowView);
-    shadowView.addView(view);
-  }
-
-  private void eraseViewIfNeeded(FrameLayout frameLayout) {
-    if (frameLayout.getChildCount() > 0) {
-      frameLayout.removeAllViews();
-    }
   }
 
   public void closeActivity() {

@@ -3,7 +3,6 @@ apply plugin: 'checkstyle'
 
 dependencies {
   compile 'com.android.support:appcompat-v7:22.1.1'
-  compile 'com.nineoldandroids:library:2.4.0'
 }
 
 android {

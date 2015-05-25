@@ -39,7 +39,8 @@ public class PanelActivity extends AbstractActivity {
     super.onPostCreate(savedInstanceState);
     draggerPanel.initializeView();
     draggerPanel.addViewOnDrag(layoutInflater.inflate(R.layout.layout_content, draggerPanel, false));
-    draggerPanel.addViewOnShadow(layoutInflater.inflate(R.layout.layout_shadow, draggerPanel, false));
+    draggerPanel.addViewOnShadow(
+        layoutInflater.inflate(R.layout.layout_shadow, draggerPanel, false));
   }
 
   private void configLayoutInflater() {

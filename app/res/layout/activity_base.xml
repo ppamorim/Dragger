@@ -9,85 +9,107 @@
 
     <include layout="@layout/toolbar"/>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/edittext"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/open_edittext"
-            android:padding="16dp"/>
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/open_list"
-            android:padding="16dp"/>
+            <Button
+                android:id="@+id/lazy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/open_lazy"
+                android:padding="16dp"/>
 
-        <Button
-            android:id="@+id/menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/open_menu"
-            android:padding="16dp"/>
+            <Button
+                android:id="@+id/edittext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/open_edittext"
+                android:padding="16dp"/>
 
-        <Button
-            android:id="@+id/left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/open_left"
-            android:padding="16dp"/>
+            <Button
+                android:id="@+id/list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/open_list"
+                android:padding="16dp"/>
 
-        <Button
-            android:id="@+id/right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/open_right"
-            android:padding="16dp"/>
+            <Button
+                android:id="@+id/activity_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/open_activity_list"
+                android:padding="16dp"/>
 
-        <Button
-            android:id="@+id/top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/open_top"
-            android:padding="16dp"/>
+            <Button
+                android:id="@+id/menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/open_menu"
+                android:padding="16dp"/>
 
-        <Button
-            android:id="@+id/bottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/open_bottom"
-            android:padding="16dp"/>
+            <Button
+                android:id="@+id/left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/open_left"
+                android:padding="16dp"/>
 
-        <Button
-            android:id="@+id/panel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/open_panel"
-            android:padding="16dp"/>
+            <Button
+                android:id="@+id/right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/open_right"
+                android:padding="16dp"/>
 
-        <Button
-            android:id="@+id/activity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/open_activity"
-            android:padding="16dp"/>
+            <Button
+                android:id="@+id/top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/open_top"
+                android:padding="16dp"/>
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/open_bottom"
+                android:padding="16dp"/>
+
+            <Button
+                android:id="@+id/panel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/open_panel"
+                android:padding="16dp"/>
+
+            <Button
+                android:id="@+id/activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/open_activity"
+                android:padding="16dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
