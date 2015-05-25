@@ -37,9 +37,9 @@ public class ImageActivity extends AppCompatActivity {
     ButterKnife.inject(this);
     configToolbar();
     configIntents();
-    if (savedInstanceState != null) {
-      draggerView.setCanAnimate(savedInstanceState.getBoolean(CAN_ANIMATE));
-    }
+    //if (savedInstanceState != null) {
+    //  draggerView.setCanAnimate(savedInstanceState.getBoolean(CAN_ANIMATE));
+    //}
   }
 
   @Override protected void onSaveInstanceState(Bundle outState) {
