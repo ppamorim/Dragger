@@ -36,7 +36,7 @@ public class ActivityListActivity extends DraggerActivity {
     recyclerView.setHasFixedSize(true);
     recyclerView.setItemAnimator(new DefaultItemAnimator());
     LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+    layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
     recyclerView.setLayoutManager(layoutManager);
     recyclerView.setAdapter(new RendererAdapter(texts, new RendererBuilder(new Factory())));
     recyclerView.setScrollViewCallbacks(observableScrollViewCallbacks);
@@ -46,7 +46,7 @@ public class ActivityListActivity extends DraggerActivity {
     new ObservableScrollViewCallbacks() {
       @Override public void onScrollChanged(int scrollY, boolean firstScroll,
           boolean dragging) {
-        setSlideEnabled(scrollY != 0);
+        setSlideEnabled(scrollY == 0);
       }
       @Override public void onDownMotionEvent() { }
       @Override public void onUpOrCancelMotionEvent(ScrollState scrollState) { }

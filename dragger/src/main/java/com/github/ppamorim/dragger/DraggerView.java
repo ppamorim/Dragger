@@ -118,7 +118,7 @@ public class DraggerView extends FrameLayout {
   }
 
   @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
-    if (!isEnabled() || canSlide()) {
+    if (!isEnabled() || !canSlide()) {
       return false;
     }
     final int action = MotionEventCompat.getActionMasked(ev);
@@ -280,14 +280,18 @@ public class DraggerView extends FrameLayout {
     }, DELAY);
   }
 
-  private void showViews() {
+  protected void showViews() {
     setViewAlpha(dragView, MAX_ALPHA);
     shadowView.setVisibility(VISIBLE);
   }
 
-  private void openActivity() {
+  public void openActivity() {
     animationFinish = true;
     moveToCenter();
+  }
+
+  public void setCanFinish(Boolean canFinish) {
+    this.canFinish = canFinish;
   }
 
   public void closeActivity() {
