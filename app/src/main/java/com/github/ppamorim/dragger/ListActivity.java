@@ -44,6 +44,7 @@ public class ListActivity extends AbstractToolbarActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    draggerView.setAnimationDuration(900, 500);
     configRecyclerView();
   }
 

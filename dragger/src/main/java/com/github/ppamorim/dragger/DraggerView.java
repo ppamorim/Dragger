@@ -21,7 +21,6 @@ import android.content.res.TypedArray;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -155,6 +154,14 @@ public class DraggerView extends FrameLayout {
     if (!isInEditMode() && dragHelper.continueSettling(true)) {
       ViewCompat.postInvalidateOnAnimation(this);
     }
+  }
+
+  public void setCanAnimate(boolean canAnimate) {
+    animationFinish = !canAnimate;
+  }
+
+  public boolean getCanAnimate() {
+    return !animationFinish;
   }
 
   private float getVerticalDragRange() {
@@ -375,6 +382,16 @@ public class DraggerView extends FrameLayout {
         }
       }
     }
+  }
+
+  public void setAnimationDuration(int baseSettleDuration, int maxSettleDuration) {
+    dragHelper.setBaseSettleDuration(baseSettleDuration);
+    dragHelper.setMaxSettleDuration(maxSettleDuration);
+  }
+
+  public void setAnimationDuration(int miliseconds, float multipler) {
+    dragHelper.setBaseSettleDuration(miliseconds);
+    dragHelper.setMaxSettleDuration((int) (miliseconds * multipler));
   }
 
   private DraggerHelperListener draggerListener = new DraggerHelperListener() {
