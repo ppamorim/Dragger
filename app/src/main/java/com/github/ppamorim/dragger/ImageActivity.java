@@ -25,6 +25,7 @@ import com.github.ppamorim.dragger.app.R;
 
 public class ImageActivity extends AppCompatActivity {
 
+  private static final String CAN_ANIMATE = "can_animate";
   public static final String DRAG_POSITION = "drag_position";
 
   @InjectView(R.id.toolbar) Toolbar toolbar;
@@ -36,6 +37,14 @@ public class ImageActivity extends AppCompatActivity {
     ButterKnife.inject(this);
     configToolbar();
     configIntents();
+    if(savedInstanceState != null) {
+      draggerView.setCanAnimate(savedInstanceState.getBoolean(CAN_ANIMATE));
+    }
+  }
+
+  @Override protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putBoolean(CAN_ANIMATE, draggerView.getCanAnimate());
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {

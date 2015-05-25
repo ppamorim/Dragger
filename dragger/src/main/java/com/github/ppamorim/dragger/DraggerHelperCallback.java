@@ -15,7 +15,6 @@
 */
 package com.github.ppamorim.dragger;
 
-import android.support.v4.widget.ViewDragHelper;
 import android.view.View;
 
 public class DraggerHelperCallback extends ViewDragHelper.Callback {

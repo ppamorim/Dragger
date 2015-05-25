@@ -75,4 +75,12 @@ public class DraggerPanel extends BaseDraggerPanel {
     draggerView.closeActivity();
   }
 
+  public void setAnimationDuration(int baseSettleDuration, int maxSettleDuration) {
+    draggerView.setAnimationDuration(baseSettleDuration, maxSettleDuration);
+  }
+
+  public void setAnimationDuration(int miliseconds, float multipler) {
+    draggerView.setAnimationDuration(miliseconds, multipler);
+  }
+
 }
