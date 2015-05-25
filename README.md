@@ -112,7 +112,11 @@ dependencies {
 ```
 
 
+<<<<<<< HEAD
 You will use with lists(RecyclerView, List/GridView, ScrollView)?
+=======
+Will you use with lists(RecyclerView, List/GridView, ScrollView)?
+>>>>>>> c453eeab671440906f87ca043f66f3ecff19a97f
 --------------------------------------------------------------------
 
 I decided that need to be Out-Of-Box, then...
