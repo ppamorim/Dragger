@@ -26,7 +26,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-import com.nineoldandroids.view.ViewHelper;
 
 /**
  * Class created to extends a FrameLayout, that's a root of the view
@@ -249,20 +248,20 @@ public class DraggerView extends FrameLayout {
     switch (dragPosition) {
       case LEFT:
         parentSize = dragView.getWidth();
-        viewAxisPosition = -ViewHelper.getX(dragView) + (parentSize * dragLimit);
+        viewAxisPosition = -ViewCompat.getX(dragView) + (parentSize * dragLimit);
         break;
       case RIGHT:
         parentSize = dragView.getWidth();
-        viewAxisPosition = ViewHelper.getX(dragView) + (parentSize * dragLimit);
+        viewAxisPosition = ViewCompat.getX(dragView) + (parentSize * dragLimit);
         break;
       case TOP:
       default:
         parentSize = dragView.getHeight();
-        viewAxisPosition = ViewHelper.getY(dragView) + (parentSize * dragLimit);
+        viewAxisPosition = ViewCompat.getY(dragView) + (parentSize * dragLimit);
         break;
       case BOTTOM:
         parentSize = dragView.getHeight();
-        viewAxisPosition = -ViewHelper.getY(dragView) + (parentSize * dragLimit);
+        viewAxisPosition = -ViewCompat.getY(dragView) + (parentSize * dragLimit);
         break;
     }
     return parentSize < viewAxisPosition;
@@ -354,7 +353,7 @@ public class DraggerView extends FrameLayout {
   }
 
   private void setViewAlpha(View view, float alpha) {
-    ViewHelper.setAlpha(view, alpha);
+    ViewCompat.setAlpha(view, alpha);
   }
 
   private boolean smoothSlideTo(View view, int x, int y) {
@@ -385,7 +384,7 @@ public class DraggerView extends FrameLayout {
     }
 
     @Override public void onViewPositionChanged(float dragValue) {
-      ViewHelper.setAlpha(shadowView, MAX_ALPHA - dragValue);
+      ViewCompat.setAlpha(shadowView, MAX_ALPHA - dragValue);
     }
 
     @Override public float dragVerticalDragRange() {
