@@ -17,7 +17,6 @@ package com.github.ppamorim.dragger;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.github.ppamorim.dragger.app.R;
 

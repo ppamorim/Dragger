@@ -15,13 +15,8 @@
 */
 package com.github.ppamorim.dragger;
 
-import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.View;
+public class DraggerActivity extends BaseDraggerActivity {
 
-public class DraggerActivity extends AppCompatActivity {
-
-  private int shadowResID = -1;
   private DraggerPanel draggerPanel;
 
   @Override public void setContentView(int layoutResID) {
@@ -32,10 +27,6 @@ public class DraggerActivity extends AppCompatActivity {
 
   public DraggerPanel getDraggerPanel() {
     return draggerPanel;
-  }
-
-  public void setShadowView(int shadowResID) {
-    this.shadowResID = shadowResID;
   }
 
   private void configDraggerView() {
@@ -49,10 +40,6 @@ public class DraggerActivity extends AppCompatActivity {
       shadowResID = R.layout.layout_shadow;
     }
     draggerPanel.addViewOnShadow(inflateLayout(shadowResID));
-  }
-
-  private View inflateLayout(int layoutResID) {
-    return LayoutInflater.from(this).inflate(layoutResID, null);
   }
 
   public void setDraggerPosition(DraggerPosition dragPosition) {
