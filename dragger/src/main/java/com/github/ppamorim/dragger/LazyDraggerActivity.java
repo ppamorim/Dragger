@@ -16,7 +16,7 @@ public class LazyDraggerActivity extends BaseDraggerActivity {
 
   private void configDraggerView() {
     lazyDraggerPanel = new LazyDraggerPanel(this);
-    lazyDraggerPanel.initializeView(R.layout.lazy_dragger_panel);
+    lazyDraggerPanel.initializeView();
   }
 
   private void configViews(int layoutResID) {

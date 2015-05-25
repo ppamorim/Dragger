@@ -1,6 +1,7 @@
 <resources>
   <string name="app_name">Dragger</string>
   <string name="hi">Hi!</string>
+  <string name="open_lazy">Lazy</string>
   <string name="open_edittext">EditText</string>
   <string name="open_list">List</string>
   <string name="open_activity_list">Activity List</string>

@@ -31,7 +31,7 @@ public class DraggerActivity extends BaseDraggerActivity {
 
   private void configDraggerView() {
     draggerPanel = new DraggerPanel(this);
-    draggerPanel.initializeView(R.layout.dragger_panel);
+    draggerPanel.initializeView();
   }
 
   private void configViews(int layoutResID) {

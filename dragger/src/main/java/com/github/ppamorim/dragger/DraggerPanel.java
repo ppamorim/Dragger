@@ -57,8 +57,8 @@ public class DraggerPanel extends BaseDraggerPanel {
     draggerView.setSlideEnabled(enabled);
   }
 
-  @Override public void initializeView(int layoutId) {
-    super.initializeView(layoutId);
+  public void initializeView() {
+    super.initializeView(R.layout.dragger_panel);
     draggerView = (DraggerView) findViewById(R.id.dragger_view);
     if(attributes != null) {
       setDraggerLimit(draggerLimit);
