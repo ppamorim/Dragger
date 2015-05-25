@@ -321,13 +321,23 @@ public class ViewDragHelper {
     this.maxSettleDuration = maxSettleDuration;
   }
 
+  ///**
+  // * Interpolator defining the animation curve for mScroller
+  // */
+  //private static final Interpolator interpolation = new Interpolator() {
+  //  public float getInterpolation(float t) {
+  //    t -= 1.0f;
+  //    return t * t * t * t * t + 1.0f;
+  //  }
+  //};
+
   /**
    * Interpolator defining the animation curve for mScroller
    */
   private static final Interpolator interpolation = new Interpolator() {
     public float getInterpolation(float t) {
       t -= 1.0f;
-      return t * t * t * t * t + 1.0f;
+      return (float) (Math.pow(t, 5) + 1.0f);
     }
   };
 
