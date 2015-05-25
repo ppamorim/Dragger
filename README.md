@@ -17,7 +17,6 @@ This library should work on API 10 (but not tested yet).
 Usage
 -----
 
-
 You can use this library like a view, you just need to do the following:
 
 * 1. Add ''DraggerView'' view to your root layout and add two layouts inside it.
@@ -78,6 +77,8 @@ public class YourActivity extends DraggerActivity {
 }
 ```
 
+Now you can control the slide of the view, just use the method expand() when you want.
+
 Sample
 ------
 
@@ -89,7 +90,7 @@ Sample
 Import dependency
 --------------------------------
 
-This library uses `nineoldandroids:2.4.0` and `appcompat-v7:21.0.3`.
+This library use `appcompat-v7:22.1.1`.
 
 But why not to add in MavenCentral?
 Because it is so much bureaucratic.
@@ -107,12 +108,12 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.ppamorim:dragger:1.0.5.1'
+  compile 'com.github.ppamorim:dragger:1.0.5.2'
 }
 ```
 
 
-You will use with lists(RecyclerView, List/GridView, ScrollView)?
+Will you use with lists(RecyclerView, List/GridView, ScrollView)?
 --------------------------------------------------------------------
 
 I decided that need to be Out-Of-Box, then...
