@@ -44,7 +44,7 @@ public class LazyDraggerPanel extends BaseDraggerPanel {
   public void initializeView() {
     super.initializeView(R.layout.lazy_dragger_panel);
     lazyDraggerView = (LazyDraggerView) findViewById(R.id.dragger_view);
-    if(attributes != null) {
+    if (attributes != null) {
       setLazyDraggerLimit(draggerLimit);
       setLazyDraggerPosition(DraggerPosition.getDragPosition(draggerPosition));
     }

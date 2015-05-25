@@ -60,7 +60,7 @@ public class DraggerPanel extends BaseDraggerPanel {
   public void initializeView() {
     super.initializeView(R.layout.dragger_panel);
     draggerView = (DraggerView) findViewById(R.id.dragger_view);
-    if(attributes != null) {
+    if (attributes != null) {
       setDraggerLimit(draggerLimit);
       setDraggerPosition(DraggerPosition.getDragPosition(draggerPosition));
     }

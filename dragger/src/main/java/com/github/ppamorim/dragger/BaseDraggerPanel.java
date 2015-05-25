@@ -58,7 +58,7 @@ public class BaseDraggerPanel extends FrameLayout {
 
   public void initializeAttributes(AttributeSet attrs) {
     attributes = getContext().obtainStyledAttributes(attrs, R.styleable.dragger_layout);
-    if(attributes != null) {
+    if (attributes != null) {
       draggerLimit = attributes.getFloat(R.styleable.dragger_layout_drag_limit, DEFAULT_DRAG_LIMIT);
       draggerPosition =
           attributes.getInt(R.styleable.dragger_layout_drag_position, DEFAULT_DRAG_POSITION);
