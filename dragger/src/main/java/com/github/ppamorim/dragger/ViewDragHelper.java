@@ -334,7 +334,7 @@ public class ViewDragHelper {
   /**
    * Interpolator defining the animation curve for mScroller
    */
-  private static final Interpolator interpolation = new Interpolator() {
+  private static final Interpolator INTERPOLATOR = new Interpolator() {
     public float getInterpolation(float t) {
       t -= 1.0f;
       return (float) (Math.pow(t, 5) + 1.0f);
@@ -399,7 +399,7 @@ public class ViewDragHelper {
     mTouchSlop = vc.getScaledTouchSlop();
     mMaxVelocity = vc.getScaledMaximumFlingVelocity();
     mMinVelocity = vc.getScaledMinimumFlingVelocity();
-    mScroller = ScrollerCompat.create(context, interpolation);
+    mScroller = ScrollerCompat.create(context, INTERPOLATOR);
   }
 
   /**
@@ -970,6 +970,10 @@ public class ViewDragHelper {
     mVelocityTracker.addMovement(ev);
 
     switch (action) {
+
+      default:
+        break;
+
       case MotionEvent.ACTION_DOWN: {
         final float x = ev.getX();
         final float y = ev.getY();
@@ -1473,8 +1477,8 @@ public class ViewDragHelper {
     final int childCount = mParentView.getChildCount();
     for (int i = childCount - 1; i >= 0; i--) {
       final View child = mParentView.getChildAt(mCallback.getOrderedChildIndex(i));
-      if (x >= child.getLeft() && x < child.getRight() &&
-          y >= child.getTop() && y < child.getBottom()) {
+      if (x >= child.getLeft() && x < child.getRight()
+          && y >= child.getTop() && y < child.getBottom()) {
         return child;
       }
     }
