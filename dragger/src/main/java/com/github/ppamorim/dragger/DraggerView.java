@@ -391,7 +391,7 @@ public class DraggerView extends FrameLayout {
 
   public void setAnimationDuration(int miliseconds, float multipler) {
     dragHelper.setBaseSettleDuration(miliseconds);
-    dragHelper.setMaxSettleDuration((int) (miliseconds*multipler));
+    dragHelper.setMaxSettleDuration((int) (miliseconds * multipler));
   }
 
   private DraggerHelperListener draggerListener = new DraggerHelperListener() {
