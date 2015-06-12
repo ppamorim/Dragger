@@ -17,14 +17,4 @@ public class LazyDraggerView extends DraggerView {
     super(context, attrs, defStyle);
   }
 
-  @Override public void expandWithDelay() { }
-
-  public void expand() {
-    if (isEnabled()) {
-      showViews();
-      openActivity();
-      setCanFinish(true);
-    }
-  }
-
 }

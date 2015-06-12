@@ -4,6 +4,8 @@
   <declare-styleable name="dragger_layout">
     <attr name="drag_view_id" format="reference"/>
     <attr name="shadow_view_id" format="reference"/>
+    <attr name="tension" format="reference|integer"/>
+    <attr name="friction" format="reference|integer"/>
     <attr name="drag_limit" format="float"/>
 
     <attr name="drag_position" format="enum">

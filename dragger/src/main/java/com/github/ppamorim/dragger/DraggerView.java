@@ -25,6 +25,11 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import com.facebook.rebound.Spring;
+import com.facebook.rebound.SpringConfig;
+import com.facebook.rebound.SpringListener;
+import com.facebook.rebound.SpringSystem;
+import com.facebook.rebound.SpringUtil;
 
 /**
  * Class created to extends a FrameLayout, that's a root of the view
@@ -35,11 +40,13 @@ import android.widget.FrameLayout;
  */
 public class DraggerView extends FrameLayout {
 
-  private static final int DELAY = 200;
+  private static final int DELAY = 100;
   private static final float SLIDE_IN = 1f;
 
   private static final int MAX_ALPHA = 1;
-  private static final int MIN_ALPHA = 0;
+
+  private static final int DEFAULT_TENSION = 40;
+  private static final int DEFAULT_FRICTION = 6;
 
   private static final float SENSITIVITY = 1.0f;
   private static final float DEFAULT_DRAG_LIMIT = 0.5f;
@@ -53,6 +60,10 @@ public class DraggerView extends FrameLayout {
   private float verticalDragRange;
   private float horizontalDragRange;
   private float dragLimit;
+  private float tension;
+  private float friction;
+  private float progress;
+  private double val;
 
   private TypedArray attributes;
   private DraggerPosition dragPosition;
@@ -63,7 +74,7 @@ public class DraggerView extends FrameLayout {
   private View dragView;
   private View shadowView;
 
-  private Handler handler = new Handler();
+  private static volatile Spring singleton = null;
 
   public DraggerView(Context context) {
     super(context);
@@ -85,7 +96,19 @@ public class DraggerView extends FrameLayout {
       mapGUI(attributes);
       attributes.recycle();
       configDragViewHelper();
+      performAnimation();
     }
+  }
+
+  @Override protected void onAttachedToWindow() {
+    super.onAttachedToWindow();
+    getSpring().addListener(springListener);
+  }
+
+  @Override
+  protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    getSpring().removeListener(springListener);
   }
 
   @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -98,13 +121,6 @@ public class DraggerView extends FrameLayout {
         MeasureSpec.EXACTLY);
     if (dragView != null) {
       dragView.measure(measureWidth, measureHeight);
-      setViewAlpha(dragView, MIN_ALPHA);
-      if (!animationFinish) {
-        closeActivity();
-        expandWithDelay();
-      } else {
-        showViews();
-      }
     }
 
   }
@@ -156,10 +172,6 @@ public class DraggerView extends FrameLayout {
     }
   }
 
-  public void setCanAnimate(boolean canAnimate) {
-    animationFinish = !canAnimate;
-  }
-
   public boolean getCanAnimate() {
     return !animationFinish;
   }
@@ -205,12 +217,22 @@ public class DraggerView extends FrameLayout {
     dragHelperCallback.setDragPosition(dragPosition);
   }
 
+  public void setTension(float tension) {
+    this.tension = tension;
+  }
+
+  public void setFriction(float friction) {
+    this.friction = friction;
+  }
+
   private void initializeAttributes(AttributeSet attrs) {
     TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.dragger_layout);
     this.dragLimit = attributes.getFloat(R.styleable.dragger_layout_drag_limit,
         DEFAULT_DRAG_LIMIT);
     this.dragPosition = DraggerPosition.getDragPosition(
         attributes.getInt(R.styleable.dragger_layout_drag_position, DEFAULT_DRAG_POSITION));
+    this.tension = attributes.getInteger(R.styleable.dragger_layout_tension, DEFAULT_TENSION);
+    this.friction = attributes.getInteger(R.styleable.dragger_layout_friction, DEFAULT_FRICTION);
     this.attributes = attributes;
   }
 
@@ -234,6 +256,20 @@ public class DraggerView extends FrameLayout {
     } else {
       throw new IllegalStateException("DraggerView must contains only two direct child");
     }
+  }
+
+  private Spring getSpring() {
+    if(singleton == null) {
+      synchronized (Spring.class) {
+        if(singleton == null) {
+          singleton = SpringSystem
+              .create()
+              .createSpring()
+              .setSpringConfig(SpringConfig.fromOrigamiTensionAndFriction(tension, friction));
+        }
+      }
+    }
+    return singleton;
   }
 
   private boolean isViewHit(View view, int x, int y) {
@@ -274,21 +310,18 @@ public class DraggerView extends FrameLayout {
     return parentSize < viewAxisPosition;
   }
 
-  public void expandWithDelay() {
-    handler.postDelayed(new Runnable() {
+  public void performAnimation() {
+    post(new Runnable() {
       @Override public void run() {
-        if (isEnabled()) {
-          showViews();
-          openActivity();
-          canFinish = true;
-        }
-      }
-    }, DELAY);
-  }
+        getSpring().setCurrentValue(1);
 
-  protected void showViews() {
-    setViewAlpha(dragView, MAX_ALPHA);
-    shadowView.setVisibility(VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+          @Override public void run() {
+            getSpring().setEndValue(0);
+          }
+        }, DELAY);
+      }
+    });
   }
 
   public void openActivity() {
@@ -372,14 +405,12 @@ public class DraggerView extends FrameLayout {
   }
 
   private void finish() {
-    if (canFinish) {
-      Context context = getContext();
-      if (context instanceof Activity) {
-        Activity activity = (Activity) context;
-        if (!activity.isFinishing()) {
-          activity.overridePendingTransition(0, android.R.anim.fade_out);
-          activity.finish();
-        }
+    Context context = getContext();
+    if (context instanceof Activity) {
+      Activity activity = (Activity) context;
+      if (!activity.isFinishing()) {
+        activity.overridePendingTransition(0, android.R.anim.fade_out);
+        activity.finish();
       }
     }
   }
@@ -393,6 +424,44 @@ public class DraggerView extends FrameLayout {
     dragHelper.setBaseSettleDuration(miliseconds);
     dragHelper.setMaxSettleDuration((int) (miliseconds * multipler));
   }
+
+  private SpringListener springListener = new SpringListener() {
+    @Override public void onSpringUpdate(Spring spring) {
+
+      val = spring.getCurrentValue();
+      switch (dragPosition) {
+        case LEFT:
+          progress = (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, -dragView.getWidth());
+          ViewCompat.setTranslationX(dragView, progress);
+          break;
+        case RIGHT:
+          progress = (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, dragView.getWidth());
+          ViewCompat.setTranslationX(dragView, progress);
+          break;
+        case TOP:
+          progress = (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, dragView.getHeight());
+          ViewCompat.setTranslationY(dragView, progress);
+          break;
+        case BOTTOM:
+          progress = (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, -dragView.getHeight());
+          ViewCompat.setTranslationY(dragView, progress);
+          break;
+      }
+
+      if (draggerCallback != null) {
+        draggerCallback.onProgress(spring.getCurrentValue());
+      }
+    }
+
+    @Override public void onSpringAtRest(Spring spring) {
+      if(draggerCallback != null) {
+        draggerCallback.notifyOpen();
+      }
+    }
+
+    @Override public void onSpringActivate(Spring spring) { }
+    @Override public void onSpringEndStateChange(Spring spring) { }
+  };
 
   private DraggerHelperListener draggerListener = new DraggerHelperListener() {
 

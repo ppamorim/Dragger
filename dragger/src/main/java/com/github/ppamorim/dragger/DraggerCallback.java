@@ -16,6 +16,7 @@
 package com.github.ppamorim.dragger;
 
 public interface DraggerCallback {
+  void onProgress(double progress);
   void notifyOpen();
   void notifyClose();
 }

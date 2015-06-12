@@ -50,6 +50,14 @@ public class DraggerActivity extends BaseDraggerActivity {
     draggerPanel.setDraggerLimit(dragLimit);
   }
 
+  public void setTension(float tension) {
+    draggerPanel.setTension(tension);
+  }
+
+  public void setFriction(float friction) {
+    draggerPanel.setFriction(friction);
+  }
+
   public void setDraggerCallback(DraggerCallback draggerCallback) {
     draggerPanel.setDraggerCallback(draggerCallback);
   }

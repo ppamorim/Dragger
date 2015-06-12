@@ -49,6 +49,14 @@ public class DraggerPanel extends BaseDraggerPanel {
     draggerView.setDraggerPosition(dragPosition);
   }
 
+  public void setTension(float tension) {
+    draggerView.setTension(tension);
+  }
+
+  public void setFriction(float friction) {
+    draggerView.setFriction(friction);
+  }
+
   public void setDraggerCallback(DraggerCallback draggerCallback) {
     draggerView.setDraggerCallback(draggerCallback);
   }

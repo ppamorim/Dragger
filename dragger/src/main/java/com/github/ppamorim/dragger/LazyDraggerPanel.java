@@ -55,7 +55,7 @@ public class LazyDraggerPanel extends BaseDraggerPanel {
   }
 
   public void expand() {
-    lazyDraggerView.expand();
+    lazyDraggerView.performAnimation();
   }
 
   public void setAnimationDuration(int baseSettleDuration, int maxSettleDuration) {
