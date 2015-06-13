@@ -15,7 +15,6 @@
 */
 package com.github.ppamorim.dragger;
 
-import android.os.Bundle;
 import android.view.MenuItem;
 import butterknife.InjectView;
 import com.github.ppamorim.dragger.app.R;
@@ -32,11 +31,6 @@ public class EditTextActivity extends AbstractToolbarActivity {
     return R.layout.activity_edittext;
   }
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    overridePendingTransition(0, 0);
-    super.onCreate(savedInstanceState);
-  }
-
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case android.R.id.home:
@@ -50,6 +44,5 @@ public class EditTextActivity extends AbstractToolbarActivity {
   @Override public void onBackPressed() {
     draggerView.closeActivity();
   }
-
 
 }

@@ -76,19 +76,19 @@ public class BaseActivity extends AbstractToolbarActivity {
         startDraggerActivity(DraggerPosition.BOTTOM);
         break;
       case 4:
-        startActivity(new Intent(this, PanelActivity.class));
+        startActivityNoAnimation(new Intent(this, PanelActivity.class));
         break;
       case 5:
-        startActivity(new Intent(this, DraggingActivity.class));
+        startActivityNoAnimation(new Intent(this, DraggingActivity.class));
         break;
       case 6:
-        startActivity(new Intent(this, EditTextActivity.class));
+        startActivityNoAnimation(new Intent(this, EditTextActivity.class));
         break;
       case 7:
-        startActivity(new Intent(this, ActivityListActivity.class));
+        startActivityNoAnimation(new Intent(this, ActivityListActivity.class));
         break;
       case 8:
-        startActivity(new Intent(this, LazyActivity.class));
+        startActivityNoAnimation(new Intent(this, LazyActivity.class));
         break;
       default:
         break;
@@ -97,8 +97,12 @@ public class BaseActivity extends AbstractToolbarActivity {
 
   private void startDraggerActivity(DraggerPosition dragPosition) {
     Intent intent = new Intent(this, ImageActivity.class);
-    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
     intent.putExtra(ImageActivity.DRAG_POSITION, dragPosition);
+    startActivityNoAnimation(intent);
+  }
+
+  private void startActivityNoAnimation(Intent intent) {
+    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
     startActivity(intent);
   }
 

@@ -22,9 +22,15 @@ import butterknife.ButterKnife;
 public abstract class AbstractActivity extends AppCompatActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
+    overridePendingTransition(0, 0);
     super.onCreate(savedInstanceState);
     setContentView(getContentViewId());
     ButterKnife.inject(this);
+  }
+
+  @Override protected void onPause() {
+    overridePendingTransition(0, 0);
+    super.onPause();
   }
 
   protected abstract int getContentViewId();

@@ -8,6 +8,7 @@ import com.github.ppamorim.dragger.app.R;
 public class LazyActivity extends LazyDraggerActivity {
 
   @Override public void onCreate(Bundle savedInstanceState) {
+    overridePendingTransition(0, 0);
     super.onCreate(savedInstanceState);
     setContentView(R.layout.layout_content);
     ButterKnife.inject(this);
@@ -17,7 +18,7 @@ public class LazyActivity extends LazyDraggerActivity {
     super.onPostCreate(savedInstanceState);
     new Handler().postDelayed(new Runnable() {
       @Override public void run() {
-        expand();
+        show();
       }
     }, 1000);
   }

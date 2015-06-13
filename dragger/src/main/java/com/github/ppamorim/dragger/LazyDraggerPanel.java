@@ -37,6 +37,10 @@ public class LazyDraggerPanel extends BaseDraggerPanel {
     lazyDraggerView.setDraggerCallback(draggerCallback);
   }
 
+  public void config() {
+    lazyDraggerView.setRunAnimationOnFinishInflate(false);
+  }
+
   public void setSlideEnabled(boolean enabled) {
     lazyDraggerView.setSlideEnabled(enabled);
   }
@@ -48,14 +52,15 @@ public class LazyDraggerPanel extends BaseDraggerPanel {
       setLazyDraggerLimit(draggerLimit);
       setLazyDraggerPosition(DraggerPosition.getDragPosition(draggerPosition));
     }
+    config();
   }
 
   public void closeActivity() {
     lazyDraggerView.closeActivity();
   }
 
-  public void expand() {
-    lazyDraggerView.performAnimation();
+  public void show() {
+    lazyDraggerView.show();
   }
 
   public void setAnimationDuration(int baseSettleDuration, int maxSettleDuration) {

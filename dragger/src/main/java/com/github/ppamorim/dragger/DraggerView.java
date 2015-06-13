@@ -53,8 +53,8 @@ public class DraggerView extends FrameLayout {
   private static final int DEFAULT_DRAG_POSITION = DraggerPosition.TOP.getPosition();
   private static final int INVALID_POINTER = -1;
 
+  private boolean runAnimationOnFinishInflate = true;
   private boolean animationFinish = false;
-  private boolean canFinish = false;
   private boolean canSlide = true;
   private int activePointerId = INVALID_POINTER;
   private float verticalDragRange;
@@ -96,7 +96,7 @@ public class DraggerView extends FrameLayout {
       mapGUI(attributes);
       attributes.recycle();
       configDragViewHelper();
-      performAnimation();
+      preparePosition();
     }
   }
 
@@ -170,6 +170,10 @@ public class DraggerView extends FrameLayout {
     if (!isInEditMode() && dragHelper.continueSettling(true)) {
       ViewCompat.postInvalidateOnAnimation(this);
     }
+  }
+
+  public void setRunAnimationOnFinishInflate(boolean runAnimationOnFinishInflate) {
+    this.runAnimationOnFinishInflate = runAnimationOnFinishInflate;
   }
 
   public boolean getCanAnimate() {
@@ -310,27 +314,23 @@ public class DraggerView extends FrameLayout {
     return parentSize < viewAxisPosition;
   }
 
-  public void performAnimation() {
+  public void preparePosition() {
     post(new Runnable() {
       @Override public void run() {
-        getSpring().setCurrentValue(1);
-
-        new Handler().postDelayed(new Runnable() {
-          @Override public void run() {
-            getSpring().setEndValue(0);
-          }
-        }, DELAY);
+        getSpring().setCurrentValue(1).setAtRest();
+        if(runAnimationOnFinishInflate) {
+          show();
+        }
       }
     });
   }
 
-  public void openActivity() {
-    animationFinish = true;
-    moveToCenter();
-  }
-
-  public void setCanFinish(Boolean canFinish) {
-    this.canFinish = canFinish;
+  public void show() {
+    new Handler().postDelayed(new Runnable() {
+      @Override public void run() {
+        getSpring().setEndValue(0);
+      }
+    }, DELAY);
   }
 
   public void closeActivity() {
@@ -390,10 +390,6 @@ public class DraggerView extends FrameLayout {
     if (draggerCallback != null) {
       draggerCallback.notifyClose();
     }
-  }
-
-  private void setViewAlpha(View view, float alpha) {
-    ViewCompat.setAlpha(view, alpha);
   }
 
   private boolean smoothSlideTo(View view, int x, int y) {

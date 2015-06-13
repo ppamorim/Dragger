@@ -25,6 +25,10 @@ public class DraggerActivity extends BaseDraggerActivity {
     super.setContentView(draggerPanel);
   }
 
+  @Override public void onBackPressed() {
+    draggerPanel.closeActivity();
+  }
+
   public DraggerPanel getDraggerPanel() {
     return draggerPanel;
   }

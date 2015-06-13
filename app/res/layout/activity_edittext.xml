@@ -26,8 +26,20 @@ dragger_layout:shadow_view_id="@+id/shadow_view">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:padding="16dp"/>
+        android:textColor="@color/black"
+        android:layout_margin="16dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_margin="16dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_margin="16dp"/>
 
   </LinearLayout>
 

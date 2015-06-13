@@ -50,6 +50,10 @@ public class ListActivity extends AbstractToolbarActivity {
     configRecyclerView();
   }
 
+  @Override public void onBackPressed() {
+    draggerView.closeActivity();
+  }
+
   public void configRecyclerView() {
 
     ArrayList<Renderable> texts = new ArrayList<>();

@@ -16,14 +16,12 @@
 package com.github.ppamorim.dragger;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.github.ppamorim.dragger.app.R;
 
-public class ImageActivity extends AppCompatActivity {
+public class ImageActivity extends AbstractActivity {
 
   private static final String CAN_ANIMATE = "can_animate";
   public static final String DRAG_POSITION = "drag_position";
@@ -31,11 +29,12 @@ public class ImageActivity extends AppCompatActivity {
   @InjectView(R.id.toolbar) Toolbar toolbar;
   @InjectView(R.id.dragger_view) DraggerView draggerView;
 
+  @Override protected int getContentViewId() {
+    return R.layout.activity_dragger;
+  }
+
   @Override protected void onCreate(Bundle savedInstanceState) {
-    overridePendingTransition(0, 0);
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_dragger);
-    ButterKnife.inject(this);
     configToolbar();
     configIntents();
   }

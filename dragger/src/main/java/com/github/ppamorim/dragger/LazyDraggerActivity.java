@@ -10,6 +10,10 @@ public class LazyDraggerActivity extends BaseDraggerActivity {
     super.setContentView(lazyDraggerPanel);
   }
 
+  @Override public void onBackPressed() {
+    lazyDraggerPanel.closeActivity();
+  }
+
   public LazyDraggerPanel getDraggerPanel() {
     return lazyDraggerPanel;
   }
@@ -47,8 +51,8 @@ public class LazyDraggerActivity extends BaseDraggerActivity {
     lazyDraggerPanel.closeActivity();
   }
 
-  public void expand() {
-    lazyDraggerPanel.expand();
+  public void show() {
+    lazyDraggerPanel.show();
   }
 
   public void setAnimationDuration(int baseSettleDuration, int maxSettleDuration) {
