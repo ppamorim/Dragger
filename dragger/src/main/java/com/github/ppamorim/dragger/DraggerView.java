@@ -259,9 +259,9 @@ public class DraggerView extends FrameLayout {
   }
 
   private Spring getSpring() {
-    if(singleton == null) {
+    if (singleton == null) {
       synchronized (Spring.class) {
-        if(singleton == null) {
+        if (singleton == null) {
           singleton = SpringSystem
               .create()
               .createSpring()
@@ -446,6 +446,8 @@ public class DraggerView extends FrameLayout {
           progress = (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, -dragView.getHeight());
           ViewCompat.setTranslationY(dragView, progress);
           break;
+        default:
+          break;
       }
 
       ViewCompat.setAlpha(shadowView,
@@ -457,7 +459,7 @@ public class DraggerView extends FrameLayout {
     }
 
     @Override public void onSpringAtRest(Spring spring) {
-      if(draggerCallback != null) {
+      if (draggerCallback != null) {
         draggerCallback.notifyOpen();
       }
     }
