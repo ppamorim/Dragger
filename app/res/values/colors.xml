@@ -6,4 +6,5 @@
   <color name="gray">#EAEAEA</color>
   <color name="white">#FFFFFF</color>
   <color name="accent">#00B8D4</color>
+  <color name="accent_dark">#00A6BC</color>
 </resources>
