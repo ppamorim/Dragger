@@ -5,4 +5,4 @@
   android:layout_gravity="center"
   android:padding="16dp"
   android:src="@mipmap/dragger"
-  android:background="@color/black_grey"/>
+  android:background="@color/gray"/>

@@ -11,14 +11,13 @@
       android:id="@+id/shadow_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/transparent"
-      android:visibility="invisible"/>
+      android:background="@color/transparent"/>
 
   <LinearLayout
       android:id="@+id/drag_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/black_grey"
+      android:background="@color/gray"
       android:orientation="vertical">
 
     <include layout="@layout/toolbar"/>

@@ -24,7 +24,7 @@ public class EditTextActivity extends AbstractToolbarActivity {
   @InjectView(R.id.dragger_view) DraggerView draggerView;
 
   @Override protected String getToolbarTitle() {
-    return getResources().getString(R.string.open_edittext);
+    return getResources().getStringArray(R.array.home)[1];
   }
 
   @Override protected int getContentViewId() {

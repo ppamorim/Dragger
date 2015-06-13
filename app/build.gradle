@@ -9,10 +9,11 @@ repositories {
 
 dependencies {
   compile project(':dragger')
-  compile 'com.android.support:appcompat-v7:22.1.1'
+  compile 'com.android.support:appcompat-v7:22.2.0'
   compile 'com.github.ksoichiro:android-observablescrollview:1.5.1'
-  compile 'com.github.ppamorim:recyclerrenderers:v1.2'
+  compile 'com.github.ppamorim:recyclerrenderers:1.2.2'
   compile 'com.jakewharton:butterknife:6.1.0'
+  compile 'com.facebook.fresco:fresco:0.5.1+'
 }
 
 android {

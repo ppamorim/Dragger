@@ -16,54 +16,27 @@
 package com.github.ppamorim.dragger;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
+import butterknife.InjectView;
 import butterknife.OnClick;
+import butterknife.OnItemSelected;
+import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ppamorim.dragger.app.R;
+import com.github.ppamorim.dragger.model.Home;
+import com.github.ppamorim.dragger.renderers.factory.Factory;
+import com.github.ppamorim.recyclerrenderers.adapter.RendererAdapter;
+import com.github.ppamorim.recyclerrenderers.builder.RendererBuilder;
+import com.github.ppamorim.recyclerrenderers.interfaces.Renderable;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BaseActivity extends AbstractToolbarActivity {
 
-  @OnClick(R.id.lazy) void onLazyClick() {
-    startActivity(new Intent(this, LazyActivity.class));
-  }
-
-  @OnClick(R.id.edittext) void onEditTextClick() {
-    startActivity(new Intent(this, EditTextActivity.class));
-  }
-
-  @OnClick(R.id.list) void onListClick() {
-    startActivity(new Intent(this, ListActivity.class));
-  }
-
-  @OnClick(R.id.activity_list) void onActivityListClick() {
-    startActivity(new Intent(this, ActivityListActivity.class));
-  }
-
-  @OnClick(R.id.menu) void onMenuClick() {
-    startActivity(new Intent(this, BaseActivity.class));
-  }
-
-  @OnClick(R.id.left) void onLeftClick() {
-    startDraggerActivity(DraggerPosition.LEFT);
-  }
-
-  @OnClick(R.id.right) void onRightClick() {
-    startDraggerActivity(DraggerPosition.RIGHT);
-  }
-
-  @OnClick(R.id.top) void onTopClick() {
-    startDraggerActivity(DraggerPosition.TOP);
-  }
-
-  @OnClick(R.id.bottom) void onBottomClick() {
-    startDraggerActivity(DraggerPosition.BOTTOM);
-  }
-
-  @OnClick(R.id.panel) void onPanelClick() {
-    startActivity(new Intent(this, PanelActivity.class));
-  }
-
-  @OnClick(R.id.activity) void onActivityClick() {
-    startActivity(new Intent(this, DraggingActivity.class));
-  }
+  @InjectView(R.id.recycler_view) ObservableRecyclerView observableRecyclerView;
 
   @Override protected String getToolbarTitle() {
     return getResources().getString(R.string.app_name);
@@ -71,6 +44,58 @@ public class BaseActivity extends AbstractToolbarActivity {
 
   @Override protected int getContentViewId() {
     return R.layout.activity_base;
+  }
+
+  @Override protected void onPostCreate(Bundle savedInstanceState) {
+    super.onPostCreate(savedInstanceState);
+    String[] items = getResources().getStringArray(R.array.home);
+    ArrayList<Renderable> renderables = new ArrayList<>(items.length);
+    for(String text : items) {
+      renderables.add(new Home(text));
+    }
+    observableRecyclerView.setHasFixedSize(true);
+    observableRecyclerView.setItemAnimator(new DefaultItemAnimator());
+    GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+    observableRecyclerView.setLayoutManager(layoutManager);
+    observableRecyclerView.setAdapter(
+        new RendererAdapter(renderables,
+            new RendererBuilder(new Factory()),
+            LayoutInflater.from(this)));
+  }
+
+  public void onItemClick(int position) {
+    switch (position) {
+      case 0:
+        startDraggerActivity(DraggerPosition.LEFT);
+        break;
+      case 1:
+        startDraggerActivity(DraggerPosition.RIGHT);
+        break;
+      case 2:
+        startDraggerActivity(DraggerPosition.TOP);
+        break;
+      case 3:
+        startDraggerActivity(DraggerPosition.BOTTOM);
+        break;
+      case 4:
+        startActivity(new Intent(this, PanelActivity.class));
+        break;
+      case 5:
+        startActivity(new Intent(this, DraggingActivity.class));
+        break;
+      case 6:
+        startActivity(new Intent(this, EditTextActivity.class));
+        break;
+      case 7:
+        startActivity(new Intent(this, ActivityListActivity.class));
+        break;
+      case 8:
+        startActivity(new Intent(this, LazyActivity.class));
+        break;
+      default:
+        break;
+    }
   }
 
   private void startDraggerActivity(DraggerPosition dragPosition) {

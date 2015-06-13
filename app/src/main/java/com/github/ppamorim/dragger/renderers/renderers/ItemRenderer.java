@@ -22,18 +22,8 @@ import com.github.ppamorim.recyclerrenderers.renderer.Renderer;
 import com.github.ppamorim.recyclerrenderers.viewholder.RenderViewHolder;
 
 public class ItemRenderer extends Renderer {
-
-  LayoutInflater layoutInflater;
-
-  public ItemRenderer(int id) {
-    super(id);
-  }
-
-  @Override public RenderViewHolder onCreateViewHolder(ViewGroup viewGroup, int id) {
-    if (layoutInflater == null) {
-      layoutInflater = LayoutInflater.from(viewGroup.getContext());
-    }
+  @Override public RenderViewHolder onCreateViewHolder(ViewGroup viewGroup,
+      LayoutInflater layoutInflater, int id) {
     return new ViewHolderItem(layoutInflater.inflate(id, viewGroup, false));
   }
-
 }

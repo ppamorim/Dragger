@@ -3,6 +3,7 @@ package com.github.ppamorim.dragger;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
@@ -12,6 +13,7 @@ import com.github.ppamorim.dragger.model.Item;
 import com.github.ppamorim.dragger.renderers.factory.Factory;
 import com.github.ppamorim.recyclerrenderers.adapter.RendererAdapter;
 import com.github.ppamorim.recyclerrenderers.builder.RendererBuilder;
+import com.github.ppamorim.recyclerrenderers.interfaces.Renderable;
 import java.util.ArrayList;
 import com.github.ppamorim.dragger.app.R;
 
@@ -28,7 +30,7 @@ public class ActivityListActivity extends DraggerActivity {
 
   public void configRecyclerView() {
 
-    ArrayList<Item> texts = new ArrayList<>();
+    ArrayList<Renderable> texts = new ArrayList<>();
     for (int i = 0; i < 100; i++) {
       texts.add(new Item(new StringBuilder("test ").append(i).toString()));
     }
@@ -38,7 +40,11 @@ public class ActivityListActivity extends DraggerActivity {
     LinearLayoutManager layoutManager = new LinearLayoutManager(this);
     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
     recyclerView.setLayoutManager(layoutManager);
-    recyclerView.setAdapter(new RendererAdapter(texts, new RendererBuilder(new Factory())));
+    recyclerView.setAdapter(
+        new RendererAdapter(
+            texts,
+            new RendererBuilder(new Factory()),
+            LayoutInflater.from(this)));
     recyclerView.setScrollViewCallbacks(observableScrollViewCallbacks);
   }
 

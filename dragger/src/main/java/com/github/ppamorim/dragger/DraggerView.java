@@ -448,6 +448,9 @@ public class DraggerView extends FrameLayout {
           break;
       }
 
+      ViewCompat.setAlpha(shadowView,
+          (float) (MAX_ALPHA - SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, 1)));
+
       if (draggerCallback != null) {
         draggerCallback.onProgress(spring.getCurrentValue());
       }
