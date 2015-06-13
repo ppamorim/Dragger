@@ -318,7 +318,7 @@ public class DraggerView extends FrameLayout {
     post(new Runnable() {
       @Override public void run() {
         getSpring().setCurrentValue(1).setAtRest();
-        if(runAnimationOnFinishInflate) {
+        if (runAnimationOnFinishInflate) {
           show();
         }
       }
