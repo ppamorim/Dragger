@@ -113,7 +113,7 @@ dependencies {
 ```
 
 
-Will you use with lists(RecyclerView, List/GridView, ScrollView)?
+Do you will use with lists(RecyclerView, List/GridView, ScrollView)?
 --------------------------------------------------------------------
 
 I decided that need to be Out-Of-Box, then...
