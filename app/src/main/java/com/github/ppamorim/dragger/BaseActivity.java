@@ -22,8 +22,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import butterknife.InjectView;
-import butterknife.OnClick;
-import butterknife.OnItemSelected;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ppamorim.dragger.app.R;
 import com.github.ppamorim.dragger.model.Home;
@@ -32,7 +30,6 @@ import com.github.ppamorim.recyclerrenderers.adapter.RendererAdapter;
 import com.github.ppamorim.recyclerrenderers.builder.RendererBuilder;
 import com.github.ppamorim.recyclerrenderers.interfaces.Renderable;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class BaseActivity extends AbstractToolbarActivity {
 
@@ -50,7 +47,7 @@ public class BaseActivity extends AbstractToolbarActivity {
     super.onPostCreate(savedInstanceState);
     String[] items = getResources().getStringArray(R.array.home);
     ArrayList<Renderable> renderables = new ArrayList<>(items.length);
-    for(String text : items) {
+    for (String text : items) {
       renderables.add(new Home(text));
     }
     observableRecyclerView.setHasFixedSize(true);

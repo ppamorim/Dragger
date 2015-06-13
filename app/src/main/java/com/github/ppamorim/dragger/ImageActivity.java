@@ -32,14 +32,12 @@ public class ImageActivity extends AppCompatActivity {
   @InjectView(R.id.dragger_view) DraggerView draggerView;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
+    overridePendingTransition(0, 0);
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_dragger);
     ButterKnife.inject(this);
     configToolbar();
     configIntents();
-    //if (savedInstanceState != null) {
-    //  draggerView.setCanAnimate(savedInstanceState.getBoolean(CAN_ANIMATE));
-    //}
   }
 
   @Override protected void onSaveInstanceState(Bundle outState) {

@@ -21,6 +21,7 @@ import com.github.ppamorim.dragger.app.R;
 public class DraggingActivity extends DraggerActivity {
 
   @Override public void onCreate(Bundle savedInstanceState) {
+    overridePendingTransition(0, 0);
     super.onCreate(savedInstanceState);
     setContentView(R.layout.layout_content);
   }

@@ -23,7 +23,7 @@ public class ViewHolderHome extends RenderViewHolder<Home> implements View.OnCli
   }
 
   @Override public void onClick(View view) {
-    ((BaseActivity)getContext()).onItemClick(getAdapterPosition());
+    ((BaseActivity) getContext()).onItemClick(getAdapterPosition());
   }
 
   @Override public void onBindView(Home home) {
