@@ -17,41 +17,59 @@ package com.github.ppamorim.dragger;
 
 import android.view.View;
 
+/**
+ * This class provides a helper to touch
+ * and drag on DraggerView class.
+ *
+ * @author Pedro Paulo de Amorim
+ *
+ */
 public class DraggerHelperCallback extends ViewDragHelper.Callback {
 
   private int dragState = 0;
   private int dragOffset = 0;
 
   private DraggerView draggerView;
-  private View dragView;
 
-  private DraggerPosition dragPosition;
   private DraggerHelperListener draggerListener;
 
-  public DraggerHelperCallback(DraggerView draggerView, View dragView, DraggerPosition dragPosition,
+  /**
+   * The constructor get the instance of FlapBar and Bar
+   *
+   * @param draggerView provide the instance of DraggerView
+   * @param dragView provide the instance inner view, this is inflated on DraggerView
+   * @param draggerListener provide the instance of DraggerHelperListener class
+   */
+  public DraggerHelperCallback(DraggerView draggerView, View dragView,
       DraggerHelperListener draggerListener) {
     this.draggerView = draggerView;
-    this.dragView = dragView;
-    this.dragPosition = DraggerPosition.values()[dragPosition.getPosition()];
     this.draggerListener = draggerListener;
   }
 
-  public DraggerPosition getDragPosition() {
-    return dragPosition;
-  }
-
-  public void setDragPosition(DraggerPosition dragPosition) {
-    this.dragPosition = dragPosition;
-  }
-
+  /**
+   * Check if view on focus is the DraggerView
+   *
+   * @param child return the view on focus
+   * @param pointerId return the id of view
+   * @return if the child on focus is equals the DraggerView
+   */
   @Override public boolean tryCaptureView(View child, int pointerId) {
-    return child.equals(dragView);
+    return child.equals(draggerView.getDragView());
   }
 
+  /**
+   * Return the value of slide based
+   * on left and width of the element
+   *
+   * @param child return the view on focus
+   * @param left return the left size of DraggerView
+   * @param dx return the scroll on x-axis
+   * @return the offset of slide
+   */
   @Override public int clampViewPositionHorizontal(View child, int left, int dx) {
     int leftBound = 0;
     int rightBound = 0;
-    switch (dragPosition) {
+    switch (draggerView.getDragPosition()) {
       case RIGHT:
         if (left > 0) {
           leftBound = draggerView.getPaddingLeft();
@@ -70,10 +88,19 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
     return Math.min(Math.max(left, leftBound), rightBound);
   }
 
+  /**
+   * Return the value of slide based
+   * on top and height of the element
+   *
+   * @param child return the view on focus
+   * @param top return the top size of DraggerView
+   * @param dy return the scroll on y-axis
+   * @return the offset of slide
+   */
   @Override public int clampViewPositionVertical(View child, int top, int dy) {
     int topBound = 0;
     int bottomBound = 0;
-    switch (dragPosition) {
+    switch (draggerView.getDragPosition()) {
       case TOP:
         if (top > 0) {
           topBound = draggerView.getPaddingTop();
@@ -92,44 +119,62 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
     return Math.min(Math.max(top, topBound), bottomBound);
   }
 
-  @Override public int getViewVerticalDragRange(View child) {
-    return (int) draggerListener.dragVerticalDragRange();
-  }
-
+  /**
+   * Return the max value of view that can
+   * slide based on #camplViewPositionHorizontal
+   *
+   * @param child return the view on focus
+   * @return max horizontal distance that view on focus can slide
+   */
   @Override public int getViewHorizontalDragRange(View child) {
     return (int) draggerListener.dragHorizontalDragRange();
   }
 
+  /**
+   * Return the max value of view that can
+   * slide based on #clampViewPositionVertical
+   *
+   * @param child return the view on focus
+   * @return max vertical distance that view on focus can slide
+   */
+  @Override public int getViewVerticalDragRange(View child) {
+    return (int) draggerListener.dragVerticalDragRange();
+  }
+
+  /**
+   * Verify if view is dragging or idle and
+   * check dragOffset is bigger than dragRange,
+   * if true, finish the activity.
+   *
+   * @param state return the touch state of view
+   */
   @Override public void onViewDragStateChanged(int state) {
     if (state == dragState) {
       return;
     }
     if ((dragState == ViewDragHelper.STATE_DRAGGING
         || dragState == ViewDragHelper.STATE_SETTLING)
-        && state == ViewDragHelper.STATE_IDLE) {
-      switch (dragPosition) {
-        case LEFT:
-        case RIGHT:
-          if (dragOffset == draggerListener.dragHorizontalDragRange()) {
-            draggerListener.finishActivity();
-          }
-          break;
-        default:
-        case TOP:
-        case BOTTOM:
-          if (dragOffset == draggerListener.dragVerticalDragRange()) {
-            draggerListener.finishActivity();
-          }
-          break;
-      }
+        && state == ViewDragHelper.STATE_IDLE
+        && (dragOffset == draggerListener.dragHorizontalDragRange()
+        || dragOffset == draggerListener.dragVerticalDragRange())) {
+      draggerListener.finishActivity();
     }
     dragState = state;
   }
 
+  /**
+   * Override method used notify the drag value
+   * based on position and dragRange
+   *
+   * @param left position.
+   * @param top position.
+   * @param dx change in X position from the last call.
+   * @param dy change in Y position from the last call.
+   */
   @Override public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
     super.onViewPositionChanged(changedView, left, top, dx, dy);
     float fractionScreen;
-    switch (dragPosition) {
+    switch (draggerView.getDragPosition()) {
       case TOP:
       case BOTTOM:
         dragOffset = Math.abs(top);
@@ -142,46 +187,38 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
         fractionScreen = (float) dragOffset / draggerListener.dragHorizontalDragRange();
         break;
     }
-    if (fractionScreen >= 1) {
-      fractionScreen = 1;
-    }
     if (draggerListener != null) {
-      draggerListener.onViewPositionChanged(fractionScreen);
+      draggerListener.onViewPositionChanged(fractionScreen >= 1 ? 1 : fractionScreen);
     }
   }
 
+  /**
+   * This is called only the touch on DraggerView is released.
+   *
+   * @param releasedChild return the view on focus
+   * @param xVel return the speed of X animation
+   * @param yVel return the speed of Y animation
+   */
   @Override public void onViewReleased(View releasedChild, float xVel, float yVel) {
     super.onViewReleased(releasedChild, xVel, yVel);
-    switch (dragPosition) {
-      case LEFT:
-        if (draggerView.isDragViewAboveTheMiddle()) {
+    if(draggerView.isDragViewAboveTheMiddle()) {
+      switch (draggerView.getDragPosition()) {
+        case LEFT:
           draggerView.closeFromCenterToLeft();
-        } else {
-          draggerView.moveToCenter();
-        }
-        break;
-      case RIGHT:
-        if (draggerView.isDragViewAboveTheMiddle()) {
+          break;
+        case RIGHT:
           draggerView.closeFromCenterToRight();
-        } else {
-          draggerView.moveToCenter();
-        }
-        break;
-      case TOP:
-      default:
-        if (draggerView.isDragViewAboveTheMiddle()) {
+          break;
+        case TOP:
+        default:
           draggerView.closeFromCenterToBottom();
-        } else {
-          draggerView.moveToCenter();
-        }
-        break;
-      case BOTTOM:
-        if (draggerView.isDragViewAboveTheMiddle()) {
+          break;
+        case BOTTOM:
           draggerView.closeFromCenterToTop();
-        } else {
-          draggerView.moveToCenter();
-        }
-        break;
+          break;
+      }
+    } else {
+      draggerView.moveToCenter();
     }
   }
 

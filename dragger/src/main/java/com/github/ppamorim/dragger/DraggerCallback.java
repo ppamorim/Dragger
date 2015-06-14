@@ -15,7 +15,14 @@
 */
 package com.github.ppamorim.dragger;
 
+/**
+ * This class provide a callback to
+ * every action at DraggerView classes.
+ *
+ * @author Pedro Paulo de Amorim
+ */
 public interface DraggerCallback {
+  void onProgress(double progress);
   void notifyOpen();
   void notifyClose();
 }

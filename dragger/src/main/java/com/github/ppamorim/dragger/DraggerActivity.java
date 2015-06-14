@@ -25,6 +25,10 @@ public class DraggerActivity extends BaseDraggerActivity {
     super.setContentView(draggerPanel);
   }
 
+  @Override public void onBackPressed() {
+    draggerPanel.closeActivity();
+  }
+
   public DraggerPanel getDraggerPanel() {
     return draggerPanel;
   }
@@ -48,6 +52,14 @@ public class DraggerActivity extends BaseDraggerActivity {
 
   public void setDraggerLimit(float dragLimit) {
     draggerPanel.setDraggerLimit(dragLimit);
+  }
+
+  public void setTension(float tension) {
+    draggerPanel.setTension(tension);
+  }
+
+  public void setFriction(float friction) {
+    draggerPanel.setFriction(friction);
   }
 
   public void setDraggerCallback(DraggerCallback draggerCallback) {
