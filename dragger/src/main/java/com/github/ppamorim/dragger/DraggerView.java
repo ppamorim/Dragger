@@ -161,15 +161,18 @@ public class DraggerView extends FrameLayout {
       return false;
     }
     dragHelper.processTouchEvent(ev);
-    boolean isDragViewHit = isViewHit(dragView, (int) ev.getX(), (int) ev.getY());
-    boolean isSecondViewHit = isViewHit(shadowView, (int) ev.getX(), (int) ev.getY());
-    return isDragViewHit || isSecondViewHit;
+    return isViewHit(dragView, (int) ev.getX(), (int) ev.getY())
+        || isViewHit(shadowView, (int) ev.getX(), (int) ev.getY());
   }
 
   @Override public void computeScroll() {
     if (!isInEditMode() && dragHelper.continueSettling(true)) {
       ViewCompat.postInvalidateOnAnimation(this);
     }
+  }
+
+  public View getDragView() {
+    return dragView;
   }
 
   public void setRunAnimationOnFinishInflate(boolean runAnimationOnFinishInflate) {
@@ -240,7 +243,7 @@ public class DraggerView extends FrameLayout {
   }
 
   private void configDragViewHelper() {
-    dragHelperCallback = new DraggerHelperCallback(this, dragView, dragPosition, draggerListener);
+    dragHelperCallback = new DraggerHelperCallback(this, dragView, draggerListener);
     dragHelper = ViewDragHelper.create(this, SENSITIVITY, dragHelperCallback);
   }
 

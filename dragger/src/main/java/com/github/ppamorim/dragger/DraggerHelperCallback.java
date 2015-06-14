@@ -30,7 +30,6 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
   private int dragOffset = 0;
 
   private DraggerView draggerView;
-  private View dragView;
 
   private DraggerHelperListener draggerListener;
 
@@ -39,13 +38,11 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
    *
    * @param draggerView provide the instance of DraggerView
    * @param dragView provide the instance inner view, this is inflated on DraggerView
-   * @param dragPosition provide the type of position of view on the start
    * @param draggerListener provide the instance of DraggerHelperListener class
    */
-  public DraggerHelperCallback(DraggerView draggerView, View dragView, DraggerPosition dragPosition,
+  public DraggerHelperCallback(DraggerView draggerView, View dragView,
       DraggerHelperListener draggerListener) {
     this.draggerView = draggerView;
-    this.dragView = dragView;
     this.draggerListener = draggerListener;
   }
 
@@ -57,7 +54,7 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
    * @return if the child on focus is equals the DraggerView
    */
   @Override public boolean tryCaptureView(View child, int pointerId) {
-    return child.equals(dragView);
+    return child.equals(draggerView.getDragView());
   }
 
   /**
