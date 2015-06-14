@@ -1,4 +1,4 @@
-![Logo 1][10]
+﻿![Logo 1][10]
 
 [![Build Status](https://api.travis-ci.org/ppamorim/Dragger.svg?branch=master)](https://travis-ci.org/ppamorim/Dragger)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Dragger-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1673)
@@ -190,7 +190,7 @@ License
 [5]: https://github.com/JakeWharton/butterknife
 [6]: https://github.com/JakeWharton/NineOldAndroids/
 [7]: https://github.com/square/picasso
-[10]: ./art/dragger.png
+[10]: https://github.com/ppamorim/Dragger/blob/master/art/dragger_new.png?raw=true
 [11]: http://i.imgur.com/goPWgq1.gif
 [12]: https://github.com/Falkirks
 [13]: https://github.com/ksoichiro/Android-ObservableScrollView
