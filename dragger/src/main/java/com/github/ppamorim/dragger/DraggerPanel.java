@@ -19,6 +19,13 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
+/**
+ * Class created to extends a BaseDraggerPanel,
+ * this need to be used only with fragments
+ * and do the same of DraggerView
+ *
+ * @author Pedro Paulo de Amorim
+ */
 public class DraggerPanel extends BaseDraggerPanel {
 
   private DraggerView draggerView;

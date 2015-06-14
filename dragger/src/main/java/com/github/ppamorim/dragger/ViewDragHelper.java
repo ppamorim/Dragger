@@ -1,6 +1,5 @@
 package com.github.ppamorim.dragger;
 
-
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.VelocityTrackerCompat;
