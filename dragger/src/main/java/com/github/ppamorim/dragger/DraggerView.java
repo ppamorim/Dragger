@@ -218,7 +218,6 @@ public class DraggerView extends FrameLayout {
 
   public void setDraggerPosition(DraggerPosition dragPosition) {
     this.dragPosition = dragPosition;
-    dragHelperCallback.setDragPosition(dragPosition);
   }
 
   public void setTension(float tension) {
@@ -262,6 +261,13 @@ public class DraggerView extends FrameLayout {
     }
   }
 
+  /**
+   * The global default {@link Spring} instance.
+   *
+   * This instance is automatically initialized with defaults that are suitable to most
+   * implementations.
+   *
+   */
   private Spring getSpring() {
     if (singleton == null) {
       synchronized (Spring.class) {
@@ -408,7 +414,10 @@ public class DraggerView extends FrameLayout {
         activity.overridePendingTransition(0, android.R.anim.fade_out);
         activity.finish();
       }
+      activity = null;
     }
+    context = null;
+    System.gc();
   }
 
   public void setAnimationDuration(int baseSettleDuration, int maxSettleDuration) {
