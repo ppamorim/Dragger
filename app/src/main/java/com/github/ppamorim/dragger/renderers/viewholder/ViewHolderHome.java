@@ -30,7 +30,7 @@ public class ViewHolderHome extends RenderViewHolder<Home> implements View.OnCli
     if (home != null) {
       textView.setText(home.getText());
       ViewUtil.bind(simpleDraweeView,
-          "https://pbs.twimg.com/profile_images/417201275466690560/TzVjIXv2.jpeg");
+          "https://github.com/ppamorim/Dragger/blob/master/art/app_image.jpg?raw=true");
     }
   }
 
