@@ -194,6 +194,6 @@ License
 [6]: https://github.com/JakeWharton/NineOldAndroids/
 [7]: https://github.com/square/picasso
 [10]: ./art/dragger_new.png
-[11]: http://i.imgur.com/goPWgq1.gif
+[11]: https://github.com/ppamorim/Dragger/blob/master/art/app_sample_uncompressed.gif?raw=true
 [12]: https://github.com/Falkirks
 [13]: https://github.com/ksoichiro/Android-ObservableScrollView
