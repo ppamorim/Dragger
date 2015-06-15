@@ -4,4 +4,5 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="56dp"
-    android:background="@color/accent"/>
+    android:background="@color/accent"
+    android:elevation="4dp"/>
