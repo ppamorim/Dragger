@@ -10,8 +10,6 @@ Using the ViewDragHelper class, it is possible to create smooth animations that 
 
 This new component has been created using some concepts described on [Flavien Laurent Blog][1] and [Denevell Blog][2].
 
-Dragger now uses Rebound from Facebook to provide more realistic animations and improve performance for old devices.
-
 This library should work on API 10 (but not tested yet).
 
 ![Demo 1][11]
@@ -110,7 +108,7 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.ppamorim:dragger:1.1'
+  compile 'com.github.ppamorim:dragger:1.0.5.2'
 }
 ```
 
@@ -152,7 +150,6 @@ Contributors
 * [Falkirks][12]
 
 This was only possible because [Pedro Vicente Gómez Sánchez][4] helped me and I am very grateful for that! Thank you. :)
-And thank you Facebook for provide Rebound library!
 
 Developed By
 ------------
