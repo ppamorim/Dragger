@@ -10,6 +10,8 @@ Using the ViewDragHelper class, it is possible to create smooth animations that 
 
 This new component has been created using some concepts described on [Flavien Laurent Blog][1] and [Denevell Blog][2].
 
+Dragger now uses Rebound from Facebook to provide more realistic animations and improve performance for old devices.
+
 This library should work on API 10 (but not tested yet).
 
 ![Demo 1][11]
@@ -108,12 +110,12 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.ppamorim:dragger:1.0.5.2'
+  compile 'com.github.ppamorim:dragger:1.1'
 }
 ```
 
 
-Will you use with lists(RecyclerView, List/GridView, ScrollView)?
+Do you will use with lists(RecyclerView, List/GridView, ScrollView)?
 --------------------------------------------------------------------
 
 I decided that need to be Out-Of-Box, then...
@@ -150,6 +152,7 @@ Contributors
 * [Falkirks][12]
 
 This was only possible because [Pedro Vicente Gómez Sánchez][4] helped me and I am very grateful for that! Thank you. :)
+And thank you Facebook for provide Rebound library!
 
 Developed By
 ------------
@@ -190,7 +193,7 @@ License
 [5]: https://github.com/JakeWharton/butterknife
 [6]: https://github.com/JakeWharton/NineOldAndroids/
 [7]: https://github.com/square/picasso
-[10]: https://github.com/ppamorim/Dragger/blob/master/art/dragger_new.png?raw=true
+[10]: ./art/dragger_new.png
 [11]: http://i.imgur.com/goPWgq1.gif
 [12]: https://github.com/Falkirks
 [13]: https://github.com/ksoichiro/Android-ObservableScrollView
