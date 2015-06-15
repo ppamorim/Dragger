@@ -167,7 +167,6 @@ Libraries used on the sample project
 ------------------------------------
 
 * [Butterknife][5]
-* [NineOldAndroids][6]
 
 License
 -------
