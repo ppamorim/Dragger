@@ -42,7 +42,7 @@ public class EditTextActivity extends AbstractToolbarActivity {
   }
 
   @Override public void onBackPressed() {
-    draggerView.closeActivity();
+    draggerView.close();
   }
 
 }

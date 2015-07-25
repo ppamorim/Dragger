@@ -55,7 +55,7 @@ public class ImageActivity extends AbstractActivity {
   }
 
   @Override public void onBackPressed() {
-    draggerView.closeActivity();
+    draggerView.close();
   }
 
   private void configToolbar() {

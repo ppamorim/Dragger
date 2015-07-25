@@ -46,12 +46,11 @@ public class ListActivity extends AbstractToolbarActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    draggerView.setAnimationDuration(900, 500);
     configRecyclerView();
   }
 
   @Override public void onBackPressed() {
-    draggerView.closeActivity();
+    draggerView.close();
   }
 
   public void configRecyclerView() {

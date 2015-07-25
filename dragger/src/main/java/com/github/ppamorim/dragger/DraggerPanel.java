@@ -65,7 +65,7 @@ public class DraggerPanel extends BaseDraggerPanel {
   }
 
   public void setDraggerCallback(DraggerCallback draggerCallback) {
-    draggerView.setDraggerCallback(draggerCallback);
+    //draggerView.setDraggerCallback(draggerCallback);
   }
 
   public void setSlideEnabled(boolean enabled) {
@@ -87,15 +87,7 @@ public class DraggerPanel extends BaseDraggerPanel {
   }
 
   public void closeActivity() {
-    draggerView.closeActivity();
-  }
-
-  public void setAnimationDuration(int baseSettleDuration, int maxSettleDuration) {
-    draggerView.setAnimationDuration(baseSettleDuration, maxSettleDuration);
-  }
-
-  public void setAnimationDuration(int miliseconds, float multipler) {
-    draggerView.setAnimationDuration(miliseconds, multipler);
+    draggerView.close();
   }
 
 }

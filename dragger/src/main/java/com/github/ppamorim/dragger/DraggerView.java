@@ -23,6 +23,7 @@ import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.widget.FrameLayout;
 import com.facebook.rebound.Spring;
@@ -64,13 +65,23 @@ public class DraggerView extends FrameLayout {
   private float friction;
   private float progress;
   private double val;
+  private float downX;
+  private float downY;
+  private float lastX;
+  private float lastY;
+  private VelocityTracker velocityTracker;
+  private float centerX;
+  private float centerY;
+  private float touchX;
+  private float touchY;
+  private float x;
+  private float y;
+  private boolean dragging;
+  private SpringConfig COASTING;
 
   private TypedArray attributes;
   private DraggerPosition dragPosition;
 
-  private DraggerCallback draggerCallback;
-  private DraggerHelperCallback dragHelperCallback;
-  private ViewDragHelper dragHelper;
   private View dragView;
   private View shadowView;
 
@@ -95,20 +106,19 @@ public class DraggerView extends FrameLayout {
     if (!isInEditMode()) {
       mapGUI(attributes);
       attributes.recycle();
-      configDragViewHelper();
       preparePosition();
     }
   }
 
   @Override protected void onAttachedToWindow() {
     super.onAttachedToWindow();
-    getSpring().addListener(springListener);
+    spring().addListener(springListener);
   }
 
   @Override
   protected void onDetachedFromWindow() {
     super.onDetachedFromWindow();
-    getSpring().removeListener(springListener);
+    spring().removeListener(springListener);
   }
 
   @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -117,8 +127,7 @@ public class DraggerView extends FrameLayout {
         getMeasuredWidth() - getPaddingLeft() - getPaddingRight(),
         MeasureSpec.EXACTLY);
     int measureHeight = MeasureSpec.makeMeasureSpec(
-        getMeasuredHeight() - getPaddingTop() - getPaddingBottom(),
-        MeasureSpec.EXACTLY);
+        getMeasuredHeight() - getPaddingTop() - getPaddingBottom(), MeasureSpec.EXACTLY);
     if (dragView != null) {
       dragView.measure(measureWidth, measureHeight);
     }
@@ -131,44 +140,42 @@ public class DraggerView extends FrameLayout {
     setHorizontalDragRange(width);
   }
 
-  @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
-    if (!isEnabled() || !canSlide()) {
-      return false;
-    }
-    final int action = MotionEventCompat.getActionMasked(ev);
-    switch (action) {
-      case MotionEvent.ACTION_CANCEL:
-      case MotionEvent.ACTION_UP:
-        dragHelper.cancel();
-        return false;
+  @Override
+  public boolean onTouchEvent(MotionEvent event) {
+    System.out.println("event: " + event.getAction());
+    touchX = event.getRawX();
+    touchY = event.getRawY();
+    switch (event.getAction()) {
       case MotionEvent.ACTION_DOWN:
-        int index = MotionEventCompat.getActionIndex(ev);
-        activePointerId = MotionEventCompat.getPointerId(ev, index);
-        if (activePointerId == INVALID_POINTER) {
-          return false;
+        downX = touchX;
+        downY = touchY;
+        lastX = downX;
+        lastY = downY;
+        velocityTracker = VelocityTracker.obtain();
+        velocityTracker.addMovement(event);
+        break;
+      case MotionEvent.ACTION_MOVE:
+        System.out.println("MOVE");
+        velocityTracker.addMovement(event);
+        float offsetX = lastX - touchX;
+        float offsetY = lastY - touchY;
+        break;
+      case MotionEvent.ACTION_UP:
+      case MotionEvent.ACTION_CANCEL:
+        if (!dragging) {
+          break;
         }
-      default:
-        return dragHelper.shouldInterceptTouchEvent(ev);
+        velocityTracker.addMovement(event);
+        velocityTracker.computeCurrentVelocity(1000);
+        dragging = false;
+        spring().setSpringConfig(COASTING);
+        downX = 0;
+        downY = 0;
+        spring().setVelocity(velocityTracker.getXVelocity());
     }
-  }
-
-  @Override public boolean onTouchEvent(MotionEvent ev) {
-    int actionMasked = MotionEventCompat.getActionMasked(ev);
-    if ((actionMasked & MotionEventCompat.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
-      activePointerId = MotionEventCompat.getPointerId(ev, actionMasked);
-    }
-    if (activePointerId == INVALID_POINTER) {
-      return false;
-    }
-    dragHelper.processTouchEvent(ev);
-    return isViewHit(dragView, (int) ev.getX(), (int) ev.getY())
-        || isViewHit(shadowView, (int) ev.getX(), (int) ev.getY());
-  }
-
-  @Override public void computeScroll() {
-    if (!isInEditMode() && dragHelper.continueSettling(true)) {
-      ViewCompat.postInvalidateOnAnimation(this);
-    }
+    lastX = touchX;
+    lastY = touchY;
+    return true;
   }
 
   public View getDragView() {
@@ -242,15 +249,6 @@ public class DraggerView extends FrameLayout {
     this.attributes = attributes;
   }
 
-  private void configDragViewHelper() {
-    dragHelperCallback = new DraggerHelperCallback(this, dragView, draggerListener);
-    dragHelper = ViewDragHelper.create(this, SENSITIVITY, dragHelperCallback);
-  }
-
-  public void setDraggerCallback(DraggerCallback draggerCallback) {
-    this.draggerCallback = draggerCallback;
-  }
-
   private void mapGUI(TypedArray attributes) {
     if (getChildCount() == 2) {
       int dragViewId = attributes.getResourceId(
@@ -271,7 +269,7 @@ public class DraggerView extends FrameLayout {
    * implementations.
    *
    */
-  private Spring getSpring() {
+  private Spring spring() {
     if (singleton == null) {
       synchronized (Spring.class) {
         if (singleton == null) {
@@ -326,7 +324,7 @@ public class DraggerView extends FrameLayout {
   public void preparePosition() {
     post(new Runnable() {
       @Override public void run() {
-        getSpring().setCurrentValue(1).setAtRest();
+        spring().setCurrentValue(1).setAtRest();
         if (runAnimationOnFinishInflate) {
           show();
         }
@@ -337,76 +335,13 @@ public class DraggerView extends FrameLayout {
   public void show() {
     new Handler().postDelayed(new Runnable() {
       @Override public void run() {
-        getSpring().setEndValue(0);
+        spring().setEndValue(0);
       }
     }, DELAY);
   }
 
-  public void closeActivity() {
-    if (dragPosition != null) {
-      switch (dragPosition) {
-        case LEFT:
-          closeFromCenterToLeft();
-          break;
-        case RIGHT:
-          closeFromCenterToRight();
-          break;
-        case TOP:
-        default:
-          closeFromCenterToBottom();
-          break;
-        case BOTTOM:
-          closeFromCenterToTop();
-          break;
-      }
-    } else {
-      throw new IllegalStateException("dragPosition is null");
-    }
-  }
-
-  public void moveToCenter() {
-    smoothSlideTo(dragView, 0, 0);
-    notifyOpen();
-  }
-
-  public void closeFromCenterToRight() {
-    smoothSlideTo(dragView, (int) getHorizontalDragRange(), 0);
-    notifyClosed();
-  }
-
-  public void closeFromCenterToLeft() {
-    smoothSlideTo(dragView, (int) -getHorizontalDragRange(), 0);
-    notifyClosed();
-  }
-
-  public void closeFromCenterToTop() {
-    smoothSlideTo(dragView, 0, (int) -getVerticalDragRange());
-    notifyClosed();
-  }
-
-  public void closeFromCenterToBottom() {
-    smoothSlideTo(dragView, 0, (int) (SLIDE_IN * getVerticalDragRange()));
-    notifyClosed();
-  }
-
-  private void notifyOpen() {
-    if (draggerCallback != null) {
-      draggerCallback.notifyOpen();
-    }
-  }
-
-  private void notifyClosed() {
-    if (draggerCallback != null) {
-      draggerCallback.notifyClose();
-    }
-  }
-
-  private boolean smoothSlideTo(View view, int x, int y) {
-    if (dragHelper.smoothSlideViewTo(view, x, y)) {
-      ViewCompat.postInvalidateOnAnimation(this);
-      return true;
-    }
-    return false;
+  public void close() {
+    spring().setCurrentValue(0).setEndValue(1);
   }
 
   private void finish() {
@@ -417,20 +352,7 @@ public class DraggerView extends FrameLayout {
         activity.overridePendingTransition(0, android.R.anim.fade_out);
         activity.finish();
       }
-      activity = null;
     }
-    context = null;
-    System.gc();
-  }
-
-  public void setAnimationDuration(int baseSettleDuration, int maxSettleDuration) {
-    dragHelper.setBaseSettleDuration(baseSettleDuration);
-    dragHelper.setMaxSettleDuration(maxSettleDuration);
-  }
-
-  public void setAnimationDuration(int miliseconds, float multipler) {
-    dragHelper.setBaseSettleDuration(miliseconds);
-    dragHelper.setMaxSettleDuration((int) (miliseconds * multipler));
   }
 
   private SpringListener springListener = new SpringListener() {
@@ -461,39 +383,22 @@ public class DraggerView extends FrameLayout {
       ViewCompat.setAlpha(shadowView,
           (float) (MAX_ALPHA - SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, 1)));
 
-      if (draggerCallback != null) {
-        draggerCallback.onProgress(spring.getCurrentValue());
-      }
+      //if (draggerCallback != null) {
+      //  draggerCallback.onProgress(spring.getCurrentValue());
+      //}
     }
 
     @Override public void onSpringAtRest(Spring spring) {
-      if (draggerCallback != null) {
-        draggerCallback.notifyOpen();
+      //if (draggerCallback != null) {
+      //  draggerCallback.notifyOpen();
+      //}
+      if(spring.getCurrentValue() == 1) {
+        finish();
       }
     }
 
     @Override public void onSpringActivate(Spring spring) { }
     @Override public void onSpringEndStateChange(Spring spring) { }
-  };
-
-  private DraggerHelperListener draggerListener = new DraggerHelperListener() {
-
-    @Override public void finishActivity() {
-      finish();
-    }
-
-    @Override public void onViewPositionChanged(float dragValue) {
-      ViewCompat.setAlpha(shadowView, MAX_ALPHA - dragValue);
-    }
-
-    @Override public float dragVerticalDragRange() {
-      return getVerticalDragRange();
-    }
-
-    @Override public float dragHorizontalDragRange() {
-      return getHorizontalDragRange();
-    }
-
   };
 
 }
