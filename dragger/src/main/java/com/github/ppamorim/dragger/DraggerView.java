@@ -420,7 +420,6 @@ public class DraggerView extends FrameLayout {
       activity = null;
     }
     context = null;
-    System.gc();
   }
 
   public void setAnimationDuration(int baseSettleDuration, int maxSettleDuration) {
