@@ -15,6 +15,10 @@
 */
 package com.github.ppamorim.dragger;
 
+/**
+ * Provides a simple implementation of Dragger,
+ * that`s use activity.
+ */
 public class DraggerActivity extends BaseDraggerActivity {
 
   private DraggerPanel draggerPanel;

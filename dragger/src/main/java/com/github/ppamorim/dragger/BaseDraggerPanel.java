@@ -19,16 +19,21 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+/**
+ * The base implementation of DraggerPanel.\
+ */
 public class BaseDraggerPanel extends FrameLayout {
 
   private static final float DEFAULT_DRAG_LIMIT = 0.5f;
   private static final int DEFAULT_DRAG_POSITION = DraggerPosition.TOP.ordinal();
 
-  public TypedArray attributes;
   public float draggerLimit;
   public int draggerPosition;
+
+  public TypedArray attributes;
 
   public FrameLayout dragView;
   public FrameLayout shadowView;
@@ -55,22 +60,43 @@ public class BaseDraggerPanel extends FrameLayout {
     shadowView = (FrameLayout) findViewById(R.id.shadow_view);
   }
 
+  /**
+   * Add a custom view to shadowView, optional.
+   *
+   * @param view Instance of the view.
+   */
   public void addViewOnShadow(View view) {
     eraseViewIfNeeded(shadowView);
     shadowView.addView(view);
   }
 
+  /**
+   * Add a custom view to dragView.
+   *
+   * @param view Instance of view.
+   */
   public void addViewOnDrag(View view) {
     eraseViewIfNeeded(dragView);
     dragView.addView(view);
   }
 
-  public void eraseViewIfNeeded(FrameLayout frameLayout) {
-    if (frameLayout.getChildCount() > 0) {
-      frameLayout.removeAllViews();
+  /**
+   * Removes the view if needed, prevent some exceptions.
+   *
+   * @param view Instance of ViewGroup, every view
+   * here extends this class.
+   */
+  public void eraseViewIfNeeded(ViewGroup view) {
+    if (view.getChildCount() > 0) {
+      view.removeAllViews();
     }
   }
 
+  /**
+   * Map the attributes to use with DraggerView
+   *
+   * @param attrs Attributes to be mapped.
+   */
   public void initializeAttributes(AttributeSet attrs) {
     attributes = getContext().obtainStyledAttributes(attrs, R.styleable.dragger_layout);
     if (attributes != null) {

@@ -20,6 +20,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 
+/**
+ * The base implementation of DraggerActivity.\
+ */
 public class BaseDraggerActivity extends AppCompatActivity {
 
   public int shadowResID = -1;

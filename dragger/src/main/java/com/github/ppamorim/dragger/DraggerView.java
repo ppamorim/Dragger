@@ -211,6 +211,9 @@ public class DraggerView extends FrameLayout {
     }
   }
 
+  /**
+   * @return Instance of Draggable View
+   */
   public View getDragView() {
     return dragView;
   }
@@ -247,8 +250,18 @@ public class DraggerView extends FrameLayout {
     return dragLimit;
   }
 
+  /**
+   * Set the max limit drag to auto collapse the dragView,
+   * default is 0.5 (center of the screen, vertical).
+   *
+   * @param dragLimit Value between 0.0f and 1.0f
+   */
   public void setDraggerLimit(float dragLimit) {
-    this.dragLimit = dragLimit;
+    if(dragLimit > 0.0f && dragLimit < 1.0f) {
+      this.dragLimit = dragLimit;
+    } else {
+      throw new IllegalStateException("dragLimit needs to be between 0.0f and 1.0f");
+    }
   }
 
   public DraggerPosition getDragPosition() {
@@ -278,6 +291,11 @@ public class DraggerView extends FrameLayout {
     this.attributes = attributes;
   }
 
+  /**
+   * Configure the DragViewHelper instance adding a
+   * instance of DraggerHelperCallback, useful to
+   * detect the touch callbacks from dragView.
+   */
   private void configDragViewHelper() {
     dragHelper = ViewDragHelper.create(this, SENSITIVITY,
         new DraggerHelperCallback(this, dragView, draggerListener));
@@ -287,14 +305,23 @@ public class DraggerView extends FrameLayout {
     this.draggerCallback = draggerCallback;
   }
 
+  /**
+   * Map the layout attributes, the dragView and shadowView, after, find the view by id.
+   *
+   * @param attributes
+   */
   private void mapGUI(TypedArray attributes) {
     if (getChildCount() == 2) {
       int dragViewId = attributes.getResourceId(
           R.styleable.dragger_layout_drag_view_id, R.id.drag_view);
       int shadowViewId = attributes.getResourceId(
           R.styleable.dragger_layout_shadow_view_id, R.id.shadow_view);
-      dragView = findViewById(dragViewId);
-      shadowView = findViewById(shadowViewId);
+      if(dragViewId > 0) {
+        dragView = findViewById(dragViewId);
+      }
+      if(shadowViewId > 0) {
+        shadowView = findViewById(shadowViewId);
+      }
     } else {
       throw new IllegalStateException("DraggerView must contains only two direct child");
     }
@@ -321,6 +348,13 @@ public class DraggerView extends FrameLayout {
     return singleton;
   }
 
+  /**
+   * Detect if the touch on the screen is at the region of the view.
+   * @param view Instance of the view that will be verified.
+   * @param x X position of the touch.
+   * @param y Y position of the touch.
+   * @return Position is at the region of the view.
+   */
   private boolean isViewHit(View view, int x, int y) {
     int[] viewLocation = new int[2];
     view.getLocationOnScreen(viewLocation);
@@ -334,7 +368,14 @@ public class DraggerView extends FrameLayout {
         && screenY < viewLocation[1] + view.getHeight();
   }
 
-  boolean isDragViewAboveTheMiddle() {
+  /**
+   * Detect if the dragView actual position is above the
+   * limit determined with the @param dragLimit.
+   *
+   * @return Use a dimension and compare with the dragged
+   * axis position.
+   */
+  boolean isDragViewAboveTheLimit() {
     int parentSize;
     float viewAxisPosition;
     switch (dragPosition) {

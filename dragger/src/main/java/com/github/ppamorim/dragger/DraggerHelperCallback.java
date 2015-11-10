@@ -201,7 +201,7 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
    */
   @Override public void onViewReleased(View releasedChild, float xVel, float yVel) {
     super.onViewReleased(releasedChild, xVel, yVel);
-    if (draggerView.isDragViewAboveTheMiddle()) {
+    if (draggerView.isDragViewAboveTheLimit()) {
       switch (draggerView.getDragPosition()) {
         case LEFT:
           draggerView.closeFromCenterToLeft();
