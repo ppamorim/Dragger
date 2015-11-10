@@ -54,7 +54,6 @@ public class DraggerView extends FrameLayout {
   private static final int INVALID_POINTER = -1;
 
   private boolean runAnimationOnFinishInflate = true;
-  private boolean animationFinish = false;
   private boolean canSlide = true;
   private int activePointerId = INVALID_POINTER;
   private float verticalDragRange;
@@ -62,14 +61,11 @@ public class DraggerView extends FrameLayout {
   private float dragLimit;
   private float tension;
   private float friction;
-  private float progress;
-  private double val;
 
   private TypedArray attributes;
   private DraggerPosition dragPosition;
 
   private DraggerCallback draggerCallback;
-  private DraggerHelperCallback dragHelperCallback;
   private ViewDragHelper dragHelper;
   private View dragView;
   private View shadowView;
@@ -90,6 +86,10 @@ public class DraggerView extends FrameLayout {
     initializeAttributes(attrs);
   }
 
+  /**
+   * Bind the attributes of the view and config
+   * the DraggerView with these params.
+   */
   @Override protected void onFinishInflate() {
     super.onFinishInflate();
     if (!isInEditMode()) {
@@ -100,17 +100,28 @@ public class DraggerView extends FrameLayout {
     }
   }
 
+  /**
+   * Add the spring listener when the view is attached.
+   */
   @Override protected void onAttachedToWindow() {
     super.onAttachedToWindow();
     getSpring().addListener(springListener);
   }
 
-  @Override
-  protected void onDetachedFromWindow() {
-    super.onDetachedFromWindow();
+  /**
+   * Remove the spring listener when the view  is detached.
+   */
+  @Override protected void onDetachedFromWindow() {
     getSpring().removeListener(springListener);
+    super.onDetachedFromWindow();
   }
 
+  /**
+   * Configure the width and height of the DraggerView.
+   *
+   * @param widthMeasureSpec Spec value of width, not represent the real width.
+   * @param heightMeasureSpec Spec value of height, not represent the real height.
+   */
   @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     int measureWidth = MeasureSpec.makeMeasureSpec(
@@ -125,12 +136,27 @@ public class DraggerView extends FrameLayout {
 
   }
 
+  /**
+   * Updates the view size if needed.
+   * @param width The new width size.
+   * @param height The new height size.
+   * @param oldWidth The old width size, useful the calculate the diff.
+   * @param oldHeight The old height size, useful the calculate the diff.
+   */
   @Override protected void onSizeChanged(int width, int height, int oldWidth, int oldHeight) {
     super.onSizeChanged(width, height, oldWidth, oldHeight);
     setVerticalDragRange(height);
     setHorizontalDragRange(width);
   }
 
+  /**
+   * Detect the type of motion event (like touch)
+   * at the DraggerView, this can be a simple
+   * detector of the touch, not the listener ifself.
+   *
+   * @param ev Event of MotionEvent
+   * @return View is touched
+   */
   @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
     if (!isEnabled() || !canSlide()) {
       return false;
@@ -152,6 +178,15 @@ public class DraggerView extends FrameLayout {
     }
   }
 
+  /**
+   * Handle the touch event intercepted from onInterceptTouchEvent
+   * method, this method valid if the touch listener
+   * is a valid pointer(like fingers) or the touch
+   * is inside of the DraggerView.
+   *
+   * @param ev MotionEvent instance, can be used to detect the type of touch.
+   * @return Touched area is a valid position.
+   */
   @Override public boolean onTouchEvent(MotionEvent ev) {
     int actionMasked = MotionEventCompat.getActionMasked(ev);
     if ((actionMasked & MotionEventCompat.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
@@ -165,6 +200,11 @@ public class DraggerView extends FrameLayout {
         || isViewHit(shadowView, (int) ev.getX(), (int) ev.getY());
   }
 
+  /**
+   * This method is needed to calculate the auto scroll
+   * when the user slide the view to the max limit, this
+   * starts a animation to finish the view.
+   */
   @Override public void computeScroll() {
     if (!isInEditMode() && dragHelper.continueSettling(true)) {
       ViewCompat.postInvalidateOnAnimation(this);
@@ -177,10 +217,6 @@ public class DraggerView extends FrameLayout {
 
   public void setRunAnimationOnFinishInflate(boolean runAnimationOnFinishInflate) {
     this.runAnimationOnFinishInflate = runAnimationOnFinishInflate;
-  }
-
-  public boolean getCanAnimate() {
-    return !animationFinish;
   }
 
   private float getVerticalDragRange() {
@@ -243,8 +279,8 @@ public class DraggerView extends FrameLayout {
   }
 
   private void configDragViewHelper() {
-    dragHelperCallback = new DraggerHelperCallback(this, dragView, draggerListener);
-    dragHelper = ViewDragHelper.create(this, SENSITIVITY, dragHelperCallback);
+    dragHelper = ViewDragHelper.create(this, SENSITIVITY,
+        new DraggerHelperCallback(this, dragView, draggerListener));
   }
 
   public void setDraggerCallback(DraggerCallback draggerCallback) {
@@ -417,9 +453,7 @@ public class DraggerView extends FrameLayout {
         activity.overridePendingTransition(0, android.R.anim.fade_out);
         activity.finish();
       }
-      activity = null;
     }
-    context = null;
   }
 
   public void setAnimationDuration(int baseSettleDuration, int maxSettleDuration) {
@@ -435,23 +469,19 @@ public class DraggerView extends FrameLayout {
   private SpringListener springListener = new SpringListener() {
     @Override public void onSpringUpdate(Spring spring) {
 
-      val = spring.getCurrentValue();
+      double val = spring.getCurrentValue();
       switch (dragPosition) {
         case LEFT:
-          progress = (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, -dragView.getWidth());
-          ViewCompat.setTranslationX(dragView, progress);
+          ViewCompat.setTranslationX(dragView, (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, -dragView.getWidth()));
           break;
         case RIGHT:
-          progress = (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, dragView.getWidth());
-          ViewCompat.setTranslationX(dragView, progress);
+          ViewCompat.setTranslationX(dragView, (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, dragView.getWidth()));
           break;
         case TOP:
-          progress = (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, dragView.getHeight());
-          ViewCompat.setTranslationY(dragView, progress);
+          ViewCompat.setTranslationY(dragView, (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, dragView.getHeight()));
           break;
         case BOTTOM:
-          progress = (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, -dragView.getHeight());
-          ViewCompat.setTranslationY(dragView, progress);
+          ViewCompat.setTranslationY(dragView, (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, -dragView.getHeight()));
           break;
         default:
           break;

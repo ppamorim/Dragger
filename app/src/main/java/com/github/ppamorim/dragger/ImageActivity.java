@@ -39,11 +39,6 @@ public class ImageActivity extends AbstractActivity {
     configIntents();
   }
 
-  @Override protected void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-    outState.putBoolean(CAN_ANIMATE, draggerView.getCanAnimate());
-  }
-
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case android.R.id.home:

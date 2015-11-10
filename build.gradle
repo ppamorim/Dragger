@@ -3,7 +3,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:1.2.3'
+    classpath 'com.android.tools.build:gradle:1.3.0'
   }
 }
 
@@ -12,8 +12,4 @@ allprojects {
     mavenCentral()
     mavenLocal()
   }
-}
-
-def isReleaseBuild() {
-  return version.contains("SNAPSHOT") == false
 }

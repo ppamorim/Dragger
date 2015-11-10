@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'checkstyle'
 
 dependencies {
-  compile 'com.android.support:appcompat-v7:22.1.1'
+  compile 'com.android.support:appcompat-v7:23.1.0'
   compile 'com.facebook.rebound:rebound:0.3.8'
 }
 

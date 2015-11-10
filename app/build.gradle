@@ -9,17 +9,19 @@ repositories {
 
 dependencies {
   compile project(':dragger')
-  compile 'com.android.support:appcompat-v7:22.2.0'
+  compile 'com.android.support:appcompat-v7:23.1.0'
   compile 'com.github.ksoichiro:android-observablescrollview:1.5.1'
   compile 'com.github.ppamorim:recyclerrenderers:1.2.2'
   compile 'com.jakewharton:butterknife:6.1.0'
-  compile 'com.facebook.fresco:fresco:0.5.1+'
+  compile 'com.facebook.fresco:fresco:0.8.1'
 }
 
 android {
+
   packagingOptions {
     exclude 'META-INF/services/javax.annotation.processing.Processor'
   }
+
   compileSdkVersion Integer.parseInt(project.ANDROID_COMPILE_SDK_VERSION)
   buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
   defaultConfig {
@@ -29,6 +31,7 @@ android {
     minSdkVersion Integer.parseInt(project.ANDROID_MIN_SDK)
     targetSdkVersion Integer.parseInt(project.ANDROID_TARGET_SDK_VERSION)
   }
+
   sourceSets {
     main {
       manifest.srcFile 'AndroidManifest.xml'
@@ -36,10 +39,11 @@ android {
       res.srcDirs = ['res']
     }
   }
+
   lintOptions {
     abortOnError false
   }
-  productFlavors {}
+
 }
 
 task checkstyle(type: Checkstyle) {
