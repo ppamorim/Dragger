@@ -41,7 +41,7 @@ You can add a shadow view if you want (the first one) and it needs to be invisib
           android:background="@color/transparent"
           android:visibility="invisible"/>
 
-      <LinearLayout
+    <LinearLayout
           android:id="@+id/drag_view"
           android:layout_width="match_parent"
           android:layout_height="match_parent"/>
@@ -54,10 +54,10 @@ In your ''styles'' file, you need a config like this:
 ```xml
 <style name="YourTheme" parent="Theme.AppCompat.Light.DarkActionBar">
     <item name="android:windowIsTranslucent">true</item>
-      <item name="android:windowBackground">@android:color/transparent</item>
-      <item name="android:windowNoTitle">true</item>
-      <item name="windowActionBar">false</item>
-      <item name="android:windowAnimationStyle">@null</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="windowActionBar">false</item>
+    <item name="android:windowAnimationStyle">@null</item>
 </style>
 ```
 
