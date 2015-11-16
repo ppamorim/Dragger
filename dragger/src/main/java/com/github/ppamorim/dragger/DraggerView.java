@@ -513,19 +513,19 @@ public class DraggerView extends FrameLayout {
       double val = spring.getCurrentValue();
       switch (dragPosition) {
         case LEFT:
-          ViewCompat.setTranslationX(dragView, 
+          ViewCompat.setTranslationX(dragView,
           (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, -dragView.getWidth()));
           break;
         case RIGHT:
-          ViewCompat.setTranslationX(dragView, 
+          ViewCompat.setTranslationX(dragView,
           (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, dragView.getWidth()));
           break;
         case TOP:
-          ViewCompat.setTranslationY(dragView, 
+          ViewCompat.setTranslationY(dragView,
           (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, dragView.getHeight()));
           break;
         case BOTTOM:
-          ViewCompat.setTranslationY(dragView, 
+          ViewCompat.setTranslationY(dragView,
           (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, -dragView.getHeight()));
           break;
         default:
