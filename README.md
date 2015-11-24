@@ -12,7 +12,7 @@ Using the ViewDragHelper class, it is possible to create smooth animations that 
 
 This new component has been created using some concepts described on [Flavien Laurent Blog][1] and [Denevell Blog][2].
 
-Dragger now uses [Rebound][14] from Facebook to provide more realistic animations and improve performance for old devices.
+Dragger now uses [Rebound][14](tiny, 41.7kb) from Facebook to provide more realistic animations and improve performance for old devices.
 
 This library should work on API 10 (but not tested [yet][1337]).
 
