@@ -259,7 +259,7 @@ public class DraggerView extends FrameLayout {
    * @param dragLimit Value between 0.0f and 1.0f
    */
   public void setDraggerLimit(float dragLimit) {
-    if(dragLimit > 0.0f && dragLimit < 1.0f) {
+    if (dragLimit > 0.0f && dragLimit < 1.0f) {
       this.dragLimit = dragLimit;
     } else {
       throw new IllegalStateException("dragLimit needs to be between 0.0f and 1.0f");
@@ -318,10 +318,10 @@ public class DraggerView extends FrameLayout {
           R.styleable.dragger_layout_drag_view_id, R.id.drag_view);
       int shadowViewId = attributes.getResourceId(
           R.styleable.dragger_layout_shadow_view_id, R.id.shadow_view);
-      if(dragViewId > 0) {
+      if (dragViewId > 0) {
         dragView = findViewById(dragViewId);
       }
-      if(shadowViewId > 0) {
+      if (shadowViewId > 0) {
         shadowView = findViewById(shadowViewId);
       }
     } else {
@@ -515,16 +515,20 @@ public class DraggerView extends FrameLayout {
       double val = spring.getCurrentValue();
       switch (dragPosition) {
         case LEFT:
-          ViewCompat.setTranslationX(dragView, (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, -dragView.getWidth()));
+          ViewCompat.setTranslationX(dragView,
+              (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, -dragView.getWidth()));
           break;
         case RIGHT:
-          ViewCompat.setTranslationX(dragView, (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, dragView.getWidth()));
+          ViewCompat.setTranslationX(dragView,
+              (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, dragView.getWidth()));
           break;
         case TOP:
-          ViewCompat.setTranslationY(dragView, (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, dragView.getHeight()));
+          ViewCompat.setTranslationY(dragView,
+              (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, dragView.getHeight()));
           break;
         case BOTTOM:
-          ViewCompat.setTranslationY(dragView, (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, -dragView.getHeight()));
+          ViewCompat.setTranslationY(dragView,
+              (float) SpringUtil.mapValueFromRangeToRange(val, 0, 1, 0, -dragView.getHeight()));
           break;
         default:
           break;
