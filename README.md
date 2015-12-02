@@ -83,6 +83,24 @@ public class YourActivity extends DraggerActivity {
 
 Now you can control the slide of the view, just use the method expand() when you want.
 
+Some methods that you can use:
+
+```java
+
+setDraggerCallback(DraggerCallback) //Interface that's provides some infos of the animation.
+setSlideEnabled(boolean) //Enable or disable the drag, useful to use with ScrollViews.
+setHorizontalDragRange(float) //Draggable distance that the draggableView can use, horizontally.
+setVerticalDragRange(float) //Draggable distance that the draggableView can use, vertically.
+setRunAnimationOnFinishInflate(boolean) //Run the initial animation, useful if you only want the drag function.
+setDraggerLimit(float) //Set the max limit drag, default is 0.5 (center of the screen).
+setDraggerPosition(DraggerPosition) //Set the position of archor.
+setTension(float) //Tension of the animation. This represent with the friction, how much time the animation will be executed.
+setFriction(float) //Friction of the animation. This represent with the tension, how much friction is applied at the tension animation.
+show() //Show the drag view with Rebound animation.
+closeActivity() //Simply close the activity with Rebound animation, based of the DraggerPosition choosen.
+
+```
+
 Sample
 ------
 
