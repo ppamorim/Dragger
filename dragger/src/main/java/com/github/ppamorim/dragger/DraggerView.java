@@ -19,6 +19,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
@@ -565,5 +567,91 @@ public class DraggerView extends FrameLayout {
     }
 
   };
+
+  /**
+   * Perform the save of the instance state of some params that's used at dragView.
+   * @return Parcelable
+   */
+  @Override public Parcelable onSaveInstanceState() {
+    Parcelable superState = super.onSaveInstanceState();
+    SavedState ss = new SavedState(superState);
+    ss.canSlide = this.canSlide;
+    ss.runAnimationOnFinishInflate = this.runAnimationOnFinishInflate;
+    ss.horizontalDragRange = this.horizontalDragRange;
+    ss.verticalDragRange = this.verticalDragRange;
+    ss.dragPosition = this.dragPosition;
+    ss.dragLimit = this.dragLimit;
+    ss.tension = this.tension;
+    ss.friction = this.friction;
+    return ss;
+  }
+
+  /**
+   * Called when the view is restored
+   * @param state Return the state
+   */
+  @Override public void onRestoreInstanceState(Parcelable state) {
+    SavedState ss = (SavedState) state;
+    super.onRestoreInstanceState(ss.getSuperState());
+    this.canSlide = ss.canSlide;
+    this.runAnimationOnFinishInflate = ss.runAnimationOnFinishInflate;
+    this.horizontalDragRange = ss.horizontalDragRange;
+    this.verticalDragRange = ss.verticalDragRange;
+    this.dragPosition = ss.dragPosition;
+    this.dragLimit = ss.dragLimit;
+    this.tension = ss.tension;
+    this.friction = ss.friction;
+  }
+
+  private static class SavedState extends BaseSavedState {
+
+    private boolean canSlide;
+    private boolean runAnimationOnFinishInflate;
+    private DraggerPosition dragPosition;
+    private float horizontalDragRange;
+    private float verticalDragRange;
+    private float dragLimit;
+    private float tension;
+    private float friction;
+
+    SavedState(Parcelable superState) {
+      super(superState);
+    }
+
+    private SavedState(Parcel in) {
+      super(in);
+      this.canSlide = in.readInt() == 1;
+      this.runAnimationOnFinishInflate = in.readInt() == 1;
+      this.dragPosition = DraggerPosition.getDragPosition(in.readInt());
+      this.horizontalDragRange = in.readFloat();
+      this.verticalDragRange = in.readFloat();
+      this.dragLimit = in.readFloat();
+      this.tension = in.readFloat();
+      this.friction = in.readFloat();
+    }
+
+    @Override public void writeToParcel(Parcel out, int flags) {
+      super.writeToParcel(out, flags);
+      out.writeInt(canSlide ? 1 : 0);
+      out.writeInt(runAnimationOnFinishInflate ? 1 : 0);
+      out.writeInt(dragPosition.getPosition());
+      out.writeFloat(horizontalDragRange);
+      out.writeFloat(verticalDragRange);
+      out.writeFloat(dragLimit);
+      out.writeFloat(tension);
+      out.writeFloat(friction);
+    }
+
+    public static final Parcelable.Creator<SavedState> CREATOR
+        = new Parcelable.Creator<SavedState>() {
+      public SavedState createFromParcel(Parcel in) {
+        return new SavedState(in);
+      }
+
+      public SavedState[] newArray(int size) {
+        return new SavedState[size];
+      }
+    };
+  }
 
 }
