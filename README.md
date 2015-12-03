@@ -125,12 +125,12 @@ Into your build.gradle:
 
 repositories {
   maven {
-    url "https://jitpack.io"
+    url "https://github.com"
   }
 }
 
 dependencies {
-  compile 'com.github.ppamorim:dragger:1.1'
+  compile 'com.github.ppamorim:dragger:1.2'
 }
 ```
 
