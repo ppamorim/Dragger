@@ -112,7 +112,7 @@ Sample
 Import dependency
 --------------------------------
 
-This library use `appcompat-v7:22.1.1`.
+This library use `appcompat-v7:23.1.0`.
 
 But why not to add in MavenCentral?
 Because it is so much bureaucratic.
