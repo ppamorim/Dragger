@@ -12,7 +12,7 @@ Using the ViewDragHelper class, it is possible to create smooth animations that 
 
 This new component has been created using some concepts described on [Flavien Laurent Blog][1] and [Denevell Blog][2].
 
-Dragger now uses [Rebound][14] from Facebook to provide more realistic animations and improve performance for old devices.
+Dragger now uses [Rebound][14](tiny, 41.7kb) from Facebook to provide more realistic animations and improve performance for old devices.
 
 This library should work on API 10 (but not tested [yet][1337]).
 
@@ -41,7 +41,7 @@ You can add a shadow view if you want (the first one) and it needs to be invisib
           android:background="@color/transparent"
           android:visibility="invisible"/>
 
-      <LinearLayout
+    <LinearLayout
           android:id="@+id/drag_view"
           android:layout_width="match_parent"
           android:layout_height="match_parent"/>
@@ -54,10 +54,10 @@ In your ''styles'' file, you need a config like this:
 ```xml
 <style name="YourTheme" parent="Theme.AppCompat.Light.DarkActionBar">
     <item name="android:windowIsTranslucent">true</item>
-      <item name="android:windowBackground">@android:color/transparent</item>
-      <item name="android:windowNoTitle">true</item>
-      <item name="windowActionBar">false</item>
-      <item name="android:windowAnimationStyle">@null</item>
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="windowActionBar">false</item>
+    <item name="android:windowAnimationStyle">@null</item>
 </style>
 ```
 
@@ -82,6 +82,24 @@ public class YourActivity extends DraggerActivity {
 ```
 
 Now you can control the slide of the view, just use the method expand() when you want.
+
+Some methods that you can use:
+
+```java
+
+setDraggerCallback(DraggerCallback) //Interface that's provides some infos of the animation.
+setSlideEnabled(boolean) //Enable or disable the drag, useful to use with ScrollViews.
+setHorizontalDragRange(float) //Draggable distance that the draggableView can use, horizontally.
+setVerticalDragRange(float) //Draggable distance that the draggableView can use, vertically.
+setRunAnimationOnFinishInflate(boolean) //Run the initial animation, useful if you only want the drag function.
+setDraggerLimit(float) //Set the max limit drag, default is 0.5 (center of the screen).
+setDraggerPosition(DraggerPosition) //Set the position of archor.
+setTension(float) //Tension of the animation. This represent with the friction, how much time the animation will be executed.
+setFriction(float) //Friction of the animation. This represent with the tension, how much friction is applied at the tension animation.
+show() //Show the drag view with Rebound animation.
+closeActivity() //Simply close the activity with Rebound animation, based of the DraggerPosition choosen.
+
+```
 
 Sample
 ------
