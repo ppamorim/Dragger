@@ -34,7 +34,7 @@ public class DraggerHelperCallback extends ViewDragHelper.Callback {
   private DraggerHelperListener draggerListener;
 
   /**
-   * The constructor get the instance of FlapBar and Bar
+   * The constructor get the instance of DraggableView
    *
    * @param draggerView provide the instance of DraggerView
    * @param dragView provide the instance inner view, this is inflated on DraggerView
