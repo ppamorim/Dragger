@@ -125,7 +125,7 @@ Into your build.gradle:
 
 repositories {
   maven {
-    url "https://github.com"
+    url "https://jitpack.io"
   }
 }
 
