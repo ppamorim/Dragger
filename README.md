@@ -130,7 +130,7 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.ppamorim:dragger:1.2'
+  implementation 'com.github.ppamorim:dragger:1.2'
 }
 ```
 
@@ -143,7 +143,7 @@ You must use the [Android-ObservableScrollView][13], like this:
 
 ```groovy
 dependencies {
-  compile 'com.github.ksoichiro:android-observablescrollview:VERSION'
+  implementation 'com.github.ksoichiro:android-observablescrollview:VERSION'
 }
 ```
 
