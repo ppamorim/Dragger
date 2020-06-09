@@ -5,6 +5,13 @@
 [![JitPack](https://img.shields.io/github/release/ppamorim/Dragger.svg?label=JitPack%20Maven)](https://jitpack.io/#ppamorim/Dragger)
 [![Join the chat at https://gitter.im/ppamorim/Dragger](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ppamorim/Dragger?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+Warning
+-------
+
+This library is not in development anymore, but we are accepting PRs or successors if anyone is interested.
+
+---
+
 If you want to use these transitions with fragments, take a look at [PrismView][123456789] library!
 
 The library was created in order to provide new animations for activities on Android.
